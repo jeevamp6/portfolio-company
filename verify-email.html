@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Account Verification - Aegrion Security</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brandOrange: '#F48120',
+            secondaryOrange: '#FFA640',
+            lightOrange: '#FFBE5C',
+            softOrange: '#FFF4EA',
+            warmWhite: '#FFF8F2',
+            textPrimary: '#111111',
+            textSecondary: '#4B5563',
+            borderColor: '#E9E9E9',
+            footerNavy: '#17122A',
+            success: '#16A34A',
+            danger: '#EF4444',
+            warning: '#F59E0B'
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Load Supabase JS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .animate-spin {
+      animation: spin 1s linear infinite;
+    }
+  </style>
+</head>
+<body class="bg-warmWhite min-h-screen flex items-center justify-center p-6 sm:p-12">
+  <div class="w-full max-w-[440px] bg-white rounded-[20px] border border-borderColor p-8 shadow-[0_8px_32px_rgba(0,0,0,0.03)]">
+    
+    <div class="mb-8 text-center">
+      <a href="index.html" class="inline-block mb-6">
+        <img src="/logo.png" alt="Aegrion Security Logo" class="h-10 w-auto object-contain mx-auto">
+      </a>
+      <h2 class="text-2xl font-black text-textPrimary tracking-tight mb-2">Account Verification</h2>
+    </div>
+
+    <!-- STATE 1: VERIFYING -->
+    <div id="state-verifying" class="flex flex-col items-center justify-center text-center py-6 gap-4">
+      <i data-lucide="loader" class="text-brandOrange w-12 h-12 animate-spin"></i>
+      <h3 class="text-lg font-bold text-textPrimary">Verifying your email...</h3>
+      <p class="text-textSecondary text-xs font-semibold max-w-xs leading-relaxed">
+        Please wait while we establish your secure session with Aegrion Security.
+      </p>
+    </div>
+
+    <!-- STATE 2: VERIFIED -->
+    <div id="state-verified" class="hidden flex-col items-center justify-center text-center py-6 gap-4">
+      <i data-lucide="check-circle" class="text-success w-12 h-12"></i>
+      <h3 class="text-lg font-bold text-textPrimary">Email Verified Successfully</h3>
+      <p class="text-textSecondary text-xs font-semibold max-w-xs leading-relaxed">
+        Your email has been verified. Welcome to Aegrion Security.
+      </p>
+      <a id="btn-continue" href="app.html" class="w-full mt-4 py-3.5 bg-brandOrange text-white text-sm font-semibold rounded-full hover:bg-brandOrange/95 transition-all text-center">
+        Continue to Aegrion Argus
+      </a>
+    </div>
+
+    <!-- STATE 3: ERROR -->
+    <div id="state-error" class="hidden flex-col items-center justify-center text-center py-6 gap-4">
+      <i data-lucide="alert-circle" class="text-danger w-12 h-12"></i>
+      <h3 class="text-lg font-bold text-textPrimary">Verification Failed</h3>
+      <p class="text-textSecondary text-xs font-semibold max-w-xs leading-relaxed" id="error-message">
+        Verification link is invalid or expired.
+      </p>
+      
+      <!-- Resend Verification Form -->
+      <div id="resend-form-container" class="w-full mt-2 text-left space-y-3 hidden">
+        <label for="resend-email" class="text-xs font-bold text-textSecondary uppercase tracking-wider block">Resend Verification Email</label>
+        <input type="email" id="resend-email" class="w-full px-4 py-2.5 rounded-xl border border-borderColor focus:outline-none focus:border-brandOrange text-textPrimary font-medium text-xs transition-all duration-200" placeholder="name@company.com">
+        <button id="btn-resend-verify" class="w-full py-2.5 text-white bg-brandOrange hover:bg-brandOrange/95 rounded-full font-bold transition-all text-[11px] shadow-sm">
+          Resend Verification Link
+        </button>
+      </div>
+
+      <div class="w-full flex flex-col gap-2.5 mt-4">
+        <button id="btn-show-resend" class="w-full py-3.5 bg-softOrange text-brandOrange text-sm font-semibold rounded-full hover:bg-brandOrange/10 transition-all text-center">
+          Resend Verification Email
+        </button>
+        <a id="btn-to-login" href="login.html" class="w-full py-3.5 border border-borderColor text-textPrimary text-sm font-semibold rounded-full hover:bg-warmWhite transition-all text-center">
+          Return to Login
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <script type="module">
+    import { supabase, showNotification, LOGIN_URL, DASHBOARD_URL } from './supabase-client.js';
+
+    // Initialize icons
+    lucide.createIcons();
+
+    const stateVerifying = document.getElementById('state-verifying');
+    const stateVerified = document.getElementById('state-verified');
+    const stateError = document.getElementById('state-error');
+    const errorMsgEl = document.getElementById('error-message');
+    const resendEmailInput = document.getElementById('resend-email');
+    const btnResendVerify = document.getElementById('btn-resend-verify');
+    const btnShowResend = document.getElementById('btn-show-resend');
+    const resendFormContainer = document.getElementById('resend-form-container');
+
+    // Bind URL constants
+    document.getElementById('btn-to-login').setAttribute('href', LOGIN_URL);
+    document.getElementById('btn-continue').setAttribute('href', DASHBOARD_URL);
+
+    // Show specific state helpers
+    function showState(stateName) {
+      stateVerifying.classList.add('hidden');
+      stateVerified.classList.add('hidden');
+      stateError.classList.add('hidden');
+
+      if (stateName === 'verifying') {
+        stateVerifying.classList.remove('hidden');
+      } else if (stateName === 'verified') {
+        stateVerified.classList.remove('hidden');
+        stateVerified.classList.add('flex');
+      } else if (stateName === 'error') {
+        stateError.classList.remove('hidden');
+        stateError.classList.add('flex');
+      }
+      lucide.createIcons();
+    }
+
+    async function checkVerification() {
+      try {
+        const hash = window.location.hash;
+        const params = new URLSearchParams(window.location.search);
+
+        // Check for error queries from Supabase redirect
+        if (params.get('error') || params.get('error_description')) {
+          const desc = params.get('error_description') || "Verification link is invalid or expired.";
+          errorMsgEl.textContent = desc;
+          showState('error');
+          return;
+        }
+
+        // Get session
+        const { data: { session }, error } = await supabase.auth.getSession();
+        if (error) throw error;
+
+        if (session) {
+          showState('verified');
+        } else {
+          // If no session, wait a brief moment to ensure auto refresh/detect completes
+          setTimeout(async () => {
+            const { data: { session: retrySession } } = await supabase.auth.getSession();
+            if (retrySession) {
+              showState('verified');
+            } else {
+              errorMsgEl.textContent = "Verification link is invalid, expired, or has already been used.";
+              showState('error');
+            }
+          }, 1500);
+        }
+      } catch (err) {
+        errorMsgEl.textContent = err.message || "An error occurred during verification.";
+        showState('error');
+      }
+    }
+
+    // Handle resend verification flow
+    btnShowResend.addEventListener('click', () => {
+      resendFormContainer.classList.remove('hidden');
+      btnShowResend.classList.add('hidden');
+    });
+
+    btnResendVerify.addEventListener('click', async () => {
+      const email = resendEmailInput.value.trim();
+      if (!email) {
+        showNotification("Please enter your work email address.", "warning");
+        return;
+      }
+
+      btnResendVerify.disabled = true;
+      const originalText = btnResendVerify.textContent;
+      
+      let secondsLeft = 60;
+      const timer = setInterval(() => {
+        secondsLeft--;
+        if (secondsLeft <= 0) {
+          clearInterval(timer);
+          btnResendVerify.disabled = false;
+          btnResendVerify.textContent = originalText;
+        } else {
+          btnResendVerify.textContent = `Resend available in ${secondsLeft}s`;
+        }
+      }, 1000);
+
+      try {
+        const redirectUrl = window.location.origin + '/' + LOGIN_URL;
+        const { error } = await supabase.auth.resend({
+          type: 'signup',
+          email: email,
+          options: {
+            emailRedirectTo: `${redirectUrl}?verified=true`
+          }
+        });
+
+        if (error) {
+          showNotification(error.message, "error");
+          clearInterval(timer);
+          btnResendVerify.disabled = false;
+          btnResendVerify.textContent = originalText;
+        } else {
+          showNotification("Verification email resent successfully.", "success");
+        }
+      } catch (err) {
+        showNotification("Failed to resend verification email.", "error");
+        clearInterval(timer);
+        btnResendVerify.disabled = false;
+        btnResendVerify.textContent = originalText;
+      }
+    });
+
+    // Execute check
+    checkVerification();
+  </script>
+</body>
+</html>

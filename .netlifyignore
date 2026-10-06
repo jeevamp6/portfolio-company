@@ -1,0 +1,9 @@
+node_modules
+.git
+.gemini
+aegrion_updated
+.env
+.env.local
+.vscode
+.idea
+*.log

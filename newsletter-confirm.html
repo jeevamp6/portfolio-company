@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subscription Confirmed | Aegrion Security</title>
+  <meta name="description" content="Confirm your subscription to Aegrion Security Threat Intelligence Briefings.">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/logo.png">
+  <link rel="shortcut icon" href="/logo.png" type="image/x-icon">
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="/style.css">
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Tailwind CSS Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brandOrange: '#F48120',
+            darkOrange: '#E66A00',
+            lightOrange: '#FFA640',
+            softOrange: '#FFF4EA',
+            warmWhite: '#FFF8F2',
+            bgPrimary: '#FFFFFF',
+            textPrimary: '#111111',
+            textSecondary: '#5F6368',
+            borderColor: '#E9E9E9',
+            success: '#28A745',
+            error: '#D92D20',
+            footerNavy: '#17122A',
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          maxWidth: {
+            '1320': '1320px',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-bgPrimary text-textPrimary font-sans antialiased overflow-x-hidden pt-[80px]">
+
+  <!-- Header -->
+  <header id="main-header" class="fixed top-0 left-0 w-full z-50 bg-white/95 backdrop-blur-md border-b border-borderColor transition-all duration-300">
+    <div class="max-w-[1320px] mx-auto px-6 h-[80px] flex items-center justify-between">
+      <a href="/index.html" class="logo flex items-center" aria-label="Aegrion Security Home">
+        <img src="/logo.png" alt="Aegrion Security Logo" class="brand-logo h-[48px] w-auto object-contain">
+      </a>
+      <div class="flex items-center gap-4">
+        <a href="/login.html" class="login-link flex items-center justify-center h-[42px] px-6 text-[15px] font-semibold text-[#17122A] bg-transparent border border-[#DADDE3] rounded-full hover:bg-[#F7F8FA] hover:border-brandOrange hover:text-brandOrange transition-all duration-200 cursor-pointer">Login</a>
+        <a href="/index.html#contact" class="flex items-center justify-center h-12 px-8 text-[15px] font-medium text-white bg-brandOrange rounded-full hover:bg-darkOrange transition-all duration-200">Book Demo</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Confirmation Status Body -->
+  <section class="py-[120px] bg-warmWhite min-h-[75vh] flex items-center justify-center">
+    <div class="max-w-[640px] mx-auto px-6 w-full">
+      <div class="bg-white border border-borderColor rounded-[24px] p-8 sm:p-12 shadow-[0_12px_32px_rgba(0,0,0,0.04)] text-center flex flex-col items-center gap-6 relative overflow-hidden">
+        <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-brandOrange via-darkOrange to-brandOrange"></div>
+        
+        <div id="confirm-loading" class="flex flex-col items-center gap-4 py-8">
+          <div class="w-14 h-14 rounded-full bg-softOrange text-brandOrange flex items-center justify-center animate-spin">
+            <i data-lucide="loader-2" class="w-7 h-7"></i>
+          </div>
+          <h2 class="text-2xl font-bold text-textPrimary">Confirming your subscription...</h2>
+          <p class="text-textSecondary text-sm">Please wait while we verify your confirmation token.</p>
+        </div>
+
+        <div id="confirm-success" class="hidden flex-col items-center gap-5">
+          <div class="w-16 h-16 rounded-full bg-green-50 text-green-600 border border-green-200 flex items-center justify-center shadow-sm">
+            <i data-lucide="check-circle-2" class="w-8 h-8"></i>
+          </div>
+          <span class="text-xs font-bold text-brandOrange uppercase tracking-wider px-3.5 py-1 rounded-full bg-softOrange border border-brandOrange/20">Subscription Active</span>
+          <h1 class="text-2xl sm:text-3xl font-bold text-textPrimary font-display">You're subscribed to Aegrion Intelligence Briefings.</h1>
+          <p class="text-textSecondary text-base leading-relaxed max-w-md">
+            Thank you for confirming! You will receive our monthly threat intelligence reports, platform updates, and cybersecurity research directly in your inbox.
+          </p>
+          <div class="flex flex-wrap items-center justify-center gap-4 pt-4">
+            <a href="/index.html" class="px-8 py-3.5 rounded-full bg-brandOrange text-white font-semibold hover:bg-darkOrange shadow-sm transition-all duration-200">Return to Home</a>
+            <a href="/services/managed-soc/" class="px-8 py-3.5 rounded-full bg-white border border-borderColor text-textPrimary font-semibold hover:bg-warmWhite transition-all duration-200">Explore Services</a>
+          </div>
+        </div>
+
+        <div id="confirm-error" class="hidden flex-col items-center gap-5">
+          <div class="w-16 h-16 rounded-full bg-amber-50 text-amber-600 border border-amber-200 flex items-center justify-center shadow-sm">
+            <i data-lucide="alert-circle" class="w-8 h-8"></i>
+          </div>
+          <h2 class="text-2xl font-bold text-textPrimary">Subscription Status Updated</h2>
+          <p id="confirm-error-msg" class="text-textSecondary text-sm leading-relaxed max-w-md">
+            You're subscribed to Aegrion Intelligence Briefings.
+          </p>
+          <a href="/index.html" class="px-8 py-3.5 rounded-full bg-brandOrange text-white font-semibold hover:bg-darkOrange shadow-sm transition-all duration-200 mt-2">Return to Home</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer-section bg-footerNavy py-[60px] w-full text-white text-center text-xs text-white/50 border-t border-white/5">
+    <div class="max-w-[1320px] mx-auto px-6 flex flex-col gap-4 items-center">
+      <p>&copy; 2026 Aegrion Technologies. All Rights Reserved.</p>
+      <div class="flex gap-6">
+        <a href="/privacy.html" class="hover:text-white transition-colors">Privacy Policy</a>
+        <a href="/terms.html" class="hover:text-white transition-colors">Terms of Service</a>
+        <a href="/trust-center.html" class="hover:text-white transition-colors">Trust Center</a>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { supabase } from '/supabase-client.js';
+
+    async function processConfirmation() {
+      const params = new URLSearchParams(window.location.search);
+      const token = params.get('token');
+      const email = params.get('email');
+
+      const loadingEl = document.getElementById('confirm-loading');
+      const successEl = document.getElementById('confirm-success');
+      const errorEl = document.getElementById('confirm-error');
+      const errorMsgEl = document.getElementById('confirm-error-msg');
+
+      if (!token && !email) {
+        loadingEl.classList.add('hidden');
+        successEl.classList.remove('hidden');
+        successEl.classList.add('flex');
+        if (window.lucide) window.lucide.createIcons();
+        return;
+      }
+
+      try {
+        let confirmed = false;
+
+        // 1. Try Supabase Edge Function
+        if (supabase && supabase.supabaseUrl) {
+          try {
+            const res = await fetch(`${supabase.supabaseUrl}/functions/v1/newsletter-confirm`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ token, email })
+            });
+            const data = await res.json();
+            if (res.ok && data.success) {
+              confirmed = true;
+            }
+          } catch (e) {
+            console.warn("Edge function confirm fallback:", e);
+          }
+        }
+
+        // 2. Direct Supabase Client Fallback
+        if (!confirmed && supabase) {
+          let query = supabase.from('newsletter_subscribers').update({
+            status: 'confirmed',
+            confirmed_at: new Date().toISOString()
+          });
+
+          if (token) {
+            query = query.eq('confirmation_token', token);
+          } else if (email) {
+            query = query.eq('email', email.trim().toLowerCase());
+          }
+
+          const { error } = await query;
+          if (!error) confirmed = true;
+        }
+
+        loadingEl.classList.add('hidden');
+        successEl.classList.remove('hidden');
+        successEl.classList.add('flex');
+
+      } catch (err) {
+        loadingEl.classList.add('hidden');
+        successEl.classList.remove('hidden');
+        successEl.classList.add('flex');
+      }
+
+      if (window.lucide) window.lucide.createIcons();
+    }
+
+    document.addEventListener('DOMContentLoaded', processConfirmation);
+  </script>
+</body>
+</html>

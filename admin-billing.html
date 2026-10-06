@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Billing Portal - Aegrion Security</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brandOrange: '#F48120',
+            secondaryOrange: '#FFA640',
+            lightOrange: '#FFBE5C',
+            softOrange: '#FFF4EA',
+            warmWhite: '#FFF8F2',
+            textPrimary: '#111111',
+            textSecondary: '#4B5563',
+            borderColor: '#E9E9E9',
+            footerNavy: '#17122A',
+            success: '#16A34A',
+            danger: '#EF4444',
+            warning: '#F59E0B'
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- Load jsPDF for on-the-fly invoice generation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-warmWhite min-h-screen text-textPrimary flex flex-col hidden" id="admin-body">
+
+  <!-- HEADER -->
+  <header class="h-20 bg-white border-b border-borderColor flex items-center px-6 md:px-12 justify-between flex-shrink-0 z-30">
+    <div class="flex items-center gap-3">
+      <a href="app.html" class="flex items-center gap-2">
+        <img src="/logo.png" alt="Aegrion Security Logo" class="h-8 w-auto object-contain">
+      </a>
+      <span class="text-xs font-bold text-white bg-brandOrange px-2.5 py-0.5 rounded-full uppercase tracking-wider">Admin Billing</span>
+    </div>
+    
+    <div class="flex items-center gap-3">
+      <button onclick="window.location.href='app.html';" class="text-xs font-bold text-textSecondary hover:text-textPrimary flex items-center gap-1.5 transition-colors">
+        <i data-lucide="arrow-left" class="w-4 h-4"></i> Return to App
+      </button>
+    </div>
+  </header>
+
+  <!-- WORKSPACE WRAPPER -->
+  <div class="flex-1 flex overflow-hidden">
+    
+    <!-- SIDEBAR -->
+    <aside class="w-64 bg-white border-r border-borderColor flex flex-col justify-between flex-shrink-0 z-20">
+      <nav class="flex-1 p-4 space-y-1.5 font-semibold text-xs text-textSecondary">
+        <a href="#" onclick="switchTab('dashboard', this)" class="nav-btn flex items-center gap-3 px-3 py-2.5 rounded-xl text-brandOrange bg-softOrange transition-all">
+          <i data-lucide="layout-dashboard" class="w-4.5 h-4.5"></i> Dashboard Analytics
+        </a>
+        <a href="#" onclick="switchTab('customers', this)" class="nav-btn flex items-center gap-3 px-3 py-2.5 rounded-xl hover:text-textPrimary hover:bg-neutral-50 transition-all">
+          <i data-lucide="users" class="w-4.5 h-4.5"></i> Customers List
+        </a>
+        <a href="#" onclick="switchTab('payments', this)" class="nav-btn flex items-center gap-3 px-3 py-2.5 rounded-xl hover:text-textPrimary hover:bg-neutral-50 transition-all">
+          <i data-lucide="credit-card" class="w-4.5 h-4.5"></i> Transactions & Refunds
+        </a>
+        <a href="#" onclick="switchTab('logs', this)" class="nav-btn flex items-center gap-3 px-3 py-2.5 rounded-xl hover:text-textPrimary hover:bg-neutral-50 transition-all">
+          <i data-lucide="history" class="w-4.5 h-4.5"></i> System Audit Logs
+        </a>
+      </nav>
+    </aside>
+
+    <!-- CONTENT WORKSPACE -->
+    <main class="flex-1 overflow-y-auto p-6 md:p-10 space-y-6">
+
+      <!-- TAB: DASHBOARD ANALYTICS -->
+      <section id="tab-dashboard" class="tab-view space-y-8">
+        
+        <!-- Header -->
+        <div class="border-b border-borderColor pb-4">
+          <h2 class="text-2xl font-black text-textPrimary tracking-tight">Financial Dashboard</h2>
+          <p class="text-textSecondary font-medium text-xs">Real-time revenue, conversion, and MRR aggregates.</p>
+        </div>
+
+        <!-- Metrics Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          
+          <div class="bg-white p-6 rounded-2xl border border-borderColor space-y-2">
+            <div class="text-[10px] text-textSecondary uppercase font-bold tracking-wider">Total Revenue</div>
+            <div class="text-3xl font-black text-textPrimary" id="stat-revenue">$0.00</div>
+            <div class="text-[9px] text-success font-bold flex items-center gap-1"><i data-lucide="trending-up" class="w-3 h-3"></i> +12% from last month</div>
+          </div>
+
+          <div class="bg-white p-6 rounded-2xl border border-borderColor space-y-2">
+            <div class="text-[10px] text-textSecondary uppercase font-bold tracking-wider">Monthly Recurring Revenue (MRR)</div>
+            <div class="text-3xl font-black text-brandOrange" id="stat-mrr">$0.00</div>
+            <div class="text-[9px] text-textSecondary font-semibold">ARR: <span id="stat-arr" class="font-bold text-textPrimary">$0.00</span></div>
+          </div>
+
+          <div class="bg-white p-6 rounded-2xl border border-borderColor space-y-2">
+            <div class="text-[10px] text-textSecondary uppercase font-bold tracking-wider">Active Subscribers</div>
+            <div class="text-3xl font-black text-textPrimary" id="stat-subs">0</div>
+            <div class="text-[9px] text-textSecondary font-semibold">Trial users active: <span id="stat-trials" class="font-bold text-textPrimary">0</span></div>
+          </div>
+
+          <div class="bg-white p-6 rounded-2xl border border-borderColor space-y-2">
+            <div class="text-[10px] text-textSecondary uppercase font-bold tracking-wider">Payment Success Rate</div>
+            <div class="text-3xl font-black text-success" id="stat-success-rate">100%</div>
+            <div class="text-[9px] text-textSecondary font-semibold">Failure rate: <span id="stat-failure-rate" class="font-bold text-danger">0%</span></div>
+          </div>
+
+        </div>
+
+        <!-- Revenue Graph / Chart Section -->
+        <div class="bg-white rounded-2xl border border-borderColor p-6 space-y-4">
+          <h3 class="text-xs font-bold text-textPrimary uppercase tracking-wider border-b border-borderColor pb-3">Monthly MRR Growth Analytics</h3>
+          
+          <div class="h-64 flex items-end gap-2 border-b border-l border-borderColor p-4 relative" id="chart-container">
+            <!-- Simple SVG curve graph representing sales trend -->
+            <svg class="absolute inset-0 w-full h-full p-4" viewBox="0 0 400 100" preserveAspectRatio="none">
+              <path d="M 0 90 Q 100 60 200 40 T 400 10" fill="none" stroke="#F48120" stroke-width="3"></path>
+              <circle cx="200" cy="40" r="4" fill="#F48120"></circle>
+              <circle cx="400" cy="10" r="4" fill="#F48120"></circle>
+            </svg>
+            <div class="absolute bottom-2 left-2 text-[8px] text-textSecondary font-semibold">Q1 (Start)</div>
+            <div class="absolute bottom-2 right-2 text-[8px] text-textSecondary font-semibold">Q4 (End)</div>
+          </div>
+        </div>
+
+        <!-- Founding Customer Campaign Section -->
+        <div class="bg-white rounded-2xl border border-borderColor p-6 space-y-6">
+          <div class="flex items-center justify-between border-b border-borderColor pb-3">
+            <div>
+              <h3 class="text-xs font-bold text-textPrimary uppercase tracking-wider">Founding Customer Campaign</h3>
+              <p class="text-textSecondary font-medium text-[9px] mt-0.5">Track redemptions of the code AEGIRION100.</p>
+            </div>
+            <div class="text-right">
+              <span class="text-xs font-extrabold text-white bg-brandOrange px-3 py-1 rounded-full" id="admin-founding-claimed">0 / 100 Claimed</span>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-[10px] text-left text-textSecondary font-semibold border-collapse" id="founding-table">
+              <thead>
+                <tr class="bg-neutral-50 border-b border-borderColor text-textPrimary text-xxs uppercase tracking-wider">
+                  <th class="p-3">Customer</th>
+                  <th class="p-3">Plan</th>
+                  <th class="p-3">Cycle</th>
+                  <th class="p-3">Coupon</th>
+                  <th class="p-3">Discount</th>
+                  <th class="p-3">Payment Status</th>
+                  <th class="p-3">Subscription</th>
+                  <th class="p-3">Joined Date</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-borderColor/60">
+                <!-- Filled dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- TAB: CUSTOMERS -->
+      <section id="tab-customers" class="tab-view space-y-6 hidden">
+        <div class="border-b border-borderColor pb-4 flex justify-between items-center">
+          <div>
+            <h2 class="text-2xl font-black text-textPrimary tracking-tight">Customers & Subscriptions</h2>
+            <p class="text-textSecondary font-medium text-xs">Manage plan modifications, trial extensions, and cancellations.</p>
+          </div>
+        </div>
+
+        <!-- Filters Block -->
+        <div class="bg-white rounded-2xl border border-borderColor p-4 flex flex-col md:flex-row gap-4 items-center justify-between font-semibold text-xs">
+          <div class="flex-1 flex gap-2 w-full">
+            <input type="text" id="cust-search" oninput="filterCustomers()" class="w-full max-w-xs px-3 py-2 rounded-xl border border-borderColor focus:outline-none focus:border-brandOrange text-textPrimary text-sm font-medium" placeholder="Search customer email/company...">
+          </div>
+          <div class="flex gap-3 w-full md:w-auto">
+            <select id="cust-filter-plan" onchange="filterCustomers()" class="px-3 py-2 rounded-xl border border-borderColor focus:outline-none focus:border-brandOrange text-textSecondary">
+              <option value="">All Plans</option>
+              <option value="FREE TRIAL">Free Trial</option>
+              <option value="Starter">Starter</option>
+              <option value="Professional">Professional</option>
+              <option value="Enterprise">Enterprise</option>
+            </select>
+            <select id="cust-filter-status" onchange="filterCustomers()" class="px-3 py-2 rounded-xl border border-borderColor focus:outline-none focus:border-brandOrange text-textSecondary">
+              <option value="">All Statuses</option>
+              <option value="active">Active Profiles</option>
+              <option value="suspended">Suspended Profiles</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Customers Table Card -->
+        <div class="bg-white rounded-2xl border border-borderColor overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full text-[10px] text-left text-textSecondary font-semibold border-collapse" id="cust-table">
+              <thead>
+                <tr class="bg-neutral-50 border-b border-borderColor text-textPrimary text-xxs uppercase tracking-wider">
+                  <th class="p-4">Customer Details</th>
+                  <th class="p-4">Company</th>
+                  <th class="p-4">Plan / Status</th>
+                  <th class="p-4">Renewal / End Date</th>
+                  <th class="p-4 text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-borderColor/60">
+                <!-- Dynamic rows -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB: PAYMENTS -->
+      <section id="tab-payments" class="tab-view space-y-6 hidden">
+        <div class="border-b border-borderColor pb-4">
+          <h2 class="text-2xl font-black text-textPrimary tracking-tight">Payments & Refund Control</h2>
+          <p class="text-textSecondary font-medium text-xs">Verify payment gateways, order IDs, and process refunds.</p>
+        </div>
+
+        <!-- Payments Table Card -->
+        <div class="bg-white rounded-2xl border border-borderColor overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full text-[10px] text-left text-textSecondary font-semibold border-collapse" id="payments-table">
+              <thead>
+                <tr class="bg-neutral-50 border-b border-borderColor text-textPrimary text-xxs uppercase tracking-wider">
+                  <th class="p-4">Order / ID</th>
+                  <th class="p-4">Plan / Method</th>
+                  <th class="p-4">Amount</th>
+                  <th class="p-4">Gateway Status</th>
+                  <th class="p-4">Created Date</th>
+                  <th class="p-4 text-right">Refund Action</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-borderColor/60">
+                <!-- Dynamic payments -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB: LOGS -->
+      <section id="tab-logs" class="tab-view space-y-6 hidden">
+        <div class="border-b border-borderColor pb-4">
+          <h2 class="text-2xl font-black text-textPrimary tracking-tight">Audit Logs</h2>
+          <p class="text-textSecondary font-medium text-xs">Cryptographic signature verifications, coupon applications, and operations logs.</p>
+        </div>
+
+        <!-- Logs container -->
+        <div class="bg-white rounded-2xl border border-borderColor p-6 max-w-4xl font-mono text-[9px] text-textSecondary space-y-3" id="logs-container">
+          <!-- Dynamic logs -->
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- CONTROL MODAL (Upgrades/Trial extensions/Cancellations) -->
+  <div id="control-modal-backdrop" class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-[20px] border border-borderColor max-w-[400px] w-full p-8 shadow-xl relative font-semibold text-xs space-y-4">
+      <h3 class="text-lg font-black text-textPrimary tracking-tight">Manage Customer Subscription</h3>
+      <p class="text-textSecondary text-[10px] font-medium leading-relaxed">Modify customer limits, adjust subscription states, or pause active billing.</p>
+      
+      <form id="control-subscription-form" class="space-y-4">
+        <input type="hidden" id="manage-cust-id">
+        <input type="hidden" id="manage-cust-org">
+        
+        <div class="flex flex-col gap-1">
+          <label class="text-[9px] text-textSecondary uppercase font-bold">Change Plan Level</label>
+          <select id="manage-plan-select" class="px-3 py-2 rounded-xl border border-borderColor focus:outline-none focus:border-brandOrange text-textPrimary">
+            <option value="FREE TRIAL">Free Trial</option>
+            <option value="Starter">Starter</option>
+            <option value="Professional">Professional</option>
+            <option value="Enterprise">Enterprise</option>
+          </select>
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label class="text-[9px] text-textSecondary uppercase font-bold">Extend Trial (Days)</label>
+          <input type="number" id="manage-trial-days" class="px-3 py-2 rounded-xl border border-borderColor focus:outline-none focus:border-brandOrange text-textPrimary" placeholder="e.g. 7">
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label class="text-[9px] text-textSecondary uppercase font-bold">Subscription Action</label>
+          <select id="manage-action-select" class="px-3 py-2 rounded-xl border border-borderColor focus:outline-none focus:border-brandOrange text-textPrimary">
+            <option value="none">Keep Subscription Status</option>
+            <option value="active">Activate / Resume Billing</option>
+            <option value="suspended">Suspend Access</option>
+            <option value="cancelled">Cancel / Downgrade Plan</option>
+          </select>
+        </div>
+
+        <div class="flex justify-end gap-3 pt-4">
+          <button type="button" onclick="document.getElementById('control-modal-backdrop').classList.add('hidden');" class="px-5 py-2.5 bg-neutral-100 hover:bg-neutral-200 text-textPrimary font-bold rounded-full transition-all">Close</button>
+          <button type="submit" class="px-5 py-2.5 bg-brandOrange hover:bg-brandOrange/95 text-white font-bold rounded-full transition-all">Submit Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script type="module">
+    import { supabase, showNotification } from './supabase-client.js';
+
+    // Global properties
+    let customersList = [];
+    let paymentsList = [];
+    let logsList = [];
+
+    // Authenticate and load data
+    window.addEventListener('load', async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      // 1. Role verification
+      const { data: profile, error: profErr } = await supabase
+        .from('profiles')
+        .select('role')
+        .eq('id', session.user.id)
+        .maybeSingle();
+
+      if (profErr || !profile || (profile.role !== 'super_admin' && profile.role !== 'finance')) {
+        alert("Access Denied: Administrative permissions required.");
+        window.location.href = 'app.html';
+        return;
+      }
+
+      // Show admin portal body
+      document.getElementById('admin-body').classList.remove('hidden');
+      lucide.createIcons();
+
+      // Load statistics
+      await fetchFinancials();
+      await fetchCustomers();
+      await fetchPayments();
+      await fetchLogs();
+      await fetchFoundingCampaign();
+    });
+
+    // Switch view tabs
+    window.switchTab = function(tabName, btnEl) {
+      document.querySelectorAll('.tab-view').forEach(tab => tab.classList.add('hidden'));
+      document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+
+      document.querySelectorAll('.nav-btn').forEach(b => {
+        b.classList.remove('text-brandOrange', 'bg-softOrange');
+        b.classList.add('hover:text-textPrimary', 'hover:bg-neutral-50');
+      });
+
+      btnEl.classList.remove('hover:text-textPrimary', 'hover:bg-neutral-50');
+      btnEl.classList.add('text-brandOrange', 'bg-softOrange');
+      lucide.createIcons();
+    };
+
+    // 1. Financial Aggregates
+    async function fetchFinancials() {
+      try {
+        const { data: payments } = await supabase
+          .from('payments')
+          .select('amount, payment_status');
+
+        let totalRevenue = 0;
+        let successfulCount = 0;
+        let failedCount = 0;
+
+        payments?.forEach(p => {
+          if (p.payment_status === 'PAID' || p.payment_status === 'SUCCESSFUL') {
+            totalRevenue += Number(p.amount);
+            successfulCount++;
+          } else {
+            failedCount++;
+          }
+        });
+
+        const totalTransactions = successfulCount + failedCount;
+        const successRate = totalTransactions > 0 ? Math.round((successfulCount / totalTransactions) * 100) : 100;
+        const failureRate = 100 - successRate;
+
+        // Load active subscriptions and compute real MRR & ARR
+        const { data: activeSubscriptions } = await supabase
+          .from('subscriptions')
+          .select('price, billing_cycle')
+          .eq('status', 'ACTIVE');
+
+        let computedMRR = 0;
+        activeSubscriptions?.forEach(sub => {
+          const price = Number(sub.price || 0);
+          if (sub.billing_cycle === 'yearly') {
+            computedMRR += price / 12;
+          } else {
+            computedMRR += price;
+          }
+        });
+        const computedARR = computedMRR * 12;
+
+        document.getElementById('stat-revenue').textContent = `$${totalRevenue.toFixed(2)}`;
+        document.getElementById('stat-mrr').textContent = `$${computedMRR.toFixed(2)}`;
+        document.getElementById('stat-arr').textContent = `$${computedARR.toFixed(2)}`;
+        document.getElementById('stat-success-rate').textContent = `${successRate}%`;
+        document.getElementById('stat-failure-rate').textContent = `${failureRate}%`;
+
+        // Load active subscribers count
+        const { count: activeSubs } = await supabase
+          .from('subscriptions')
+          .select('*', { count: 'exact', head: true })
+          .eq('status', 'ACTIVE');
+        
+        const { count: trialSubs } = await supabase
+          .from('subscriptions')
+          .select('*', { count: 'exact', head: true })
+          .eq('plan', 'FREE TRIAL');
+
+        document.getElementById('stat-subs').textContent = activeSubs || 0;
+        document.getElementById('stat-trials').textContent = trialSubs || 0;
+
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    // 2. Fetch Customers
+    async function fetchCustomers() {
+      try {
+        const { data: profiles } = await supabase
+          .from('profiles')
+          .select('id, full_name, email, company, plan, status, trial_end, organization');
+
+        customersList = profiles || [];
+        renderCustomers(customersList);
+
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    function renderCustomers(list) {
+      const tbody = document.querySelector('#cust-table tbody');
+      tbody.innerHTML = '';
+      
+      if (list.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-textSecondary">No customers found.</td></tr>`;
+        return;
+      }
+
+      list.forEach(c => {
+        const row = document.createElement('tr');
+        row.className = "border-b border-borderColor/60 hover:bg-neutral-50/50";
+        row.innerHTML = `
+          <td class="p-4">
+            <div class="font-bold text-textPrimary">${c.full_name || 'Enterprise Partner'}</div>
+            <div class="text-[9px] text-textSecondary mt-0.5">${c.email}</div>
+          </td>
+          <td class="p-4 font-bold text-textPrimary">${c.company || 'Sandbox organization'}</td>
+          <td class="p-4">
+            <span class="px-2 py-0.5 rounded-full font-bold uppercase tracking-wider text-[8px] bg-softOrange text-brandOrange">${c.plan}</span>
+            <span class="ml-1 px-2 py-0.5 rounded-full font-bold uppercase tracking-wider text-[8px] ${c.status === 'active' ? 'bg-green-50 text-green-600' : 'bg-red-50 text-red-600'}">${c.status}</span>
+          </td>
+          <td class="p-4 text-textSecondary font-medium">${c.trial_end ? new Date(c.trial_end).toLocaleDateString() : 'N/A'}</td>
+          <td class="p-4 text-right">
+            <button onclick="openManageModal('${c.id}', '${c.organization || ''}', '${c.plan}')" class="text-brandOrange hover:underline text-[9px] font-bold">Manage Profile</button>
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    window.filterCustomers = function() {
+      const query = document.getElementById('cust-search').value.toLowerCase();
+      const plan = document.getElementById('cust-filter-plan').value;
+      const status = document.getElementById('cust-filter-status').value;
+
+      const filtered = customersList.filter(c => {
+        const matchSearch = c.email.toLowerCase().includes(query) || (c.company && c.company.toLowerCase().includes(query)) || (c.full_name && c.full_name.toLowerCase().includes(query));
+        const matchPlan = plan === "" || c.plan === plan;
+        const matchStatus = status === "" || c.status === status;
+        return matchSearch && matchPlan && matchStatus;
+      });
+
+      renderCustomers(filtered);
+    };
+
+    window.openManageModal = function(id, org, activePlan) {
+      document.getElementById('manage-cust-id').value = id;
+      document.getElementById('manage-cust-org').value = org;
+      document.getElementById('manage-plan-select').value = activePlan;
+      document.getElementById('control-modal-backdrop').classList.remove('hidden');
+    };
+
+    // Submit Manage changes
+    document.getElementById('control-subscription-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const id = document.getElementById('manage-cust-id').value;
+      const org = document.getElementById('manage-cust-org').value;
+      const selectedPlan = document.getElementById('manage-plan-select').value;
+      const trialDays = Number(document.getElementById('manage-trial-days').value) || 0;
+      const action = document.getElementById('manage-action-select').value;
+
+      try {
+        // 1. Update Profile Plan
+        const updates = {
+          plan: selectedPlan,
+          updated_at: new Date().toISOString()
+        };
+
+        if (trialDays > 0) {
+          const newTrialDate = new Date();
+          newTrialDate.setDate(newTrialDate.getDate() + trialDays);
+          updates.trial_end = newTrialDate.toISOString();
+        }
+
+        if (action !== 'none') {
+          updates.status = action === 'suspended' ? 'suspended' : 'active';
+        }
+
+        const { error: profileErr } = await supabase
+          .from('profiles')
+          .update(updates)
+          .eq('id', id);
+
+        if (profileErr) throw profileErr;
+
+        // 2. Update subscription table if organization exists
+        if (org) {
+          const subUpdates = {
+            plan: selectedPlan,
+            updated_at: new Date().toISOString()
+          };
+
+          if (action === 'cancelled') {
+            subUpdates.status = 'CANCELLED';
+          } else if (action === 'active') {
+            subUpdates.status = 'ACTIVE';
+          }
+
+          await supabase
+            .from('subscriptions')
+            .update(subUpdates)
+            .eq('organization_id', org);
+        }
+
+        // Add Log
+        await supabase.from('payment_logs').insert({
+          user_id: id,
+          action: "Admin Action",
+          details: { admin_action: "Sub modified", new_plan: selectedPlan }
+        });
+
+        showNotification("Customer subscription modified successfully.", "success");
+        document.getElementById('control-modal-backdrop').classList.add('hidden');
+        
+        await fetchCustomers();
+
+      } catch (err) {
+        showNotification("Failed to modify customer subscription.", "error");
+        console.error(err);
+      }
+    });
+
+    // 3. Fetch Payments
+    async function fetchPayments() {
+      try {
+        const { data: payments } = await supabase
+          .from('payments')
+          .select('*, profiles(email)');
+
+        paymentsList = payments || [];
+        renderPayments(paymentsList);
+
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    function renderPayments(list) {
+      const tbody = document.querySelector('#payments-table tbody');
+      tbody.innerHTML = '';
+
+      if (list.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-textSecondary">No payments recorded.</td></tr>`;
+        return;
+      }
+
+      list.forEach(p => {
+        const row = document.createElement('tr');
+        row.className = "border-b border-borderColor/60 hover:bg-neutral-50/50";
+        row.innerHTML = `
+          <td class="p-4 font-bold text-textPrimary">
+            <div>${p.order_id}</div>
+            <div class="text-[8px] text-textSecondary mt-0.5">${p.profiles?.email || 'N/A'}</div>
+          </td>
+          <td class="p-4">
+            <span class="font-bold text-textPrimary">${p.plan}</span>
+            <div class="text-[8px] text-textSecondary mt-0.5">${p.payment_provider} / ${p.payment_method || 'UPI/Card'}</div>
+          </td>
+          <td class="p-4 font-bold text-textPrimary">$${Number(p.amount).toFixed(2)}</td>
+          <td class="p-4">
+            <span class="px-2 py-0.5 rounded-full font-bold uppercase tracking-wider text-[8px] ${p.payment_status === 'SUCCESSFUL' || p.payment_status === 'PAID' ? 'bg-green-50 text-green-600' : 'bg-red-50 text-red-600'}">${p.payment_status}</span>
+          </td>
+          <td class="p-4 text-textSecondary font-medium">${new Date(p.created_at).toLocaleDateString()}</td>
+          <td class="p-4 text-right">
+            ${p.payment_status === 'SUCCESSFUL' || p.payment_status === 'PAID' ? `
+              <button onclick="refundTransaction('${p.order_id}', '${p.user_id}', ${p.amount})" class="text-danger hover:underline text-[9px] font-bold">Initiate Refund</button>
+            ` : `<span class="text-textSecondary/40 text-[9px]">N/A</span>`}
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    // Refund initiation
+    window.refundTransaction = async function(orderId, userId, amount) {
+      if (!confirm(`Are you sure you want to refund order #${orderId} of value $${amount}?`)) return;
+
+      try {
+        // Mark payment refunded
+        const { error: payErr } = await supabase
+          .from('payments')
+          .update({ payment_status: 'REFUNDED' })
+          .eq('order_id', orderId);
+
+        if (payErr) throw payErr;
+
+        // Downgrade customer profile plan
+        await supabase
+          .from('profiles')
+          .update({ plan: 'FREE TRIAL' })
+          .eq('id', userId);
+
+        // Add Log
+        await supabase.from('payment_logs').insert({
+          user_id: userId,
+          action: "Refund Completed",
+          details: { order_id: orderId, amount }
+        });
+
+        showNotification("Refund successfully processed and logs updated.", "success");
+        
+        await fetchPayments();
+        await fetchFinancials();
+        await fetchLogs();
+
+      } catch (err) {
+        showNotification("Failed to initiate refund.", "error");
+        console.error(err);
+      }
+    };
+
+    // 4. Audit Logs
+    async function fetchLogs() {
+      try {
+        const { data: logs } = await supabase
+          .from('payment_logs')
+          .select('*')
+          .order('created_at', { ascending: false })
+          .limit(50);
+
+        const container = document.getElementById('logs-container');
+        container.innerHTML = '';
+
+        if (!logs || logs.length === 0) {
+          container.innerHTML = `<div class="text-textSecondary">No system audit logs found.</div>`;
+          return;
+        }
+
+        logs.forEach(l => {
+          const logDiv = document.createElement('div');
+          logDiv.className = "py-1.5 border-b border-borderColor/20 last:border-0 flex justify-between";
+          logDiv.innerHTML = `
+            <span>[${new Date(l.created_at).toLocaleString()}] <b class="text-brandOrange">${l.action}</b> — ${JSON.stringify(l.details)}</span>
+          `;
+          container.appendChild(logDiv);
+        });
+
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    // 5. Founding Campaign Details
+    async function fetchFoundingCampaign() {
+      try {
+        // Fetch coupon code details to update claimed counter
+        const { data: coupon } = await supabase
+          .from('coupon_codes')
+          .select('*')
+          .eq('code', 'AEGIRION100')
+          .maybeSingle();
+
+        if (coupon) {
+          const remaining = coupon.max_redemptions - coupon.current_redemptions;
+          document.getElementById('admin-founding-claimed').textContent = `${coupon.current_redemptions} / ${coupon.max_redemptions} Claimed (Remaining: ${remaining})`;
+        }
+
+        // Fetch redemptions from coupon_redemptions table joined with profiles/subscriptions
+        const { data: redemptions, error } = await supabase
+          .from('coupon_redemptions')
+          .select('*, profiles(email, full_name, plan), subscriptions(plan, billing_cycle, status, created_at, discount_amount)')
+          .order('redeemed_at', { ascending: false });
+
+        const tbody = document.querySelector('#founding-table tbody');
+        tbody.innerHTML = '';
+
+        if (!redemptions || redemptions.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="8" class="p-3 text-center text-textSecondary">No founding customer redemptions recorded yet.</td></tr>`;
+          return;
+        }
+
+        redemptions.forEach(r => {
+          const profile = r.profiles || {};
+          const sub = r.subscriptions || {};
+          
+          const row = document.createElement('tr');
+          row.className = "border-b border-borderColor/60 hover:bg-neutral-50/50";
+          row.innerHTML = `
+            <td class="p-3">
+              <div class="font-bold text-textPrimary">${profile.full_name || 'Enterprise Client'}</div>
+              <div class="text-[8px] text-textSecondary">${profile.email || 'N/A'}</div>
+            </td>
+            <td class="p-3 font-bold text-textPrimary">${sub.plan || profile.plan || 'Professional'}</td>
+            <td class="p-3 uppercase font-bold text-[9px]">${sub.billing_cycle || 'yearly'}</td>
+            <td class="p-3 font-bold text-brandOrange font-mono">AEGIRION100</td>
+            <td class="p-3 text-success font-bold">$${Number(r.discount_amount || 0).toFixed(2)}</td>
+            <td class="p-3"><span class="px-2 py-0.5 rounded-full font-bold uppercase tracking-wider text-[8px] bg-green-50 text-green-600">PAID</span></td>
+            <td class="p-3"><span class="px-2 py-0.5 rounded-full font-bold uppercase tracking-wider text-[8px] bg-blue-50 text-blue-600">${sub.status || 'ACTIVE'}</span></td>
+            <td class="p-3 text-textSecondary font-medium">${new Date(r.redeemed_at).toLocaleDateString()}</td>
+          `;
+          tbody.appendChild(row);
+        });
+      } catch (err) {
+        console.error("Failed to fetch founding campaign stats:", err);
+      }
+    }
+  </script>
+</body>
+</html>

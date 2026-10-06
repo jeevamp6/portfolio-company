@@ -1,0 +1,1832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aegrion | Enterprise Cybersecurity & Digital Infrastructure</title>
+  <meta name="description" content="Aegrion provides enterprise cybersecurity, infrastructure protection, continuous monitoring and intelligent security operations.">
+  <meta name="keywords" content="cybersecurity, cloud security, SOC, threat detection, digital infrastructure, enterprise SaaS, Aegrion">
+  <!-- OpenGraph -->
+  <meta property="og:title" content="Aegrion | Enterprise Cybersecurity & Digital Infrastructure">
+  <meta property="og:description" content="Aegrion provides enterprise cybersecurity, infrastructure protection, continuous monitoring and intelligent security operations.">
+  <meta property="og:type" content="website">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/logo.png">
+  <link rel="shortcut icon" href="/logo.png" type="image/x-icon">
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Tailwind CSS Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brandOrange: '#F48120',
+            darkOrange: '#E66A00',
+            lightOrange: '#FFA640',
+            softOrange: '#FFF4EA',
+            warmWhite: '#FFF8F2',
+            bgPrimary: '#FFFFFF',
+            textPrimary: '#111111',
+            textSecondary: '#5F6368',
+            borderColor: '#E9E9E9',
+            success: '#28A745',
+            error: '#D92D20',
+            footerNavy: '#17122A',
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          maxWidth: {
+            '1320': '1320px',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Mobile nav compatibility overrides */
+    @media (max-width: 1023px) {
+      #nav-menu {
+        display: none;
+        position: fixed;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        background: #FFFFFF;
+        border-bottom: 1px solid #E9E9E9;
+        padding: 2rem;
+        z-index: 49;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+      }
+      #nav-menu.active {
+        display: block;
+      }
+      #nav-menu ul {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body class="bg-white text-textPrimary antialiased">
+
+  <!-- Premium Preloader -->
+  <div id="preloader">
+    <div class="preloader-content">
+      <img src="/logo.png" alt="Aegrion Security Logo" class="preloader-logo">
+      <div class="preloader-bar-container">
+        <div class="preloader-bar"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dynamic Aurora Background Canvas (Hidden via style.css) -->
+  <canvas id="aurora-canvas"></canvas>
+
+  <!-- Sticky Header Navigation -->
+  <header id="main-header" class="sticky top-0 z-50 h-[80px] bg-white border-b border-[#E9E9E9] transition-all duration-300 w-full shadow-none">
+    <div class="max-w-[1320px] mx-auto px-8 h-full flex items-center justify-between">
+      <!-- Left Section -->
+      <div class="flex items-center lg:w-[266px] xl:w-[338px] flex-shrink-0">
+        <a href="index.html" class="flex items-center" aria-label="Aegrion Security Home">
+          <img src="/logo.png" alt="Aegrion Security Logo" class="brand-logo w-[170px] h-auto object-contain">
+        </a>
+      </div>
+      
+      <!-- Center Section -->
+      <nav id="nav-menu" class="hidden lg:flex items-center justify-center flex-1">
+        <ul class="flex items-center gap-[32px] xl:gap-[48px] text-[16px] font-medium text-[#4B5563]">
+          <li><a href="index.html#home" class="hover:text-brandOrange transition-colors duration-200">Platform</a></li>
+          <li><a href="index.html#solutions" class="hover:text-brandOrange transition-colors duration-200">Solutions</a></li>
+          <li><a href="index.html#updates" class="hover:text-brandOrange transition-colors duration-200">Products</a></li>
+          <li><a href="index.html#services" class="hover:text-brandOrange transition-colors duration-200">Resources</a></li>
+          <li><a href="index.html#about" class="hover:text-brandOrange transition-colors duration-200">Company</a></li>
+          <li><a href="index.html#careers" class="hover:text-brandOrange transition-colors duration-200">Careers</a></li>
+        </ul>
+      </nav>
+      
+      <!-- Right Section (Desktop) -->
+      <div class="hidden lg:flex items-center justify-end gap-4 lg:w-[266px] xl:w-[338px] ml-auto flex-shrink-0 header-actions">
+        <a href="login.html" class="login-link flex items-center justify-center h-[42px] px-6 text-[15px] font-semibold text-[#17122A] bg-transparent border border-[#DADDE3] rounded-full hover:bg-[#F7F8FA] hover:border-brandOrange hover:text-brandOrange focus:ring-2 focus:ring-brandOrange/40 focus:outline-none active:bg-[#ECEEF2] transition-all duration-200 cursor-pointer">Login</a>
+        <a href="index.html#contact" class="flex items-center justify-center h-12 px-8 text-[15px] font-medium text-white bg-brandOrange rounded-full hover:bg-darkOrange transition-all duration-200">Book Demo</a>
+      </div>
+
+      <!-- Right Section (Tablet/Mobile controls) -->
+      <div class="flex items-center lg:hidden">
+        <a href="login.html" class="login-link flex items-center justify-center h-[36px] px-4 text-sm font-semibold text-[#17122A] bg-transparent border border-[#DADDE3] rounded-full hover:bg-[#F7F8FA] hover:border-brandOrange hover:text-brandOrange focus:ring-2 focus:ring-brandOrange/40 focus:outline-none active:bg-[#ECEEF2] transition-all duration-200 cursor-pointer mr-3">Login</a>
+        <a href="index.html#contact" class="hidden md:inline-flex items-center justify-center h-10 px-5 text-sm font-semibold text-white bg-brandOrange rounded-full hover:bg-darkOrange transition-all duration-200 mr-4">Book Demo</a>
+        <button class="menu-toggle flex flex-col gap-1.5 justify-center items-end w-8 h-8 focus:outline-none" aria-label="Toggle Menu">
+          <span class="w-6 h-0.5 bg-textPrimary transition-transform duration-200"></span>
+          <span class="w-5 h-0.5 bg-textPrimary transition-transform duration-200"></span>
+          <span class="w-6 h-0.5 bg-textPrimary transition-transform duration-200"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="home" class="animate-section bg-gradient-to-br from-brandOrange via-secondaryOrange to-[#FFBE5C] text-white py-[120px] relative overflow-hidden w-full">
+    <div class="max-w-[1320px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+      <div class="hero-content flex flex-col items-start lg:col-span-7">
+        <div class="tagline-badge inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-sm font-semibold tracking-wide uppercase mb-6">
+          <span class="pulse-dot w-2.5 h-2.5 bg-white rounded-full animate-pulse"></span> Securing Tomorrow's Digital Infrastructure
+        </div>
+        <h1 class="hero-title text-[38px] sm:text-[48px] md:text-[56px] lg:text-[64px] xl:text-[72px] font-black leading-[1.05] tracking-[-0.04em] mb-6 text-white max-w-full animate-fade-up">
+          Enterprise Cybersecurity Built for the
+          <div id="dynamic-keyword-container" class="block relative w-full mt-2 overflow-visible no-underline border-none">
+            <span class="invisible select-none pointer-events-none font-black leading-[1.2] whitespace-normal block">Modern Enterprise.</span>
+            <span id="dynamic-keyword" class="absolute left-0 top-0 w-full text-transparent bg-clip-text bg-gradient-to-r from-white to-[#FFF4EA] font-black leading-[1.2] whitespace-normal block">Cloud Era.</span>
+          </div>
+        </h1>
+        <p class="hero-subtitle text-lg sm:text-xl text-white/90 mb-8 leading-relaxed max-w-[600px] animate-fade-up delay-150">
+          Protect your business with AI-powered security operations, cloud security, continuous monitoring, and modern cyber defense. Engineered for modern, resilient digital architecture.
+        </p>
+        <div class="hero-actions flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+          <a href="#contact" class="px-8 py-4 rounded-full text-brandOrange bg-white hover:bg-softOrange font-semibold shadow-lg hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 text-center animate-fade-up delay-300">Book a Consultation</a>
+          <a href="#solutions" class="px-8 py-4 rounded-full text-white border border-white hover:bg-white/10 font-semibold hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 text-center animate-fade-up delay-450">Explore Solutions</a>
+        </div>
+      </div>
+      
+      <!-- Premium Metrics Illustration -->
+      <div class="hero-visual-container w-full lg:col-span-5 transition-transform duration-300 ease-out">
+        <div class="relative w-full aspect-[4/3] bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 p-6 shadow-2xl flex flex-col gap-6 hero-float-ill">
+          <!-- Dashboard Header -->
+          <div class="flex items-center justify-between border-b border-white/15 pb-4">
+            <div class="flex items-center gap-2">
+              <span class="w-3 h-3 rounded-full bg-white/30"></span>
+              <span class="w-3 h-3 rounded-full bg-white/30"></span>
+              <span class="w-3 h-3 rounded-full bg-white/30"></span>
+            </div>
+            <div class="text-xs sm:text-sm font-semibold text-white/80">Aegrion Cloud Portal</div>
+          </div>
+          <!-- Metrics Cards Grid -->
+          <div class="grid grid-cols-3 gap-4">
+            <div class="bg-white/15 rounded-xl p-4 border border-white/10 flex flex-col gap-1">
+              <span class="text-[10px] sm:text-xs text-white/70 uppercase font-semibold">Active Nodes</span>
+              <span class="text-xl sm:text-2xl font-bold">1,248</span>
+            </div>
+            <div class="bg-white/15 rounded-xl p-4 border border-white/10 flex flex-col gap-1">
+              <span class="text-[10px] sm:text-xs text-white/70 uppercase font-semibold">Scan Rate</span>
+              <span class="text-xl sm:text-2xl font-bold">99.98%</span>
+            </div>
+            <div class="bg-white/15 rounded-xl p-4 border border-white/10 flex flex-col gap-1">
+              <span class="text-[10px] sm:text-xs text-white/70 uppercase font-semibold">Threats Blocked</span>
+              <span class="text-xl sm:text-2xl font-bold text-white">0</span>
+            </div>
+          </div>
+          <!-- Graph Mockup -->
+          <div class="flex-1 bg-white/5 rounded-xl p-4 border border-white/10 flex flex-col gap-2 justify-end">
+            <div class="flex justify-between items-end gap-1.5 h-full pt-4">
+              <div class="w-full bg-white/20 rounded-t-sm h-[40%]"></div>
+              <div class="w-full bg-white/20 rounded-t-sm h-[60%]"></div>
+              <div class="w-full bg-white/20 rounded-t-sm h-[50%]"></div>
+              <div class="w-full bg-white/30 rounded-t-sm h-[75%]"></div>
+              <div class="w-full bg-white/45 rounded-t-sm h-[90%]"></div>
+              <div class="w-full bg-white/60 rounded-t-sm h-[85%]"></div>
+              <div class="w-full bg-white rounded-t-sm h-[100%]"></div>
+            </div>
+            <div class="flex justify-between text-[9px] sm:text-[10px] text-white/60 font-medium mt-1">
+              <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="animate-section bg-white py-[120px] w-full">
+    <div class="max-w-[1320px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <div class="about-content flex flex-col items-start">
+        <span class="section-tag text-[14px] font-bold tracking-wider text-brandOrange uppercase mb-3 block">About Aegrion</span>
+        <h2 class="section-title text-3xl sm:text-4xl lg:text-[48px] font-bold text-textPrimary leading-[1.15] mb-6">Engineering Security for the Modern Enterprise</h2>
+        <p class="about-desc text-lg text-textSecondary mb-8 leading-relaxed">
+          Aegrion Security helps organizations protect their digital infrastructure through proactive security services, cloud-native architecture, security operations, and continuous monitoring. We architect resilient systems that scale securely with your cloud demands.
+        </p>
+        <div class="about-features flex flex-col gap-6 w-full">
+          <div class="flex gap-4">
+            <div class="w-12 h-12 rounded-xl bg-softOrange text-brandOrange flex items-center justify-center flex-shrink-0"><i data-lucide="shield-check"></i></div>
+            <div>
+              <h4 class="text-xl font-bold text-textPrimary mb-1">Zero Trust Architecture</h4>
+              <p class="text-textSecondary leading-relaxed">Never trust, always verify. We integrate deep micro-segmentation across workloads.</p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <div class="w-12 h-12 rounded-xl bg-softOrange text-brandOrange flex items-center justify-center flex-shrink-0"><i data-lucide="cpu"></i></div>
+            <div>
+              <h4 class="text-xl font-bold text-textPrimary mb-1">AI-Assisted Operations</h4>
+              <p class="text-textSecondary leading-relaxed">Machine-speed filtering and signal processing reduces alert noise by over 90%.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Premium Outline Illustration -->
+      <div class="about-illustration w-full flex items-center justify-center">
+        <div class="w-full max-w-[450px] aspect-square rounded-[20px] bg-warmWhite border border-borderColor p-8 flex items-center justify-center relative shadow-[0_8px_24px_rgba(0,0,0,0.02)]">
+          <svg viewBox="0 0 400 400" width="100%" height="100%" class="cloud-ill-svg">
+            <circle cx="200" cy="200" r="130" fill="none" stroke="#E9E9E9" stroke-width="2" stroke-dasharray="8 8" />
+            <circle cx="200" cy="200" r="90" fill="none" stroke="#E9E9E9" stroke-width="1.5" />
+            
+            <path d="M 200 200 L 100 130" stroke="#F48120" stroke-width="2" stroke-dasharray="4 4" />
+            <path d="M 200 200 L 300 130" stroke="#F48120" stroke-width="2" stroke-dasharray="4 4" />
+            <path d="M 200 200 L 110 270" stroke="#F48120" stroke-width="2" stroke-dasharray="4 4" />
+            <path d="M 200 200 L 290 270" stroke="#F48120" stroke-width="2" stroke-dasharray="4 4" />
+
+            <circle cx="200" cy="200" r="30" fill="#FFFFFF" stroke="#F48120" stroke-width="3" />
+            <g transform="translate(188,188)">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F48120" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield"><path d="M20 13c0 5-3.5 7.5-7.66 9.7a1 1 0 0 1-.68 0C7.5 20.5 4 18 4 13V6a1 1 0 0 1 .76-.97l8.25-2.25a1 1 0 0 1 .53 0l8.25 2.25A1 1 0 0 1 20 6Z"/></svg>
+            </g>
+
+            <g transform="translate(76, 106)">
+              <circle cx="24" cy="24" r="24" fill="#FFFFFF" stroke="#E9E9E9" stroke-width="1.5" />
+              <g transform="translate(12,12)">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#5F6368" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-cloud"><path d="M17.5 19A3.5 3.5 0 0 0 21 15.5c0-2.79-2.54-4.5-5-4.5-.42-1.89-1.72-3-3.5-3-2.67 0-4.5 2.15-4.5 4.75 0 .25.02.5.06.75-2.33.35-4.06 2.33-4.06 4.75A3.5 3.5 0 0 0 7.5 19Z"/></svg>
+              </g>
+            </g>
+            <g transform="translate(276, 106)">
+              <circle cx="24" cy="24" r="24" fill="#FFFFFF" stroke="#E9E9E9" stroke-width="1.5" />
+              <g transform="translate(12,12)">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#5F6368" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-server"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"/><rect width="20" height="8" x="2" y="14" rx="2" ry="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/></svg>
+              </g>
+            </g>
+            <g transform="translate(86, 246)">
+              <circle cx="24" cy="24" r="24" fill="#FFFFFF" stroke="#E9E9E9" stroke-width="1.5" />
+              <g transform="translate(12,12)">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#5F6368" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-fingerprint"><path d="M12 10a2 2 0 0 0-2 2c0 .99-.8 1.6-1.8 1.8A5 5 0 0 0 18 12c0-2.2-1.8-4-4-4S10 9.8 10 12c0 .6-.4 1-1 1s-1-.4-1-1a6 6 0 0 1 12 0c0 1.2-.8 2.2-1.9 2.4A7 7 0 0 1 5 12a7 7 0 0 1 14 0c0 1.8-1.2 3.2-2.9 3.5M12 2a10 10 0 0 0-10 10c0 2.2.8 4.2 2.1 5.7M20.2 16.5A10 10 0 0 0 12 4"/></svg>
+              </g>
+            </g>
+            <g transform="translate(266, 246)">
+              <circle cx="24" cy="24" r="24" fill="#FFFFFF" stroke="#E9E9E9" stroke-width="1.5" />
+              <g transform="translate(12,12)">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#5F6368" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-activity"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+              </g>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Our Approach Section -->
+  <section id="approach" class="animate-section bg-warmWhite py-[120px] w-full">
+    <div class="max-w-[1320px] mx-auto px-6">
+      <div class="section-header text-center flex flex-col items-center mb-16">
+        <span class="section-tag text-[14px] font-bold tracking-wider text-brandOrange uppercase mb-3 block">Methodology</span>
+        <h2 class="section-title text-3xl sm:text-4xl lg:text-[48px] font-bold text-textPrimary leading-[1.15] mb-6">Our Security Approach</h2>
+        <p class="section-subtitle text-lg text-textSecondary max-w-700 leading-relaxed">A continuous engineering lifecycle that builds resilience and protects enterprise environments.</p>
+      </div>
+
+      <div class="interactive-work-timeline">
+        <div class="work-connector-line"></div>
+        
+        <div class="work-step active" id="step-discover">
+          <div class="step-num">01</div>
+          <div class="step-card">
+            <h3>Discover</h3>
+            <p>Auto-discover your assets, networks, and cloud boundaries to form a comprehensive digital map.</p>
+          </div>
+        </div>
+
+        <div class="work-step" id="step-assess">
+          <div class="step-num">02</div>
+          <div class="step-card">
+            <h3>Assess</h3>
+            <p>Identify architectural vulnerabilities, compliance gaps, and active misconfigurations.</p>
+          </div>
+        </div>
+
+        <div class="work-step" id="step-protect">
+          <div class="step-num">03</div>
+          <div class="step-card">
+            <h3>Protect</h3>
+            <p>Deploy zero-trust microsegmentation controls, MFA assertions, and secure configurations.</p>
+          </div>
+        </div>
+
+        <div class="work-step" id="step-monitor">
+          <div class="step-num">04</div>
+          <div class="step-card">
+            <h3>Monitor</h3>
+            <p>Continuous AI-assisted analysis and telemetry monitoring running 24/7 across hosts and endpoints.</p>
+          </div>
+        </div>
+
+        <div class="work-step" id="step-respond">
+          <div class="step-num">05</div>
+          <div class="step-card">
+            <h3>Respond</h3>
+            <p>Automated playbooks isolate and mitigate active threats at speed, guided by expert analysts.</p>
+          </div>
+        </div>
+
+        <div class="work-step" id="step-improve">
+          <div class="step-num">06</div>
+          <div class="step-card">
+            <h3>Improve</h3>
+            <p>Continuous review and posture enhancement cycles loop back feedback into your environments.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Choose Us -->
+  <section class="why-choose-section animate-section bg-white py-[120px] w-full">
+    <div class="max-w-[1320px] mx-auto px-6">
+      <div class="section-header text-center flex flex-col items-center mb-16">
+        <span class="section-tag text-[14px] font-bold tracking-wider text-brandOrange uppercase mb-3 block">Engineering Quality</span>
+        <h2 class="section-title text-3xl sm:text-4xl lg:text-[48px] font-bold text-textPrimary leading-[1.15] mb-6">Why Organizations Choose Aegrion</h2>
+        <p class="section-subtitle text-lg text-textSecondary max-w-700 leading-relaxed">We construct modern security defenses backed by transparent operations and technical expertise.</p>
+      </div>
+
+      <div class="why-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="why-card bg-white rounded-[20px] border border-borderColor p-8 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-4">
+          <div class="why-icon text-brandOrange"><i data-lucide="clock" class="w-8 h-8"></i></div>
+          <h3 class="text-xl font-bold text-textPrimary">24×7 Security Operations</h3>
+          <p class="text-textSecondary leading-relaxed text-sm">Continuous threat surveillance and signal correlation running around the clock, without exceptions.</p>
+        </div>
+        <div class="why-card bg-white rounded-[20px] border border-borderColor p-8 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-4">
+          <div class="why-icon text-brandOrange"><i data-lucide="cloud" class="w-8 h-8"></i></div>
+          <h3 class="text-xl font-bold text-textPrimary">Cloud Native Security</h3>
+          <p class="text-textSecondary leading-relaxed text-sm">Architected natively to shield container layers, microservices, and multi-cloud endpoints.</p>
+        </div>
+        <div class="why-card bg-white rounded-[20px] border border-borderColor p-8 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-4">
+          <div class="why-icon text-brandOrange"><i data-lucide="cpu" class="w-8 h-8"></i></div>
+          <h3 class="text-xl font-bold text-textPrimary">AI-Assisted Detection</h3>
+          <p class="text-textSecondary leading-relaxed text-sm">Integrating intelligence systems to isolate critical alerts from background network noise.</p>
+        </div>
+        <div class="why-card bg-white rounded-[20px] border border-borderColor p-8 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-4">
+          <div class="why-icon text-brandOrange"><i data-lucide="zap" class="w-8 h-8"></i></div>
+          <h3 class="text-xl font-bold text-textPrimary">Rapid Incident Response</h3>
+          <p class="text-textSecondary leading-relaxed text-sm">Fusing playbooks and specialized engineering to contain active system compromises in minutes.</p>
+        </div>
+        <div class="why-card bg-white rounded-[20px] border border-borderColor p-8 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-4">
+          <div class="why-icon text-brandOrange"><i data-lucide="users" class="w-8 h-8"></i></div>
+          <h3 class="text-xl font-bold text-textPrimary">Enterprise Consulting</h3>
+          <p class="text-textSecondary leading-relaxed text-sm">Expert advisory teams leading threat modeling reviews, posture mapping, and gap assessments.</p>
+        </div>
+        <div class="why-card bg-white rounded-[20px] border border-borderColor p-8 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-4">
+          <div class="why-icon text-brandOrange"><i data-lucide="shield-check" class="w-8 h-8"></i></div>
+          <h3 class="text-xl font-bold text-textPrimary">Zero Trust Architecture</h3>
+          <p class="text-textSecondary leading-relaxed text-sm">Constructing multi-layer credential assertions and micro-segmentation blocks inside parameters.</p>
+        </div>
+        <div class="why-card bg-white rounded-[20px] border border-borderColor p-8 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-4">
+          <div class="why-icon text-brandOrange"><i data-lucide="scroll" class="w-8 h-8"></i></div>
+          <h3 class="text-xl font-bold text-textPrimary">Compliance Expertise</h3>
+          <p class="text-textSecondary leading-relaxed text-sm">Assuring fast readiness alignments against SOC 2, HIPAA, GDPR, and PCI-DSS parameters.</p>
+        </div>
+        <div class="why-card bg-white rounded-[20px] border border-borderColor p-8 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-4">
+          <div class="why-icon text-brandOrange"><i data-lucide="binary" class="w-8 h-8"></i></div>
+          <h3 class="text-xl font-bold text-textPrimary">Security Engineering</h3>
+          <p class="text-textSecondary leading-relaxed text-sm">Integrating scanning checks directly inside developer CI/CD pipelines beforehand.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Solutions Section -->
+  <section id="solutions" class="solutions-section animate-section bg-white py-[120px] w-full">
+    <div class="max-w-[1320px] mx-auto px-6">
+      <div class="section-header text-center flex flex-col items-center mb-12">
+        <span class="section-tag text-[14px] font-bold tracking-wider text-brandOrange uppercase mb-3 block">Tailored Architecture</span>
+        <h2 class="section-title text-3xl sm:text-4xl lg:text-[48px] font-bold text-textPrimary leading-[1.15] mb-6">Solutions Built for Your Scale</h2>
+        <p class="section-subtitle text-lg text-textSecondary max-w-700 leading-relaxed mb-8">Pick your profile to see how Aegrion secures your operations.</p>
+        
+        <!-- Tab Selector -->
+        <div class="solutions-tabs flex items-center justify-center p-1 bg-warmWhite rounded-full border border-borderColor mb-8">
+          <button class="tab-btn active px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 [&.active]:bg-brandOrange [&.active]:text-white text-textSecondary" data-target="scale-group">Scale Segment</button>
+          <button class="tab-btn px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 [&.active]:bg-brandOrange [&.active]:text-white text-textSecondary" data-target="industry-group">Verticals</button>
+        </div>
+
+        <!-- Subtabs Grid -->
+        <div class="solutions-filters w-full flex justify-center" id="solutions-subtabs">
+          <!-- Scale Segment Subtabs -->
+          <div class="filter-group active flex flex-wrap justify-center gap-3 [&:not(.active)]:hidden" id="scale-group">
+            <button class="subtab-btn active px-5 py-2 rounded-full text-sm border border-borderColor hover:border-brandOrange hover:bg-softOrange transition-all duration-200 font-medium [&.active]:bg-brandOrange [&.active]:text-white [&.active]:border-brandOrange text-textSecondary" data-solution="startups">Startups</button>
+            <button class="subtab-btn px-5 py-2 rounded-full text-sm border border-borderColor hover:border-brandOrange hover:bg-softOrange transition-all duration-200 font-medium [&.active]:bg-brandOrange [&.active]:text-white [&.active]:border-brandOrange text-textSecondary" data-solution="smbs">SMBs</button>
+            <button class="subtab-btn px-5 py-2 rounded-full text-sm border border-borderColor hover:border-brandOrange hover:bg-softOrange transition-all duration-200 font-medium [&.active]:bg-brandOrange [&.active]:text-white [&.active]:border-brandOrange text-textSecondary" data-solution="enterprises">Enterprises</button>
+          </div>
+          <!-- Verticals Subtabs -->
+          <div class="filter-group flex flex-wrap justify-center gap-3 [&:not(.active)]:hidden" id="industry-group">
+            <button class="subtab-btn px-5 py-2 rounded-full text-sm border border-borderColor hover:border-brandOrange hover:bg-softOrange transition-all duration-200 font-medium [&.active]:bg-brandOrange [&.active]:text-white [&.active]:border-brandOrange text-textSecondary" data-solution="healthcare">Healthcare</button>
+            <button class="subtab-btn px-5 py-2 rounded-full text-sm border border-borderColor hover:border-brandOrange hover:bg-softOrange transition-all duration-200 font-medium [&.active]:bg-brandOrange [&.active]:text-white [&.active]:border-brandOrange text-textSecondary" data-solution="finance">Finance</button>
+            <button class="subtab-btn px-5 py-2 rounded-full text-sm border border-borderColor hover:border-brandOrange hover:bg-softOrange transition-all duration-200 font-medium [&.active]:bg-brandOrange [&.active]:text-white [&.active]:border-brandOrange text-textSecondary" data-solution="education">Education</button>
+            <button class="subtab-btn px-5 py-2 rounded-full text-sm border border-borderColor hover:border-brandOrange hover:bg-softOrange transition-all duration-200 font-medium [&.active]:bg-brandOrange [&.active]:text-white [&.active]:border-brandOrange text-textSecondary" data-solution="retail">Retail</button>
+            <button class="subtab-btn px-5 py-2 rounded-full text-sm border border-borderColor hover:border-brandOrange hover:bg-softOrange transition-all duration-200 font-medium [&.active]:bg-brandOrange [&.active]:text-white [&.active]:border-brandOrange text-textSecondary" data-solution="manufacturing">Manufacturing</button>
+            <button class="subtab-btn px-5 py-2 rounded-full text-sm border border-borderColor hover:border-brandOrange hover:bg-softOrange transition-all duration-200 font-medium [&.active]:bg-brandOrange [&.active]:text-white [&.active]:border-brandOrange text-textSecondary" data-solution="government">Government</button>
+            <button class="subtab-btn px-5 py-2 rounded-full text-sm border border-borderColor hover:border-brandOrange hover:bg-softOrange transition-all duration-200 font-medium [&.active]:bg-brandOrange [&.active]:text-white [&.active]:border-brandOrange text-textSecondary" data-solution="technology">Technology</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Solutions Display Card -->
+      <div class="bg-white rounded-[20px] border border-borderColor p-8 lg:p-12 shadow-[0_8px_24px_rgba(0,0,0,0.05)] transition-all duration-300" id="solution-display-card">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div class="sol-detail-left flex flex-col items-start">
+            <div class="px-3 py-1 rounded bg-softOrange text-brandOrange font-bold text-xs tracking-wider uppercase mb-4" id="sol-type-badge">ENTERPRISE SCALE</div>
+            <h3 class="text-3xl font-bold text-textPrimary mb-4" id="sol-display-title">Startups</h3>
+            <p class="text-textSecondary leading-relaxed mb-6 text-lg" id="sol-display-desc">
+              Fast-moving startups need frictionless compliance and API integrations. We secure your deployment paths without slowing down releases.
+            </p>
+            <ul class="flex flex-col gap-4 text-textSecondary leading-relaxed mb-8 w-full" id="sol-display-list">
+              <li class="flex items-center gap-2 text-[15px]"><i data-lucide="check-circle" class="text-success w-5 h-5 flex-shrink-0"></i> Continuous SOC 2 automated readiness mapping</li>
+              <li class="flex items-center gap-2 text-[15px]"><i data-lucide="check-circle" class="text-success w-5 h-5 flex-shrink-0"></i> API-driven cloud perimeter enforcement</li>
+              <li class="flex items-center gap-2 text-[15px]"><i data-lucide="check-circle" class="text-success w-5 h-5 flex-shrink-0"></i> Lightweight DevSecOps pipelines integrations</li>
+            </ul>
+            <a href="#contact" class="px-6 py-3 rounded-full text-white bg-brandOrange hover:bg-darkOrange font-medium hover:-translate-y-0.5 active:translate-y-0 shadow-sm transition-all duration-200">Get Started</a>
+          </div>
+          
+          <div class="sol-detail-right flex justify-center items-center w-full">
+            <div class="w-full max-w-[320px] aspect-square rounded-[20px] bg-warmWhite border border-borderColor p-6 flex items-center justify-center relative shadow-[0_8px_24px_rgba(0,0,0,0.02)]">
+              <svg viewBox="0 0 200 200" width="100%" height="100%" class="sol-card-svg">
+                <circle cx="100" cy="100" r="70" fill="none" stroke="#E9E9E9" stroke-width="2" />
+                <path d="M 100 50 L 140 65 L 140 110 Q 100 150 60 110 L 60 65 Z" fill="none" stroke="#F48120" stroke-width="3" />
+                <path d="M 80 100 L 95 115 L 125 80" stroke="#28A745" stroke-width="3" fill="none" stroke-linejoin="round" />
+                <circle cx="100" cy="25" r="5" fill="#FFA640" />
+                <circle cx="100" cy="175" r="5" fill="#FFA640" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Capabilities Section -->
+  <section class="credibility-section animate-section bg-softOrange py-[120px] w-full">
+    <div class="max-w-[1320px] mx-auto px-6">
+      <div class="cred-header text-center flex flex-col items-center mb-16">
+        <span class="section-tag text-[14px] font-bold tracking-wider text-brandOrange uppercase mb-3 block">Credibility Through Excellence</span>
+        <h2 class="section-title text-3xl sm:text-4xl lg:text-[48px] font-bold text-textPrimary leading-[1.15] mb-6">Built on Modern Security Engineering</h2>
+        <p class="section-subtitle text-lg text-textSecondary max-w-700 leading-relaxed">
+          "We combine industry-standard security frameworks, cloud-native architecture, AI-assisted threat detection, and modern engineering practices to help organizations build resilient digital infrastructure."
+        </p>
+      </div>
+
+      <!-- Enterprise metrics statistics -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-16 w-full">
+        <div class="bg-white rounded-[20px] border border-borderColor p-8 shadow-[0_8px_24px_rgba(0,0,0,0.03)] text-center flex flex-col items-center justify-center">
+          <span class="metric-counter text-4xl sm:text-[56px] font-extrabold text-brandOrange block leading-none mb-2" data-value="60" data-is-int="true" data-suffix="+">0+</span>
+          <span class="text-sm font-semibold text-textSecondary uppercase tracking-wider text-center">Cloud Services</span>
+        </div>
+        <div class="bg-white rounded-[20px] border border-borderColor p-8 shadow-[0_8px_24px_rgba(0,0,0,0.03)] text-center flex flex-col items-center justify-center">
+          <span class="metric-counter text-4xl sm:text-[56px] font-extrabold text-brandOrange block leading-none mb-2" data-value="24" data-is-int="true" data-suffix="/7">0/7</span>
+          <span class="text-sm font-semibold text-textSecondary uppercase tracking-wider text-center">SOC Monitoring</span>
+        </div>
+        <div class="bg-white rounded-[20px] border border-borderColor p-8 shadow-[0_8px_24px_rgba(0,0,0,0.03)] text-center flex flex-col items-center justify-center">
+          <span class="metric-counter text-4xl sm:text-[56px] font-extrabold text-brandOrange block leading-none mb-2" data-value="99.99" data-is-int="false" data-suffix="%">0.00%</span>
+          <span class="text-sm font-semibold text-textSecondary uppercase tracking-wider text-center">Availability</span>
+        </div>
+        <div class="bg-white rounded-[20px] border border-borderColor p-8 shadow-[0_8px_24px_rgba(0,0,0,0.03)] text-center flex flex-col items-center justify-center">
+          <span class="metric-counter text-4xl sm:text-[56px] font-extrabold text-brandOrange block leading-none mb-2" data-value="500" data-is-int="true" data-suffix="+">0+</span>
+          <span class="text-sm font-semibold text-textSecondary uppercase tracking-wider text-center">Protected Assets</span>
+        </div>
+      </div>
+
+      <!-- Capability Cards -->
+      <div class="capabilities-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+        <div class="bg-white rounded-[20px] border border-borderColor p-6 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-4">
+          <div class="w-10 h-10 rounded-lg bg-softOrange text-brandOrange flex items-center justify-center flex-shrink-0"><i data-lucide="cloud-lightning" class="w-6 h-6"></i></div>
+          <h3 class="text-lg font-bold text-textPrimary leading-snug">Cloud Security</h3>
+          <p class="text-textSecondary text-xs leading-relaxed">Multi-cloud threat isolation, orchestration layer protection, and serverless security.</p>
+        </div>
+        <div class="bg-white rounded-[20px] border border-borderColor p-6 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-4">
+          <div class="w-10 h-10 rounded-lg bg-softOrange text-brandOrange flex items-center justify-center flex-shrink-0"><i data-lucide="eye" class="w-6 h-6"></i></div>
+          <h3 class="text-lg font-bold text-textPrimary leading-snug">Security Operations Center (SOC)</h3>
+          <p class="text-textSecondary text-xs leading-relaxed">Continuous threat analysis, automated triage, and proactive security engineering.</p>
+        </div>
+        <div class="bg-white rounded-[20px] border border-borderColor p-6 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-4">
+          <div class="w-10 h-10 rounded-lg bg-softOrange text-brandOrange flex items-center justify-center flex-shrink-0"><i data-lucide="radar" class="w-6 h-6"></i></div>
+          <h3 class="text-lg font-bold text-textPrimary leading-snug">Threat Detection & Response</h3>
+          <p class="text-textSecondary text-xs leading-relaxed">Near zero-latency identification of host and network anomalies across microservices.</p>
+        </div>
+        <div class="bg-white rounded-[20px] border border-borderColor p-6 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-4">
+          <div class="w-10 h-10 rounded-lg bg-softOrange text-brandOrange flex items-center justify-center flex-shrink-0"><i data-lucide="key-round" class="w-6 h-6"></i></div>
+          <h3 class="text-lg font-bold text-textPrimary leading-snug">Identity & Access Security</h3>
+          <p class="text-textSecondary text-xs leading-relaxed">Frictionless SSO, multi-factor assertion mechanisms, and granular IAM posture checks.</p>
+        </div>
+        <div class="bg-white rounded-[20px] border border-borderColor p-6 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-4">
+          <div class="w-10 h-10 rounded-lg bg-softOrange text-brandOrange flex items-center justify-center flex-shrink-0"><i data-lucide="search-code" class="w-6 h-6"></i></div>
+          <h3 class="text-lg font-bold text-textPrimary leading-snug">Vulnerability Management</h3>
+          <p class="text-textSecondary text-xs leading-relaxed">Automated software supply chain vulnerability scanning and dependency verification.</p>
+        </div>
+        <div class="bg-white rounded-[20px] border border-borderColor p-6 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-4">
+          <div class="w-10 h-10 rounded-lg bg-softOrange text-brandOrange flex items-center justify-center flex-shrink-0"><i data-lucide="zap" class="w-6 h-6"></i></div>
+          <h3 class="text-lg font-bold text-textPrimary leading-snug">Security Automation</h3>
+          <p class="text-textSecondary text-xs leading-relaxed">Continuous deployment checks, dynamic infrastructure patching, and response playbooks.</p>
+        </div>
+        <div class="bg-white rounded-[20px] border border-borderColor p-6 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-4">
+          <div class="w-10 h-10 rounded-lg bg-softOrange text-brandOrange flex items-center justify-center flex-shrink-0"><i data-lucide="file-check-2" class="w-6 h-6"></i></div>
+          <h3 class="text-lg font-bold text-textPrimary leading-snug">Compliance Readiness</h3>
+          <p class="text-textSecondary text-xs leading-relaxed">Align environments continuously with ISO 27001, SOC 2, HIPAA, and GDPR standards.</p>
+        </div>
+        <div class="bg-white rounded-[20px] border border-borderColor p-6 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-4">
+          <div class="w-10 h-10 rounded-lg bg-softOrange text-brandOrange flex items-center justify-center flex-shrink-0"><i data-lucide="ambulance" class="w-6 h-6"></i></div>
+          <h3 class="text-lg font-bold text-textPrimary leading-snug">Incident Response</h3>
+          <p class="text-textSecondary text-xs leading-relaxed">Immediate playbook activation, breach containment, and rapid forensic preservation.</p>
+        </div>
+        <div class="bg-white rounded-[20px] border border-borderColor p-6 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-4">
+          <div class="w-10 h-10 rounded-lg bg-softOrange text-brandOrange flex items-center justify-center flex-shrink-0"><i data-lucide="brain-circuit" class="w-6 h-6"></i></div>
+          <h3 class="text-lg font-bold text-textPrimary leading-snug">AI Security Analytics</h3>
+          <p class="text-textSecondary text-xs leading-relaxed">Custom correlation models identify advanced persistent threats hidden in alert noise.</p>
+        </div>
+        <div class="bg-white rounded-[20px] border border-borderColor p-6 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-4">
+          <div class="w-10 h-10 rounded-lg bg-softOrange text-brandOrange flex items-center justify-center flex-shrink-0"><i data-lucide="users" class="w-6 h-6"></i></div>
+          <h3 class="text-lg font-bold text-textPrimary leading-snug">Security Consulting</h3>
+          <p class="text-textSecondary text-xs leading-relaxed">Expert advisory services for architecture reviews, gap analysis, and threat modeling.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section id="services" class="services-section animate-section bg-white py-[120px] w-full">
+    <div class="max-w-[1320px] mx-auto px-6">
+      <div class="section-header text-center flex flex-col items-center mb-12">
+        <span class="section-tag text-[14px] font-bold tracking-wider text-brandOrange uppercase mb-3 block">Comprehensive Protection</span>
+        <h2 class="section-title text-3xl sm:text-4xl lg:text-[48px] font-bold text-textPrimary leading-[1.15] mb-6">Our Security Services</h2>
+        <p class="section-subtitle text-lg text-textSecondary max-w-700 leading-relaxed mb-8">Premium defense mechanisms engineered for enterprise scale.</p>
+        
+        <!-- Search and Filter controls for Services -->
+        <div class="search-filter-wrapper w-full max-w-[480px]">
+          <div class="search-box relative flex items-center">
+            <i data-lucide="search" class="search-icon absolute left-4 text-textSecondary w-5 h-5"></i>
+            <input type="text" id="service-search-input" class="w-full pl-12 pr-4 py-3 rounded-full border border-borderColor focus:outline-none focus:border-brandOrange bg-white text-textPrimary font-medium text-sm transition-all duration-200 shadow-sm" placeholder="Search services (e.g. SOC, Cloud, Application)..." aria-label="Search services">
+          </div>
+        </div>
+      </div>
+
+      <div class="services-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="services-container">
+        <!-- Service Card 1 -->
+        <div class="service-card bg-white rounded-[20px] border border-borderColor p-8 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-4" data-keywords="soc, monitoring, operations, alert">
+          <div class="service-icon text-brandOrange"><i data-lucide="shield" class="w-8 h-8"></i></div>
+          <h3 class="text-xl font-bold text-textPrimary">Managed SOC</h3>
+          <p class="text-textSecondary leading-relaxed text-sm">Continuous threat detection, response orchestration, and real-time security incident correlation.</p>
+          <a href="/services/managed-soc/" class="inline-flex items-center gap-1.5 text-brandOrange font-semibold text-[15px] hover:text-darkOrange transition-colors mt-auto">Learn More <i data-lucide="arrow-up-right" class="w-4 h-4"></i></a>
+        </div>
+        
+        <!-- Service Card 2 -->
+        <div class="service-card bg-white rounded-[20px] border border-borderColor p-8 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-4" data-keywords="cloud, container, aws, azure, serverless">
+          <div class="service-icon text-brandOrange"><i data-lucide="cloud" class="w-8 h-8"></i></div>
+          <h3 class="text-xl font-bold text-textPrimary">Cloud Security</h3>
+          <p class="text-textSecondary leading-relaxed text-sm">Hardening infrastructure pipelines, auditing Kubernetes orchestrators, and enforcing IAM policies.</p>
+          <a href="/services/cloud-security/" class="inline-flex items-center gap-1.5 text-brandOrange font-semibold text-[15px] hover:text-darkOrange transition-colors mt-auto">Learn More <i data-lucide="arrow-up-right" class="w-4 h-4"></i></a>
+        </div>
+
+        <!-- Service Card 3 -->
+        <div class="service-card bg-white rounded-[20px] border border-borderColor p-8 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-4" data-keywords="incident, response, forensic, breach">
+          <div class="service-icon text-brandOrange"><i data-lucide="zap" class="w-8 h-8"></i></div>
+          <h3 class="text-xl font-bold text-textPrimary">Incident Response</h3>
+          <p class="text-textSecondary leading-relaxed text-sm">Rapid threat mitigation, containment, root cause identification, and disaster recovery execution.</p>
+          <a href="/services/incident-response/" class="inline-flex items-center gap-1.5 text-brandOrange font-semibold text-[15px] hover:text-darkOrange transition-colors mt-auto">Learn More <i data-lucide="arrow-up-right" class="w-4 h-4"></i></a>
+        </div>
+
+        <!-- Service Card 4 -->
+        <div class="service-card bg-white rounded-[20px] border border-borderColor p-8 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-4" data-keywords="threat, detection, behavior, hunting">
+          <div class="service-icon text-brandOrange"><i data-lucide="radar" class="w-8 h-8"></i></div>
+          <h3 class="text-xl font-bold text-textPrimary">Threat Detection</h3>
+          <p class="text-textSecondary leading-relaxed text-sm">Deploying correlation logic across log aggregations to catch lateral movements and exploits early.</p>
+          <a href="/services/threat-detection/" class="inline-flex items-center gap-1.5 text-brandOrange font-semibold text-[15px] hover:text-darkOrange transition-colors mt-auto">Learn More <i data-lucide="arrow-up-right" class="w-4 h-4"></i></a>
+        </div>
+
+        <!-- Service Card 5 -->
+        <div class="service-card bg-white rounded-[20px] border border-borderColor p-8 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-4" data-keywords="threat, hunting, proactive, compromise">
+          <div class="service-icon text-brandOrange"><i data-lucide="search" class="w-8 h-8"></i></div>
+          <h3 class="text-xl font-bold text-textPrimary">Threat Hunting</h3>
+          <p class="text-textSecondary leading-relaxed text-sm">Proactive searches across historical system telemetry to discover hidden breaches.</p>
+          <a href="/services/threat-hunting/" class="inline-flex items-center gap-1.5 text-brandOrange font-semibold text-[15px] hover:text-darkOrange transition-colors mt-auto">Learn More <i data-lucide="arrow-up-right" class="w-4 h-4"></i></a>
+        </div>
+
+        <!-- Service Card 6 -->
+        <div class="service-card bg-white rounded-[20px] border border-borderColor p-8 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-4" data-keywords="vulnerability, scan, audit, assessment">
+          <div class="service-icon text-brandOrange"><i data-lucide="binary" class="w-8 h-8"></i></div>
+          <h3 class="text-xl font-bold text-textPrimary">Vulnerability Assessment</h3>
+          <p class="text-textSecondary leading-relaxed text-sm">Comprehensive environment scanning to reveal software defects, bad configurations, and patch gaps.</p>
+          <a href="/services/vulnerability-assessment/" class="inline-flex items-center gap-1.5 text-brandOrange font-semibold text-[15px] hover:text-darkOrange transition-colors mt-auto">Learn More <i data-lucide="arrow-up-right" class="w-4 h-4"></i></a>
+        </div>
+
+        <!-- Service Card 7 -->
+        <div class="service-card bg-white rounded-[20px] border border-borderColor p-8 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-4" data-keywords="web, application, api, pentest">
+          <div class="service-icon text-brandOrange"><i data-lucide="code-2" class="w-8 h-8"></i></div>
+          <h3 class="text-xl font-bold text-textPrimary">Web Application Security</h3>
+          <p class="text-textSecondary leading-relaxed text-sm">Secure design evaluation, code reviews, penetration tests, and Web Application Firewall tuning.</p>
+          <a href="/services/web-application-security/" class="inline-flex items-center gap-1.5 text-brandOrange font-semibold text-[15px] hover:text-darkOrange transition-colors mt-auto">Learn More <i data-lucide="arrow-up-right" class="w-4 h-4"></i></a>
+        </div>
+
+        <!-- Service Card 8 -->
+        <div class="service-card bg-white rounded-[20px] border border-borderColor p-8 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-4" data-keywords="network, firewall, segment, vpc">
+          <div class="service-icon text-brandOrange"><i data-lucide="network" class="w-8 h-8"></i></div>
+          <h3 class="text-xl font-bold text-textPrimary">Network Security</h3>
+          <p class="text-textSecondary leading-relaxed text-sm">Segmenting networks, reviewing firewall structures, and deploying intrusion prevention tools.</p>
+          <a href="/services/network-security/" class="inline-flex items-center gap-1.5 text-brandOrange font-semibold text-[15px] hover:text-darkOrange transition-colors mt-auto">Learn More <i data-lucide="arrow-up-right" class="w-4 h-4"></i></a>
+        </div>
+
+        <!-- Service Card 9 -->
+        <div class="service-card bg-white rounded-[20px] border border-borderColor p-8 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-4" data-keywords="identity, access, iam, credentials">
+          <div class="service-icon text-brandOrange"><i data-lucide="user-check" class="w-8 h-8"></i></div>
+          <h3 class="text-xl font-bold text-textPrimary">Identity Security</h3>
+          <p class="text-textSecondary leading-relaxed text-sm">Reviewing trust models, validating privileged access flows, and auditing credential directories.</p>
+          <a href="/services/identity-security/" class="inline-flex items-center gap-1.5 text-brandOrange font-semibold text-[15px] hover:text-darkOrange transition-colors mt-auto">Learn More <i data-lucide="arrow-up-right" class="w-4 h-4"></i></a>
+        </div>
+
+        <!-- Service Card 10 -->
+        <div class="service-card bg-white rounded-[20px] border border-borderColor p-8 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-4" data-keywords="email, phishing, spam, credentials">
+          <div class="service-icon text-brandOrange"><i data-lucide="mail" class="w-8 h-8"></i></div>
+          <h3 class="text-xl font-bold text-textPrimary">Email Security</h3>
+          <p class="text-textSecondary leading-relaxed text-sm">Defending against phishing attacks, credential theft attempts, and zero-day attachments.</p>
+          <a href="/services/email-security/" class="inline-flex items-center gap-1.5 text-brandOrange font-semibold text-[15px] hover:text-darkOrange transition-colors mt-auto">Learn More <i data-lucide="arrow-up-right" class="w-4 h-4"></i></a>
+        </div>
+
+        <!-- Service Card 11 -->
+        <div class="service-card bg-white rounded-[20px] border border-borderColor p-8 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-4" data-keywords="endpoint, protection, edr, antivirus">
+          <div class="service-icon text-brandOrange"><i data-lucide="laptop" class="w-8 h-8"></i></div>
+          <h3 class="text-xl font-bold text-textPrimary">Endpoint Protection</h3>
+          <p class="text-textSecondary leading-relaxed text-sm">Monitoring workstations, servers, and mobile platforms via advanced telemetry models.</p>
+          <a href="/services/endpoint-protection/" class="inline-flex items-center gap-1.5 text-brandOrange font-semibold text-[15px] hover:text-darkOrange transition-colors mt-auto">Learn More <i data-lucide="arrow-up-right" class="w-4 h-4"></i></a>
+        </div>
+
+        <!-- Service Card 12 -->
+        <div class="service-card bg-white rounded-[20px] border border-borderColor p-8 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-4" data-keywords="compliance, consulting, iso, soc2, gdpr">
+          <div class="service-icon text-brandOrange"><i data-lucide="scroll" class="w-8 h-8"></i></div>
+          <h3 class="text-xl font-bold text-textPrimary">Compliance Consulting</h3>
+          <p class="text-textSecondary leading-relaxed text-sm">Helping organizations prepare for external audits against global information security standards.</p>
+          <a href="/services/compliance-consulting/" class="inline-flex items-center gap-1.5 text-brandOrange font-semibold text-[15px] hover:text-darkOrange transition-colors mt-auto">Learn More <i data-lucide="arrow-up-right" class="w-4 h-4"></i></a>
+        </div>
+
+        <!-- Service Card 13 -->
+        <div class="service-card bg-white rounded-[20px] border border-borderColor p-8 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-4" data-keywords="awareness, training, human, phishing">
+          <div class="service-icon text-brandOrange"><i data-lucide="graduation-cap" class="w-8 h-8"></i></div>
+          <h3 class="text-xl font-bold text-textPrimary">Security Awareness Training</h3>
+          <p class="text-textSecondary leading-relaxed text-sm">Upskilling teams with threat awareness drills and actionable cybersecurity best practices.</p>
+          <a href="/services/security-awareness-training/" class="inline-flex items-center gap-1.5 text-brandOrange font-semibold text-[15px] hover:text-darkOrange transition-colors mt-auto">Learn More <i data-lucide="arrow-up-right" class="w-4 h-4"></i></a>
+        </div>
+
+        <!-- Service Card 14 -->
+        <div class="service-card bg-white rounded-[20px] border border-borderColor p-8 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-4" data-keywords="digital, forensics, telemetry, analysis">
+          <div class="service-icon text-brandOrange"><i data-lucide="database" class="w-8 h-8"></i></div>
+          <h3 class="text-xl font-bold text-textPrimary">Digital Forensics</h3>
+          <p class="text-textSecondary leading-relaxed text-sm">Detailed host and memory analysis to reconstruct attackers' timelines and impact scopes.</p>
+          <a href="/services/digital-forensics/" class="inline-flex items-center gap-1.5 text-brandOrange font-semibold text-[15px] hover:text-darkOrange transition-colors mt-auto">Learn More <i data-lucide="arrow-up-right" class="w-4 h-4"></i></a>
+        </div>
+
+        <!-- Service Card 15 -->
+        <div class="service-card bg-white rounded-[20px] border border-borderColor p-8 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-4" data-keywords="mdr, detection, response, managed">
+          <div class="service-icon text-brandOrange"><i data-lucide="shield-alert" class="w-8 h-8"></i></div>
+          <h3 class="text-xl font-bold text-textPrimary">Managed Detection & Response</h3>
+          <p class="text-textSecondary leading-relaxed text-sm">Fully turn-key threat lifecycle handling, fusing engineering intelligence and active defense.</p>
+          <a href="/services/managed-detection-response/" class="inline-flex items-center gap-1.5 text-brandOrange font-semibold text-[15px] hover:text-darkOrange transition-colors mt-auto">Learn More <i data-lucide="arrow-up-right" class="w-4 h-4"></i></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Who We Help Section -->
+  <section class="who-we-help-section animate-section bg-white py-[120px] w-full">
+    <div class="max-w-[1320px] mx-auto px-6">
+      <div class="section-header text-center flex flex-col items-center mb-16">
+        <span class="section-tag text-[14px] font-bold tracking-wider text-brandOrange uppercase mb-3 block">Who We Help</span>
+        <h2 class="section-title text-3xl sm:text-4xl lg:text-[48px] font-bold text-textPrimary leading-[1.15] mb-6">Hardened Postures Across Verticals</h2>
+        <p class="section-subtitle text-lg text-textSecondary max-w-700 leading-relaxed">Helping diverse organizations satisfy compliance parameters and protect operational infrastructure.</p>
+      </div>
+
+      <div class="industries-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <!-- Industry Card 1 -->
+        <div class="ind-card bg-white rounded-[20px] border border-borderColor p-8 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-6">
+          <div class="ind-icon w-14 h-14 rounded-xl bg-warmWhite border border-borderColor flex items-center justify-center text-brandOrange">
+            <svg viewBox="0 0 100 100" width="32" height="32" class="ind-svg">
+              <rect x="20" y="20" width="60" height="60" rx="10" fill="none" stroke="currentColor" stroke-width="3" />
+              <path d="M 40 50 L 60 50 M 50 40 L 50 60" stroke="currentColor" stroke-width="3" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-textPrimary">Financial Services</h3>
+          <p class="text-textSecondary leading-relaxed text-sm">PCI-DSS posture mapping, transaction channel protection, and continuous database perimeter reviews.</p>
+        </div>
+
+        <!-- Industry Card 2 -->
+        <div class="ind-card bg-white rounded-[20px] border border-borderColor p-8 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-6">
+          <div class="ind-icon w-14 h-14 rounded-xl bg-warmWhite border border-borderColor flex items-center justify-center text-brandOrange">
+            <svg viewBox="0 0 100 100" width="32" height="32" class="ind-svg">
+              <path d="M 50 20 L 80 35 L 80 65 Q 50 85 20 65 L 20 35 Z" fill="none" stroke="currentColor" stroke-width="3" />
+              <circle cx="50" cy="50" r="10" fill="currentColor" opacity="0.4" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-textPrimary">Healthcare</h3>
+          <p class="text-textSecondary leading-relaxed text-sm">Enforce strict HIPAA data compliance controls, keeping electronic health records encrypted and isolated.</p>
+        </div>
+
+        <!-- Industry Card 3 -->
+        <div class="ind-card bg-white rounded-[20px] border border-borderColor p-8 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-6">
+          <div class="ind-icon w-14 h-14 rounded-xl bg-warmWhite border border-borderColor flex items-center justify-center text-brandOrange">
+            <svg viewBox="0 0 100 100" width="32" height="32" class="ind-svg">
+              <path d="M 30 75 L 70 75 L 50 35 Z" fill="none" stroke="currentColor" stroke-width="3" />
+              <line x1="50" y1="35" x2="50" y2="75" stroke="currentColor" stroke-width="3.5" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-textPrimary">Education</h3>
+          <p class="text-textSecondary leading-relaxed text-sm">Protecting student registries and intellectual research files from unauthorized perimeter queries.</p>
+        </div>
+
+        <!-- Industry Card 4 -->
+        <div class="ind-card bg-white rounded-[20px] border border-borderColor p-8 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-6">
+          <div class="ind-icon w-14 h-14 rounded-xl bg-warmWhite border border-borderColor flex items-center justify-center text-brandOrange">
+            <svg viewBox="0 0 100 100" width="32" height="32" class="ind-svg">
+              <rect x="25" y="25" width="50" height="50" fill="none" stroke="currentColor" stroke-width="3" />
+              <path d="M 40 40 L 60 60 M 60 40 L 40 60" stroke="currentColor" stroke-width="2" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-textPrimary">Manufacturing</h3>
+          <p class="text-textSecondary leading-relaxed text-sm">OT network micro-segmentation reviews, industrial controller audits, and secure hardware interfaces.</p>
+        </div>
+
+        <!-- Industry Card 5 -->
+        <div class="ind-card bg-white rounded-[20px] border border-borderColor p-8 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-6">
+          <div class="ind-icon w-14 h-14 rounded-xl bg-warmWhite border border-borderColor flex items-center justify-center text-brandOrange">
+            <svg viewBox="0 0 100 100" width="32" height="32" class="ind-svg">
+              <rect x="25" y="35" width="50" height="40" fill="none" stroke="currentColor" stroke-width="3" />
+              <path d="M 40 35 L 40 25 A 10 10 0 0 1 60 25 L 60 35" fill="none" stroke="currentColor" stroke-width="3" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-textPrimary">Retail</h3>
+          <p class="text-textSecondary leading-relaxed text-sm">Checkout pipeline audits, consumer credential data isolation, and API threat detection.</p>
+        </div>
+
+        <!-- Industry Card 6 -->
+        <div class="ind-card bg-white rounded-[20px] border border-borderColor p-8 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-6">
+          <div class="ind-icon w-14 h-14 rounded-xl bg-warmWhite border border-borderColor flex items-center justify-center text-brandOrange">
+            <svg viewBox="0 0 100 100" width="32" height="32" class="ind-svg">
+              <circle cx="50" cy="50" r="30" fill="none" stroke="currentColor" stroke-width="3.5" />
+              <circle cx="50" cy="50" r="10" fill="currentColor" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-textPrimary">Technology</h3>
+          <p class="text-textSecondary leading-relaxed text-sm">DevSecOps pipeline scanning, multi-tenant Kubernetes hardening, and unified access logic auditing.</p>
+        </div>
+
+        <!-- Industry Card 7 -->
+        <div class="ind-card bg-white rounded-[20px] border border-borderColor p-8 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-6">
+          <div class="ind-icon w-14 h-14 rounded-xl bg-warmWhite border border-borderColor flex items-center justify-center text-brandOrange">
+            <svg viewBox="0 0 100 100" width="32" height="32" class="ind-svg">
+              <path d="M 50 15 L 85 30 L 85 70 Q 50 90 15 70 L 15 30 Z" fill="none" stroke="currentColor" stroke-width="3" />
+              <path d="M 35 45 L 45 55 L 65 35" fill="none" stroke="#28A745" stroke-width="4" stroke-linecap="round" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-textPrimary">Government</h3>
+          <p class="text-textSecondary leading-relaxed text-sm">Federal compliance review mapping, secure access assertions, and redundant perimeter verification.</p>
+        </div>
+
+        <!-- Industry Card 8 -->
+        <div class="ind-card bg-white rounded-[20px] border border-borderColor p-8 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-6">
+          <div class="ind-icon w-14 h-14 rounded-xl bg-warmWhite border border-borderColor flex items-center justify-center text-brandOrange">
+            <svg viewBox="0 0 100 100" width="32" height="32" class="ind-svg">
+              <path d="M 20 80 L 50 20 L 80 80 Z" fill="none" stroke="currentColor" stroke-width="3" />
+              <circle cx="50" cy="55" r="8" fill="currentColor" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-textPrimary">Startups</h3>
+          <p class="text-textSecondary leading-relaxed text-sm">Frictionless cloud hardening controls, automated audit prep, and lightweight SaaS integrations.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Products Section -->
+  <section id="updates" class="updates-section animate-section bg-warmWhite py-[120px] w-full">
+    <div class="max-w-[1320px] mx-auto px-6">
+      <div class="section-header text-center flex flex-col items-center mb-12">
+        <span class="section-tag text-[14px] font-bold tracking-wider text-brandOrange uppercase mb-3 block">Product Roadmap</span>
+        <h2 class="section-title text-3xl sm:text-4xl lg:text-[48px] font-bold text-textPrimary leading-[1.15] mb-6">What We're Building</h2>
+        <p class="section-subtitle text-lg text-textSecondary max-w-700 leading-relaxed">Aegrion is developing a suite of AI-driven security products. Here's our quarterly release roadmap across the next two years.</p>
+      </div>
+
+      <!-- Sequence / Timeline Progress Bar -->
+      <div class="mb-12 max-w-[1000px] mx-auto hidden md:block">
+        <div class="relative flex items-center justify-between">
+          <div class="absolute left-0 top-1/2 -translate-y-1/2 w-full h-[2px] bg-borderColor -z-0"></div>
+          <div class="absolute left-0 top-1/2 -translate-y-1/2 w-[10%] h-[2px] bg-brandOrange -z-0"></div>
+          
+          <div class="flex flex-col items-center gap-1.5 relative z-10 bg-warmWhite px-3">
+            <span class="w-8 h-8 rounded-full bg-brandOrange text-white text-xs font-bold flex items-center justify-center shadow-md">01</span>
+            <span class="text-xs font-bold text-brandOrange">Janus</span>
+            <span class="text-[11px] font-semibold text-textSecondary">Q3 2026</span>
+          </div>
+
+          <div class="flex flex-col items-center gap-1.5 relative z-10 bg-warmWhite px-3">
+            <span class="w-8 h-8 rounded-full bg-white border border-borderColor text-textSecondary text-xs font-bold flex items-center justify-center">02</span>
+            <span class="text-xs font-bold text-textPrimary">Strata</span>
+            <span class="text-[11px] font-semibold text-textSecondary">Q4 2026</span>
+          </div>
+
+          <div class="flex flex-col items-center gap-1.5 relative z-10 bg-warmWhite px-3">
+            <span class="w-8 h-8 rounded-full bg-white border border-borderColor text-textSecondary text-xs font-bold flex items-center justify-center">03</span>
+            <span class="text-xs font-bold text-textPrimary">AuditX</span>
+            <span class="text-[11px] font-semibold text-textSecondary">Q1 2027</span>
+          </div>
+
+          <div class="flex flex-col items-center gap-1.5 relative z-10 bg-warmWhite px-3">
+            <span class="w-8 h-8 rounded-full bg-white border border-borderColor text-textSecondary text-xs font-bold flex items-center justify-center">04</span>
+            <span class="text-xs font-bold text-textPrimary">Bastion</span>
+            <span class="text-[11px] font-semibold text-textSecondary">Q2 2027</span>
+          </div>
+
+          <div class="flex flex-col items-center gap-1.5 relative z-10 bg-warmWhite px-3">
+            <span class="w-8 h-8 rounded-full bg-white border border-borderColor text-textSecondary text-xs font-bold flex items-center justify-center">05</span>
+            <span class="text-xs font-bold text-textPrimary">Vanguard</span>
+            <span class="text-[11px] font-semibold text-textSecondary">Q3 2027</span>
+          </div>
+
+          <div class="flex flex-col items-center gap-1.5 relative z-10 bg-warmWhite px-3">
+            <span class="w-8 h-8 rounded-full bg-white border border-borderColor text-textSecondary text-xs font-bold flex items-center justify-center">06</span>
+            <span class="text-xs font-bold text-textPrimary">Gridline</span>
+            <span class="text-[11px] font-semibold text-textSecondary">Q4 2027</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="updates-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Product 1: Janus -->
+        <div class="bg-white rounded-[20px] border border-borderColor p-8 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-6">
+          <div class="update-header flex items-center justify-between">
+            <span class="px-3 py-1 rounded bg-softOrange text-brandOrange font-bold text-[10px] tracking-wider uppercase">FLAGSHIP · IN DEVELOPMENT (Q3 2026 TARGET)</span>
+            <span class="w-10 h-10 rounded-lg bg-softOrange text-brandOrange flex items-center justify-center flex-shrink-0"><i data-lucide="shield-alert" class="w-5 h-5"></i></span>
+          </div>
+          <h3 class="text-2xl font-bold text-textPrimary">Janus</h3>
+          <p class="text-textSecondary leading-relaxed text-sm">Automated incident timeline reconstruction with built-in CERT-In compliance reporting, helping teams understand exactly what happened during a security incident and generate audit-ready reports fast.</p>
+        </div>
+
+        <!-- Product 2: Strata -->
+        <div class="bg-white rounded-[20px] border border-borderColor p-8 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-6">
+          <div class="update-header flex items-center justify-between">
+            <span class="px-3 py-1 rounded bg-borderColor text-textSecondary font-bold text-[10px] tracking-wider uppercase">Q4 2026</span>
+            <span class="w-10 h-10 rounded-lg bg-warmWhite text-textSecondary flex items-center justify-center flex-shrink-0"><i data-lucide="cloud" class="w-5 h-5"></i></span>
+          </div>
+          <h3 class="text-2xl font-bold text-textPrimary">Strata</h3>
+          <p class="text-textSecondary leading-relaxed text-sm">Continuous cloud security posture monitoring across AWS, Azure, and GCP, with real-time drift detection and automated remediation suggestions.</p>
+        </div>
+
+        <!-- Product 3: AuditX -->
+        <div class="bg-white rounded-[20px] border border-borderColor p-8 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-6">
+          <div class="update-header flex items-center justify-between">
+            <span class="px-3 py-1 rounded bg-borderColor text-textSecondary font-bold text-[10px] tracking-wider uppercase">Q1 2027</span>
+            <span class="w-10 h-10 rounded-lg bg-warmWhite text-textSecondary flex items-center justify-center flex-shrink-0"><i data-lucide="scroll" class="w-5 h-5"></i></span>
+          </div>
+          <h3 class="text-2xl font-bold text-textPrimary">AuditX</h3>
+          <p class="text-textSecondary leading-relaxed text-sm">Automated compliance scanning and audit-readiness reporting mapped to frameworks like ISO 27001, SOC 2, and CERT-In guidelines.</p>
+        </div>
+
+        <!-- Product 4: Bastion -->
+        <div class="bg-white rounded-[20px] border border-borderColor p-8 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-6">
+          <div class="update-header flex items-center justify-between">
+            <span class="px-3 py-1 rounded bg-borderColor text-textSecondary font-bold text-[10px] tracking-wider uppercase">Q2 2027</span>
+            <span class="w-10 h-10 rounded-lg bg-warmWhite text-textSecondary flex items-center justify-center flex-shrink-0"><i data-lucide="user-check" class="w-5 h-5"></i></span>
+          </div>
+          <h3 class="text-2xl font-bold text-textPrimary">Bastion</h3>
+          <p class="text-textSecondary leading-relaxed text-sm">AI-driven identity and access management with anomaly detection for privileged accounts and credential misuse.</p>
+        </div>
+
+        <!-- Product 5: Vanguard -->
+        <div class="bg-white rounded-[20px] border border-borderColor p-8 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-6">
+          <div class="update-header flex items-center justify-between">
+            <span class="px-3 py-1 rounded bg-borderColor text-textSecondary font-bold text-[10px] tracking-wider uppercase">Q3 2027</span>
+            <span class="w-10 h-10 rounded-lg bg-warmWhite text-textSecondary flex items-center justify-center flex-shrink-0"><i data-lucide="zap" class="w-5 h-5"></i></span>
+          </div>
+          <h3 class="text-2xl font-bold text-textPrimary">Vanguard</h3>
+          <p class="text-textSecondary leading-relaxed text-sm">Real-time incident response orchestration that automatically triages, escalates, and coordinates remediation across your security stack.</p>
+        </div>
+
+        <!-- Product 6: Gridline -->
+        <div class="bg-white rounded-[20px] border border-borderColor p-8 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-6">
+          <div class="update-header flex items-center justify-between">
+            <span class="px-3 py-1 rounded bg-borderColor text-textSecondary font-bold text-[10px] tracking-wider uppercase">Q4 2027</span>
+            <span class="w-10 h-10 rounded-lg bg-warmWhite text-textSecondary flex items-center justify-center flex-shrink-0"><i data-lucide="network" class="w-5 h-5"></i></span>
+          </div>
+          <h3 class="text-2xl font-bold text-textPrimary">Gridline</h3>
+          <p class="text-textSecondary leading-relaxed text-sm">Network topology mapping and hardening recommendations that visualize attack surface and segmentation gaps.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Resources Section -->
+  <section class="resources-section animate-section bg-white py-[120px] w-full">
+    <div class="max-w-[1320px] mx-auto px-6">
+      <div class="section-header text-center flex flex-col items-center mb-16">
+        <span class="section-tag text-[14px] font-bold tracking-wider text-brandOrange uppercase mb-3 block">Publications</span>
+        <h2 class="section-title text-3xl sm:text-4xl lg:text-[48px] font-bold text-textPrimary leading-[1.15] mb-6">Security Resources & Insights</h2>
+        <p class="section-subtitle text-lg text-textSecondary max-w-700 leading-relaxed">Stay informed with the latest insights from Aegrion labs.</p>
+      </div>
+
+      <div class="resources-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="bg-white rounded-[20px] border border-borderColor overflow-hidden shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col">
+          <div class="card-image-placeholder resource-1 h-[200px] w-full bg-softOrange flex items-center justify-center text-brandOrange relative">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="card-content p-8 flex flex-col gap-4 flex-1">
+            <span class="res-tag text-xs font-bold text-brandOrange tracking-wider uppercase">Threat Intelligence</span>
+            <h3 class="text-xl font-bold text-textPrimary leading-snug">Analyzing Advanced Threat Actors Targeting Cloud Infrastructure</h3>
+            <p class="text-textSecondary text-sm leading-relaxed">A technical teardown of container escape techniques and multi-stage orchestration payloads.</p>
+            <a href="/resources/analyzing-advanced-threat-actors-cloud-infrastructure/" class="inline-flex items-center gap-1.5 text-brandOrange font-semibold text-[15px] hover:text-darkOrange transition-colors mt-auto">Read Analysis <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-[20px] border border-borderColor overflow-hidden shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col">
+          <div class="card-image-placeholder resource-2 h-[200px] w-full bg-softOrange flex items-center justify-center text-brandOrange relative">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10M6 10h10M6 14h10"/></svg>
+          </div>
+          <div class="card-content p-8 flex flex-col gap-4 flex-1">
+            <span class="res-tag text-xs font-bold text-brandOrange tracking-wider uppercase">Whitepapers</span>
+            <h3 class="text-xl font-bold text-textPrimary leading-snug">Zero Trust Framework for Kubernetes Architectures</h3>
+            <p class="text-textSecondary text-sm leading-relaxed">Our deep engineering guide to applying service mesh configurations and mutual TLS policies.</p>
+            <a href="/resources/zero-trust-kubernetes-architectures/" class="inline-flex items-center gap-1.5 text-brandOrange font-semibold text-[15px] hover:text-darkOrange transition-colors mt-auto">Download PDF <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-[20px] border border-borderColor overflow-hidden shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col">
+          <div class="card-image-placeholder h-[200px] w-full bg-softOrange flex items-center justify-center text-brandOrange relative">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="card-content p-8 flex flex-col gap-4 flex-1">
+            <span class="res-tag text-xs font-bold text-brandOrange tracking-wider uppercase">Guides</span>
+            <h3 class="text-xl font-bold text-textPrimary leading-snug">Best Practices for AWS Identity and Access Management</h3>
+            <p class="text-textSecondary text-sm leading-relaxed">How to audit and prune outdated credentials, and construct resilient service roles.</p>
+            <a href="/resources/aws-iam-best-practices/" class="inline-flex items-center gap-1.5 text-brandOrange font-semibold text-[15px] hover:text-darkOrange transition-colors mt-auto">Read Guide <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Roadmap Section -->
+  <section id="roadmap" class="roadmap-section animate-section bg-softOrange py-[120px] w-full relative overflow-hidden">
+    <!-- Subtle Background Network/Node Grid SVG -->
+    <div class="absolute inset-0 pointer-events-none opacity-30 z-0 flex items-center justify-center overflow-hidden" aria-hidden="true">
+      <svg class="w-full h-full max-w-[1400px] object-cover text-brandOrange/25" viewBox="0 0 1000 800" fill="none" stroke="currentColor">
+        <defs>
+          <pattern id="roadmap-grid-pattern" width="80" height="80" patternUnits="userSpaceOnUse">
+            <circle cx="40" cy="40" r="1.5" fill="currentColor" fill-opacity="0.4" />
+            <path d="M40 0v80M0 40h80" stroke="currentColor" stroke-width="0.5" stroke-opacity="0.12" stroke-dasharray="3 3" />
+          </pattern>
+          <radialGradient id="roadmap-glow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#F48120" stop-opacity="0.12" />
+            <stop offset="100%" stop-color="#F48120" stop-opacity="0" />
+          </radialGradient>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#roadmap-grid-pattern)" />
+        <circle cx="500" cy="400" r="320" fill="url(#roadmap-glow)" />
+        <!-- Subtle network constellations -->
+        <g stroke="#F48120" stroke-opacity="0.2" stroke-width="1">
+          <line x1="200" y1="180" x2="350" y2="240" />
+          <line x1="350" y1="240" x2="500" y2="200" />
+          <line x1="500" y1="200" x2="680" y2="280" />
+          <line x1="680" y1="280" x2="820" y2="220" />
+          <line x1="350" y1="240" x2="320" y2="420" />
+          <line x1="500" y1="200" x2="500" y2="460" />
+          <line x1="680" y1="280" x2="700" y2="440" />
+          <line x1="320" y1="420" x2="500" y2="460" />
+          <line x1="500" y1="460" x2="700" y2="440" />
+          <line x1="320" y1="420" x2="240" y2="600" />
+          <line x1="500" y1="460" x2="500" y2="640" />
+          <line x1="700" y1="440" x2="780" y2="620" />
+          <circle cx="200" cy="180" r="3" fill="#F48120" fill-opacity="0.4" />
+          <circle cx="350" cy="240" r="4" fill="#F48120" fill-opacity="0.5" />
+          <circle cx="500" cy="200" r="4" fill="#F48120" fill-opacity="0.6" />
+          <circle cx="680" cy="280" r="4" fill="#F48120" fill-opacity="0.5" />
+          <circle cx="820" cy="220" r="3" fill="#F48120" fill-opacity="0.4" />
+          <circle cx="320" cy="420" r="4" fill="#F48120" fill-opacity="0.5" />
+          <circle cx="500" cy="460" r="5" fill="#F48120" fill-opacity="0.7" />
+          <circle cx="700" cy="440" r="4" fill="#F48120" fill-opacity="0.5" />
+          <circle cx="240" cy="600" r="3" fill="#F48120" fill-opacity="0.4" />
+          <circle cx="500" cy="640" r="4" fill="#F48120" fill-opacity="0.6" />
+          <circle cx="780" cy="620" r="3" fill="#F48120" fill-opacity="0.4" />
+        </g>
+      </svg>
+    </div>
+
+    <div class="max-w-[1320px] mx-auto px-6 relative z-10">
+      <div class="roadmap-wrapper flex flex-col">
+        <!-- Section Header -->
+        <div class="section-header text-center flex flex-col items-center mb-16">
+          <span class="section-tag text-[14px] font-bold tracking-wider text-brandOrange uppercase mb-3 block">Milestones & Vision</span>
+          <h2 class="section-title text-3xl sm:text-4xl lg:text-[48px] font-bold text-textPrimary leading-[1.15] mb-6">Our Journey Begins</h2>
+          <p class="section-subtitle text-lg text-textSecondary max-w-700 leading-relaxed">From foundational architecture to full-spectrum enterprise operations — how Aegrion is building the future of cloud defense.</p>
+        </div>
+
+        <!-- Interactive Animated Timeline -->
+        <div id="roadmap-timeline" class="roadmap-timeline relative flex flex-col gap-10 md:gap-14 max-w-[1000px] mx-auto w-full">
+          <!-- Static Background Track -->
+          <div class="timeline-track-bg absolute left-[23px] md:left-1/2 top-4 bottom-4 w-[2px] bg-borderColor transform md:-translate-x-1/2"></div>
+          <!-- Dynamic Progress Line that fills on scroll -->
+          <div id="roadmap-progress-line" class="timeline-progress-line absolute left-[23px] md:left-1/2 top-4 w-[2px] h-[15%] bg-gradient-to-b from-brandOrange via-darkOrange to-brandOrange transform md:-translate-x-1/2 transition-all duration-500 ease-out origin-top"></div>
+
+          <!-- Milestone 1: 2026 Q1 -->
+          <div class="roadmap-node left roadmap-node-item is-visible is-active relative flex justify-start md:justify-end md:w-1/2 md:pr-14 pl-14 md:pl-0" data-milestone="1">
+            <div class="roadmap-content bg-white border border-borderColor rounded-[20px] p-7 md:p-8 shadow-[0_8px_24px_rgba(0,0,0,0.05)] w-full max-w-[440px] relative transition-all duration-300 hover:-translate-y-[4px] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] group">
+              <div class="flex items-center justify-between mb-2">
+                <span class="roadmap-year text-xs font-bold text-brandOrange uppercase tracking-wide">2026 Q1</span>
+                <span class="text-[11px] font-semibold text-textSecondary px-2.5 py-0.5 rounded-full bg-warmWhite border border-borderColor">Foundation</span>
+              </div>
+              <h4 class="text-xl font-bold text-textPrimary mb-2 group-hover:text-brandOrange transition-colors">Company Founded</h4>
+              <p class="text-textSecondary text-sm leading-relaxed">Aegrion Security established with a focus on cloud-native security operations.</p>
+            </div>
+            <!-- Timeline Dot -->
+            <div class="timeline-dot absolute left-[23px] md:left-auto md:right-0 top-8 w-4 h-4 rounded-full bg-white border-2 border-borderColor transform -translate-x-[7px] md:translate-x-[8px] transition-all duration-300 flex items-center justify-center">
+              <span class="w-1.5 h-1.5 rounded-full bg-borderColor transition-all duration-300"></span>
+            </div>
+          </div>
+
+          <!-- Milestone 2: 2026 Q2 -->
+          <div class="roadmap-node right roadmap-node-item relative flex justify-start md:w-1/2 md:pl-14 pl-14 md:ml-auto" data-milestone="2">
+            <div class="roadmap-content bg-white border border-borderColor rounded-[20px] p-7 md:p-8 shadow-[0_8px_24px_rgba(0,0,0,0.05)] w-full max-w-[440px] relative transition-all duration-300 hover:-translate-y-[4px] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] group">
+              <div class="flex items-center justify-between mb-2">
+                <span class="roadmap-year text-xs font-bold text-brandOrange uppercase tracking-wide">2026 Q2</span>
+                <span class="text-[11px] font-semibold text-textSecondary px-2.5 py-0.5 rounded-full bg-warmWhite border border-borderColor">Operations</span>
+              </div>
+              <h4 class="text-xl font-bold text-textPrimary mb-2 group-hover:text-brandOrange transition-colors">Managed SOC Launch</h4>
+              <p class="text-textSecondary text-sm leading-relaxed">Expanding managed threat detection and automated security orchestration for digital businesses.</p>
+            </div>
+            <!-- Timeline Dot -->
+            <div class="timeline-dot absolute left-[23px] md:left-0 top-8 w-4 h-4 rounded-full bg-white border-2 border-borderColor transform -translate-x-[7px] md:-translate-x-[8px] transition-all duration-300 flex items-center justify-center">
+              <span class="w-1.5 h-1.5 rounded-full bg-borderColor transition-all duration-300"></span>
+            </div>
+          </div>
+
+          <!-- Milestone 3: 2026 Q3 -->
+          <div class="roadmap-node left roadmap-node-item relative flex justify-start md:justify-end md:w-1/2 md:pr-14 pl-14 md:pl-0" data-milestone="3">
+            <div class="roadmap-content bg-white border border-borderColor rounded-[20px] p-7 md:p-8 shadow-[0_8px_24px_rgba(0,0,0,0.05)] w-full max-w-[440px] relative transition-all duration-300 hover:-translate-y-[4px] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] group">
+              <div class="flex items-center justify-between mb-2">
+                <span class="roadmap-year text-xs font-bold text-brandOrange uppercase tracking-wide">2026 Q3</span>
+                <span class="text-[11px] font-semibold text-textSecondary px-2.5 py-0.5 rounded-full bg-warmWhite border border-borderColor">Intelligence</span>
+              </div>
+              <h4 class="text-xl font-bold text-textPrimary mb-2 group-hover:text-brandOrange transition-colors">AI Security Copilot</h4>
+              <p class="text-textSecondary text-sm leading-relaxed">Introducing AI-assisted security investigation and threat analysis to help security teams respond faster.</p>
+            </div>
+            <!-- Timeline Dot -->
+            <div class="timeline-dot absolute left-[23px] md:left-auto md:right-0 top-8 w-4 h-4 rounded-full bg-white border-2 border-borderColor transform -translate-x-[7px] md:translate-x-[8px] transition-all duration-300 flex items-center justify-center">
+              <span class="w-1.5 h-1.5 rounded-full bg-borderColor transition-all duration-300"></span>
+            </div>
+          </div>
+
+          <!-- Milestone 4: 2026 Q4 -->
+          <div class="roadmap-node right roadmap-node-item relative flex justify-start md:w-1/2 md:pl-14 pl-14 md:ml-auto" data-milestone="4">
+            <div class="roadmap-content bg-white border border-borderColor rounded-[20px] p-7 md:p-8 shadow-[0_8px_24px_rgba(0,0,0,0.05)] w-full max-w-[440px] relative transition-all duration-300 hover:-translate-y-[4px] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] group">
+              <div class="flex items-center justify-between mb-2">
+                <span class="roadmap-year text-xs font-bold text-brandOrange uppercase tracking-wide">2026 Q4</span>
+                <span class="text-[11px] font-semibold text-textSecondary px-2.5 py-0.5 rounded-full bg-warmWhite border border-borderColor">Cloud Native</span>
+              </div>
+              <h4 class="text-xl font-bold text-textPrimary mb-2 group-hover:text-brandOrange transition-colors">Cloud Security Platform</h4>
+              <p class="text-textSecondary text-sm leading-relaxed">Expanding Aegrion's platform with continuous cloud security monitoring, posture assessment, and threat detection.</p>
+            </div>
+            <!-- Timeline Dot -->
+            <div class="timeline-dot absolute left-[23px] md:left-0 top-8 w-4 h-4 rounded-full bg-white border-2 border-borderColor transform -translate-x-[7px] md:-translate-x-[8px] transition-all duration-300 flex items-center justify-center">
+              <span class="w-1.5 h-1.5 rounded-full bg-borderColor transition-all duration-300"></span>
+            </div>
+          </div>
+
+          <!-- Milestone 5: 2027 Q1 -->
+          <div class="roadmap-node left roadmap-node-item relative flex justify-start md:justify-end md:w-1/2 md:pr-14 pl-14 md:pl-0" data-milestone="5">
+            <div class="roadmap-content bg-white border border-borderColor rounded-[20px] p-7 md:p-8 shadow-[0_8px_24px_rgba(0,0,0,0.05)] w-full max-w-[440px] relative transition-all duration-300 hover:-translate-y-[4px] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] group">
+              <div class="flex items-center justify-between mb-2">
+                <span class="roadmap-year text-xs font-bold text-brandOrange uppercase tracking-wide">2027 Q1</span>
+                <span class="text-[11px] font-semibold text-textSecondary px-2.5 py-0.5 rounded-full bg-warmWhite border border-borderColor">Enterprise</span>
+              </div>
+              <h4 class="text-xl font-bold text-textPrimary mb-2 group-hover:text-brandOrange transition-colors">Enterprise Security Expansion</h4>
+              <p class="text-textSecondary text-sm leading-relaxed">Expanding enterprise security capabilities across cloud infrastructure, identity, endpoints, and security operations.</p>
+            </div>
+            <!-- Timeline Dot -->
+            <div class="timeline-dot absolute left-[23px] md:left-auto md:right-0 top-8 w-4 h-4 rounded-full bg-white border-2 border-borderColor transform -translate-x-[7px] md:translate-x-[8px] transition-all duration-300 flex items-center justify-center">
+              <span class="w-1.5 h-1.5 rounded-full bg-borderColor transition-all duration-300"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Where We're Going Compact Block -->
+        <div class="where-we-are-going mt-16 max-w-[860px] mx-auto w-full">
+          <div class="bg-white border border-borderColor rounded-[24px] p-8 md:p-10 shadow-[0_12px_32px_rgba(0,0,0,0.04)] text-center flex flex-col items-center gap-4 relative overflow-hidden">
+            <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-brandOrange to-transparent"></div>
+            <span class="text-xs font-bold text-brandOrange uppercase tracking-wider px-3.5 py-1 rounded-full bg-softOrange border border-brandOrange/20">Vision Ahead</span>
+            <h3 class="text-2xl sm:text-3xl font-bold text-textPrimary font-display">Where We're Going</h3>
+            <p class="text-textPrimary text-base md:text-lg font-semibold max-w-xl leading-snug">"Building the next generation of intelligent security operations."</p>
+            <p class="text-textSecondary text-sm md:text-base leading-relaxed max-w-2xl">Aegrion is evolving into a cloud-native cybersecurity platform that helps organizations detect, investigate, and respond to threats with greater speed and clarity.</p>
+          </div>
+        </div>
+
+        <!-- 4. Security Capability Indicators -->
+        <div class="capability-indicators mt-12 max-w-[1000px] mx-auto w-full">
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            
+            <div class="bg-white/80 backdrop-blur-sm border border-borderColor rounded-2xl p-4 flex items-center gap-3 shadow-sm hover:border-brandOrange/40 hover:bg-white transition-all duration-200">
+              <div class="w-9 h-9 rounded-xl bg-softOrange text-brandOrange flex items-center justify-center flex-shrink-0">
+                <i data-lucide="shield-check" class="w-4 h-4"></i>
+              </div>
+              <span class="text-xs sm:text-sm font-bold text-textPrimary leading-tight">24/7 Security Monitoring</span>
+            </div>
+
+            <div class="bg-white/80 backdrop-blur-sm border border-borderColor rounded-2xl p-4 flex items-center gap-3 shadow-sm hover:border-brandOrange/40 hover:bg-white transition-all duration-200">
+              <div class="w-9 h-9 rounded-xl bg-softOrange text-brandOrange flex items-center justify-center flex-shrink-0">
+                <i data-lucide="bot" class="w-4 h-4"></i>
+              </div>
+              <span class="text-xs sm:text-sm font-bold text-textPrimary leading-tight">AI-Assisted Detection</span>
+            </div>
+
+            <div class="bg-white/80 backdrop-blur-sm border border-borderColor rounded-2xl p-4 flex items-center gap-3 shadow-sm hover:border-brandOrange/40 hover:bg-white transition-all duration-200">
+              <div class="w-9 h-9 rounded-xl bg-softOrange text-brandOrange flex items-center justify-center flex-shrink-0">
+                <i data-lucide="cloud" class="w-4 h-4"></i>
+              </div>
+              <span class="text-xs sm:text-sm font-bold text-textPrimary leading-tight">Cloud-Native Security</span>
+            </div>
+
+            <div class="bg-white/80 backdrop-blur-sm border border-borderColor rounded-2xl p-4 flex items-center gap-3 shadow-sm hover:border-brandOrange/40 hover:bg-white transition-all duration-200">
+              <div class="w-9 h-9 rounded-xl bg-softOrange text-brandOrange flex items-center justify-center flex-shrink-0">
+                <i data-lucide="lock" class="w-4 h-4"></i>
+              </div>
+              <span class="text-xs sm:text-sm font-bold text-textPrimary leading-tight">Enterprise Ready</span>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Careers Section -->
+  <section id="careers" class="careers-section animate-section bg-white py-[120px] w-full">
+    <div class="max-w-[1320px] mx-auto px-6">
+      <div class="section-header text-center flex flex-col items-center mb-16">
+        <span class="section-tag text-[14px] font-bold tracking-wider text-brandOrange uppercase mb-3 block">Careers</span>
+        <h2 class="section-title text-3xl sm:text-4xl lg:text-[48px] font-bold text-textPrimary leading-[1.15] mb-6">Join Our Mission</h2>
+        <p class="section-subtitle text-lg text-textSecondary max-w-[800px] leading-relaxed">Aegrion is currently a solo-founder-led startup. These are remote collaborator / internship roles with a ₹3,000–5,000/month stipend plus a performance-based bonus.</p>
+      </div>
+
+      <div class="careers-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Job 1 -->
+        <div class="career-card bg-white rounded-[20px] border border-borderColor p-8 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-6">
+          <div class="career-top flex justify-between items-start">
+            <h3 class="text-xl font-bold text-textPrimary">SOC Analyst</h3>
+            <span class="location-badge px-2.5 py-1 text-xs font-semibold text-brandOrange bg-softOrange rounded-full">Remote</span>
+          </div>
+          <p class="text-textSecondary text-sm leading-relaxed flex-1">Monitor security log aggregates, handle incident triage workflows, and collaborate with engineering.</p>
+          <span class="location-badge inline-block text-xs font-bold text-textSecondary py-1 bg-warmWhite border border-borderColor rounded-full px-3 text-center self-start">₹3,000–5,000/mo + performance bonus</span>
+          <button class="btn btn-secondary apply-btn-trigger px-6 py-3 rounded-full border border-brandOrange text-brandOrange hover:text-white hover:bg-brandOrange font-medium hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 w-full text-center" data-role="SOC Analyst">Apply Now</button>
+        </div>
+
+        <!-- Job 2 -->
+        <div class="career-card bg-white rounded-[20px] border border-borderColor p-8 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-6">
+          <div class="career-top flex justify-between items-start">
+            <h3 class="text-xl font-bold text-textPrimary">Cloud Security Engineer</h3>
+            <span class="location-badge px-2.5 py-1 text-xs font-semibold text-brandOrange bg-softOrange rounded-full">Remote</span>
+          </div>
+          <p class="text-textSecondary text-sm leading-relaxed flex-1">Build configurations for Kubernetes security, design AWS/GCP setups, and lead security checks.</p>
+          <span class="location-badge inline-block text-xs font-bold text-textSecondary py-1 bg-warmWhite border border-borderColor rounded-full px-3 text-center self-start">₹3,000–5,000/mo + performance bonus</span>
+          <button class="btn btn-secondary apply-btn-trigger px-6 py-3 rounded-full border border-brandOrange text-brandOrange hover:text-white hover:bg-brandOrange font-medium hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 w-full text-center" data-role="Cloud Security Engineer">Apply Now</button>
+        </div>
+
+        <!-- Job 3 -->
+        <div class="career-card bg-white rounded-[20px] border border-borderColor p-8 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-6">
+          <div class="career-top flex justify-between items-start">
+            <h3 class="text-xl font-bold text-textPrimary">Security Researcher</h3>
+            <span class="location-badge px-2.5 py-1 text-xs font-semibold text-brandOrange bg-softOrange rounded-full">Remote</span>
+          </div>
+          <p class="text-textSecondary text-sm leading-relaxed flex-1">Analyze vulnerabilities, write detection logic, and research threats for Aegrion Labs.</p>
+          <span class="location-badge inline-block text-xs font-bold text-textSecondary py-1 bg-warmWhite border border-borderColor rounded-full px-3 text-center self-start">₹3,000–5,000/mo + performance bonus</span>
+          <button class="btn btn-secondary apply-btn-trigger px-6 py-3 rounded-full border border-brandOrange text-brandOrange hover:text-white hover:bg-brandOrange font-medium hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 w-full text-center" data-role="Security Researcher">Apply Now</button>
+        </div>
+
+        <!-- Job 4 -->
+        <div class="career-card bg-white rounded-[20px] border border-borderColor p-8 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-6">
+          <div class="career-top flex justify-between items-start">
+            <h3 class="text-xl font-bold text-textPrimary">DevSecOps Engineer</h3>
+            <span class="location-badge px-2.5 py-1 text-xs font-semibold text-brandOrange bg-softOrange rounded-full">Remote</span>
+          </div>
+          <p class="text-textSecondary text-sm leading-relaxed flex-1">Integrate vulnerability scanning, design secrets managers, and run CI/CD verification.</p>
+          <span class="location-badge inline-block text-xs font-bold text-textSecondary py-1 bg-warmWhite border border-borderColor rounded-full px-3 text-center self-start">₹3,000–5,000/mo + performance bonus</span>
+          <button class="btn btn-secondary apply-btn-trigger px-6 py-3 rounded-full border border-brandOrange text-brandOrange hover:text-white hover:bg-brandOrange font-medium hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 w-full text-center" data-role="DevSecOps Engineer">Apply Now</button>
+        </div>
+
+        <!-- Job 5 -->
+        <div class="career-card bg-white rounded-[20px] border border-borderColor p-8 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-6">
+          <div class="career-top flex justify-between items-start">
+            <h3 class="text-xl font-bold text-textPrimary">Backend Developer</h3>
+            <span class="location-badge px-2.5 py-1 text-xs font-semibold text-brandOrange bg-softOrange rounded-full">Remote</span>
+          </div>
+          <p class="text-textSecondary text-sm leading-relaxed flex-1">Build scalable API engines, database models, and microservice connections in Go / Rust.</p>
+          <span class="location-badge inline-block text-xs font-bold text-textSecondary py-1 bg-warmWhite border border-borderColor rounded-full px-3 text-center self-start">₹3,000–5,000/mo + performance bonus</span>
+          <button class="btn btn-secondary apply-btn-trigger px-6 py-3 rounded-full border border-brandOrange text-brandOrange hover:text-white hover:bg-brandOrange font-medium hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 w-full text-center" data-role="Backend Developer">Apply Now</button>
+        </div>
+
+        <!-- Job 6 -->
+        <div class="career-card bg-white rounded-[20px] border border-borderColor p-8 shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-6">
+          <div class="career-top flex justify-between items-start">
+            <h3 class="text-xl font-bold text-textPrimary">Frontend Developer</h3>
+            <span class="location-badge px-2.5 py-1 text-xs font-semibold text-brandOrange bg-softOrange rounded-full">Remote</span>
+          </div>
+          <p class="text-textSecondary text-sm leading-relaxed flex-1">Develop beautiful interfaces, responsive metrics charts, and secure cloud control dashboards.</p>
+          <span class="location-badge inline-block text-xs font-bold text-textSecondary py-1 bg-warmWhite border border-borderColor rounded-full px-3 text-center self-start">₹3,000–5,000/mo + performance bonus</span>
+          <button class="btn btn-secondary apply-btn-trigger px-6 py-3 rounded-full border border-brandOrange text-brandOrange hover:text-white hover:bg-brandOrange font-medium hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 w-full text-center" data-role="Frontend Developer">Apply Now</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="contact-section animate-section bg-gradient-to-br from-brandOrange via-secondaryOrange to-[#FFBE5C] py-[120px] w-full text-white">
+    <div class="max-w-[1320px] mx-auto px-6">
+      <div class="section-header text-center flex flex-col items-center mb-16">
+        <span class="section-tag inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-sm font-semibold tracking-wide uppercase mb-3">Get in Touch</span>
+        <h2 class="section-title text-3xl sm:text-4xl lg:text-[48px] font-bold leading-[1.15] mb-6">Schedule a Consultation</h2>
+        <p class="section-subtitle text-lg text-white/95 max-w-700 leading-relaxed">Let's discuss how Aegrion can secure your enterprise environments.</p>
+      </div>
+
+      <div class="contact-grid grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch">
+        <!-- Contact Information -->
+        <div class="contact-info h-full">
+          <div class="info-card bg-white/10 backdrop-blur-md rounded-[20px] border border-white/20 p-8 flex flex-col gap-8 h-full">
+            <h3 class="text-2xl font-bold text-white mb-2">Office Information</h3>
+            <div class="info-item flex gap-4">
+              <div class="w-10 h-10 rounded-lg bg-white/10 border border-white/20 flex items-center justify-center flex-shrink-0 text-white"><i data-lucide="map-pin"></i></div>
+              <div>
+                <h4 class="text-sm font-semibold text-white/80 uppercase tracking-wider mb-1">Address</h4>
+                <p class="text-white text-[15px] leading-relaxed">1st Floor, NGO Nagar, Jawahar Nagar 12th Street, Thirumangalam, Madurai, Tamil Nadu, India</p>
+              </div>
+            </div>
+            <div class="info-item flex gap-4">
+              <div class="w-10 h-10 rounded-lg bg-white/10 border border-white/20 flex items-center justify-center flex-shrink-0 text-white"><i data-lucide="mail"></i></div>
+              <div>
+                <h4 class="text-sm font-semibold text-white/80 uppercase tracking-wider mb-1">Email</h4>
+                <p class="text-white text-[15px] leading-relaxed">aegrioncsoffical@gmail.com</p>
+              </div>
+            </div>
+            <div class="info-item flex gap-4">
+              <div class="w-10 h-10 rounded-lg bg-white/10 border border-white/20 flex items-center justify-center flex-shrink-0 text-white"><i data-lucide="phone"></i></div>
+              <div>
+                <h4 class="text-sm font-semibold text-white/80 uppercase tracking-wider mb-1">Phone</h4>
+                <p class="text-white text-[15px] leading-relaxed">+91 93630 80588</p>
+              </div>
+            </div>
+            <div class="info-item flex gap-4">
+              <div class="w-10 h-10 rounded-lg bg-white/10 border border-white/20 flex items-center justify-center flex-shrink-0 text-white"><i data-lucide="clock"></i></div>
+              <div>
+                <h4 class="text-sm font-semibold text-white/80 uppercase tracking-wider mb-1">Business Hours</h4>
+                <p class="text-white text-[15px] leading-relaxed">Mon - Fri: 9:00 AM - 6:00 PM (IST)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="contact-form-container bg-white rounded-[20px] border border-borderColor p-8 shadow-[0_8px_24px_rgba(0,0,0,0.05)] text-textPrimary">
+          <form id="contact-form" class="flex flex-col gap-6">
+            <div class="form-row grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="form-group flex flex-col gap-2">
+                <label for="contact-name" class="text-xs font-bold text-textSecondary uppercase tracking-wider">Full Name</label>
+                <input type="text" id="contact-name" required class="w-full px-4 py-3 rounded-xl border border-borderColor focus:outline-none focus:border-brandOrange text-textPrimary font-medium text-sm transition-all duration-200" placeholder="Full Name">
+              </div>
+              <div class="form-group flex flex-col gap-2">
+                <label for="contact-company" class="text-xs font-bold text-textSecondary uppercase tracking-wider">Company</label>
+                <input type="text" id="contact-company" class="w-full px-4 py-3 rounded-xl border border-borderColor focus:outline-none focus:border-brandOrange text-textPrimary font-medium text-sm transition-all duration-200" placeholder="Company Name">
+              </div>
+            </div>
+            <div class="form-row grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="form-group flex flex-col gap-2">
+                <label for="contact-email" class="text-xs font-bold text-textSecondary uppercase tracking-wider">Email Address</label>
+                <input type="email" id="contact-email" required class="w-full px-4 py-3 rounded-xl border border-borderColor focus:outline-none focus:border-brandOrange text-textPrimary font-medium text-sm transition-all duration-200" placeholder="name@company.com">
+              </div>
+              <div class="form-group flex flex-col gap-2">
+                <label for="contact-phone" class="text-xs font-bold text-textSecondary uppercase tracking-wider">Phone Number</label>
+                <input type="tel" id="contact-phone" class="w-full px-4 py-3 rounded-xl border border-borderColor focus:outline-none focus:border-brandOrange text-textPrimary font-medium text-sm transition-all duration-200" placeholder="+91 98765 43210">
+              </div>
+            </div>
+            <div class="form-group flex flex-col gap-2">
+              <label for="contact-service" class="text-xs font-bold text-textSecondary uppercase tracking-wider">Service Required</label>
+              <select id="contact-service" required class="w-full px-4 py-3 rounded-xl border border-borderColor focus:outline-none focus:border-brandOrange text-textPrimary font-medium text-sm transition-all duration-200 bg-white">
+                <option value="" disabled selected>Select a Service</option>
+                <option value="Managed SOC">Managed SOC</option>
+                <option value="Cloud Security">Cloud Security Assessment</option>
+                <option value="Incident Response">Incident Response Support</option>
+                <option value="Penetration Testing">Penetration Testing</option>
+                <option value="Compliance Consulting">Compliance Consulting (SOC2/ISO)</option>
+                <option value="Vulnerability Assessment">Vulnerability Assessment</option>
+                <option value="Security Awareness Training">Security Awareness Training</option>
+                <option value="Managed Detection & Response (MDR)">Managed Detection & Response (MDR)</option>
+                <option value="Threat Intelligence">Threat Intelligence</option>
+                <option value="DevSecOps Consulting">DevSecOps Consulting</option>
+                <option value="AI Security Assessment">AI Security Assessment</option>
+                <option value="Other / Custom Requirement">Other / Custom Requirement</option>
+              </select>
+            </div>
+            <div class="form-group hidden flex-col gap-2" id="custom-requirement-group">
+              <label for="custom-requirement" class="text-xs font-bold text-textSecondary uppercase tracking-wider">Describe Your Requirement</label>
+              <textarea id="custom-requirement" rows="3" class="w-full px-4 py-3 rounded-xl border border-borderColor focus:outline-none focus:border-brandOrange text-textPrimary font-medium text-sm transition-all duration-200" placeholder="Tell us about your cybersecurity challenge, project, or custom requirement..."></textarea>
+            </div>
+            <div class="form-group flex flex-col gap-2">
+              <label for="contact-message" class="text-xs font-bold text-textSecondary uppercase tracking-wider">Message</label>
+              <textarea id="contact-message" rows="5" required class="w-full px-4 py-3 rounded-xl border border-borderColor focus:outline-none focus:border-brandOrange text-textPrimary font-medium text-sm transition-all duration-200" placeholder="How can our security team help you?"></textarea>
+            </div>
+            <button type="submit" class="px-6 py-3.5 rounded-full text-white bg-brandOrange hover:bg-darkOrange font-medium shadow-sm transition-all duration-200 w-full text-center">Submit Request</button>
+          </form>
+            <div class="form-success-message hidden flex-col items-center justify-center text-center py-12 gap-4" id="contact-success-box">
+            <i data-lucide="check-circle" class="text-success w-14 h-14"></i>
+            <h4 class="text-2xl font-bold text-textPrimary">Consultation Request Received!</h4>
+            <p class="text-textSecondary max-w-sm">Our security engineers are reviewing your details. We will contact you within 2 business hours.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pre-Footer CTA Section -->
+  <section class="animate-section bg-[#0B0914] py-[100px] w-full text-white border-t border-b border-white/5 relative overflow-hidden">
+    <!-- Glowing background radial blur -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[350px] bg-brandOrange/8 rounded-full blur-[140px] pointer-events-none"></div>
+
+    <div class="max-w-[1320px] mx-auto px-6 relative z-10 grid grid-cols-1 md:grid-cols-3 gap-8">
+      
+      <!-- Card 1 -->
+      <div class="premium-cta-card cta-card-reveal group relative overflow-hidden rounded-[24px] bg-white/5 border border-white/12 p-8 h-[330px] flex flex-col justify-between backdrop-blur-[18px] shadow-[0_20px_60px_rgba(0,0,0,0.18)] cursor-pointer">
+        <!-- Top sweep highlight line -->
+        <div class="reflective-line"></div>
+        <!-- Hover Gradient -->
+        <div class="absolute inset-0 bg-gradient-to-tr from-brandOrange/8 via-amber-500/3 to-yellow-500/3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out animated-gradient-bg"></div>
+        <!-- Particle Effect -->
+        <div class="absolute inset-0 pointer-events-none overflow-hidden opacity-10">
+          <div class="particle-1 absolute left-[20%] top-[30%] w-2 h-2 rounded-full bg-brandOrange blur-[1px]"></div>
+          <div class="particle-2 absolute right-[30%] top-[40%] w-1.5 h-1.5 rounded-full bg-amber-400 blur-[1px]"></div>
+          <div class="particle-3 absolute left-[40%] bottom-[30%] w-2.5 h-2.5 rounded-full bg-yellow-300 blur-[1.5px]"></div>
+        </div>
+        
+        <!-- Content -->
+        <div class="relative z-10 flex flex-col gap-5">
+          <!-- Icon Circle -->
+          <div class="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shadow-[0_0_20px_rgba(255,140,0,0.05)] group-hover:shadow-[0_0_20px_rgba(255,140,0,0.22)] group-hover:border-brandOrange/40 transition-all duration-300 floating-icon-container">
+            <i data-lucide="calendar" class="w-7 h-7 text-white group-hover:text-brandOrange group-hover:rotate-[5deg] transition-all duration-300"></i>
+          </div>
+          <div class="flex flex-col gap-2">
+            <h4 class="text-[28px] lg:text-[34px] font-bold text-white tracking-[-0.5px] leading-tight font-display">Book Consultation</h4>
+            <p class="text-white/80 text-sm lg:text-[18px] leading-relaxed max-w-[80%] font-medium">Schedule a direct strategy meeting with our security architects.</p>
+          </div>
+        </div>
+
+        <!-- Bottom Action -->
+        <div class="relative z-10 flex items-center justify-between border-t border-white/10 pt-4 group-hover:border-brandOrange/20 transition-colors duration-300">
+          <span class="text-xs font-semibold text-white/50 group-hover:text-white transition-colors duration-300">Book Consultation</span>
+          <span class="inline-flex items-center gap-1.5 text-xs font-bold text-brandOrange select-none">
+            <span>Book Now</span>
+            <i data-lucide="arrow-right" class="w-3.5 h-3.5 transform group-hover:translate-x-1.5 transition-transform duration-300"></i>
+          </span>
+        </div>
+        
+        <a href="#contact" class="absolute inset-0 z-20" aria-label="Book Consultation"></a>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="premium-cta-card cta-card-reveal group relative overflow-hidden rounded-[24px] bg-white/5 border border-white/12 p-8 h-[330px] flex flex-col justify-between backdrop-blur-[18px] shadow-[0_20px_60px_rgba(0,0,0,0.18)] cursor-pointer">
+        <!-- Top sweep highlight line -->
+        <div class="reflective-line"></div>
+        <!-- Hover Gradient -->
+        <div class="absolute inset-0 bg-gradient-to-tr from-brandOrange/8 via-amber-500/3 to-yellow-500/3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out animated-gradient-bg"></div>
+        <!-- Particle Effect -->
+        <div class="absolute inset-0 pointer-events-none overflow-hidden opacity-10">
+          <div class="particle-1 absolute left-[25%] top-[25%] w-2 h-2 rounded-full bg-brandOrange blur-[1px]"></div>
+          <div class="particle-2 absolute right-[25%] top-[35%] w-1.5 h-1.5 rounded-full bg-amber-400 blur-[1px]"></div>
+          <div class="particle-3 absolute left-[45%] bottom-[25%] w-2.5 h-2.5 rounded-full bg-yellow-300 blur-[1.5px]"></div>
+        </div>
+        
+        <!-- Content -->
+        <div class="relative z-10 flex flex-col gap-5">
+          <!-- Icon Circle -->
+          <div class="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shadow-[0_0_20px_rgba(255,140,0,0.05)] group-hover:shadow-[0_0_20px_rgba(255,140,0,0.22)] group-hover:border-brandOrange/40 transition-all duration-300 floating-icon-container">
+            <i data-lucide="shield" class="w-7 h-7 text-white group-hover:text-brandOrange group-hover:rotate-[5deg] transition-all duration-300"></i>
+          </div>
+          <div class="flex flex-col gap-2">
+            <h4 class="text-[28px] lg:text-[34px] font-bold text-white tracking-[-0.5px] leading-tight font-display">Talk to an Expert</h4>
+            <p class="text-white/80 text-sm lg:text-[18px] leading-relaxed max-w-[80%] font-medium">Speak with Aegrion cybersecurity specialists.</p>
+          </div>
+        </div>
+
+        <!-- Bottom Action -->
+        <div class="relative z-10 flex items-center justify-between border-t border-white/10 pt-4 group-hover:border-brandOrange/20 transition-colors duration-300">
+          <span class="text-xs font-semibold text-white/50 group-hover:text-white transition-colors duration-300">Talk to an Expert</span>
+          <span class="inline-flex items-center gap-1.5 text-xs font-bold text-brandOrange select-none">
+            <span>Start Conversation</span>
+            <i data-lucide="arrow-right" class="w-3.5 h-3.5 transform group-hover:translate-x-1.5 transition-transform duration-300"></i>
+          </span>
+        </div>
+        
+        <a href="mailto:aegrioncsoffical@gmail.com" class="absolute inset-0 z-20" aria-label="Talk to an Expert"></a>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="premium-cta-card cta-card-reveal group relative overflow-hidden rounded-[24px] bg-white/5 border border-white/12 p-8 h-[330px] flex flex-col justify-between backdrop-blur-[18px] shadow-[0_20px_60px_rgba(0,0,0,0.18)] cursor-pointer">
+        <!-- Top sweep highlight line -->
+        <div class="reflective-line"></div>
+        <!-- Hover Gradient -->
+        <div class="absolute inset-0 bg-gradient-to-tr from-brandOrange/8 via-amber-500/3 to-yellow-500/3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out animated-gradient-bg"></div>
+        <!-- Particle Effect -->
+        <div class="absolute inset-0 pointer-events-none overflow-hidden opacity-10">
+          <div class="particle-1 absolute left-[30%] top-[20%] w-2 h-2 rounded-full bg-brandOrange blur-[1px]"></div>
+          <div class="particle-2 absolute right-[20%] top-[30%] w-1.5 h-1.5 rounded-full bg-amber-400 blur-[1px]"></div>
+          <div class="particle-3 absolute left-[50%] bottom-[20%] w-2.5 h-2.5 rounded-full bg-yellow-300 blur-[1.5px]"></div>
+        </div>
+        
+        <!-- Content -->
+        <div class="relative z-10 flex flex-col gap-5">
+          <!-- Icon Circle -->
+          <div class="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shadow-[0_0_20px_rgba(255,140,0,0.05)] group-hover:shadow-[0_0_20px_rgba(255,140,0,0.22)] group-hover:border-brandOrange/40 transition-all duration-300 floating-icon-container">
+            <i data-lucide="rocket" class="w-7 h-7 text-white group-hover:text-brandOrange group-hover:rotate-[5deg] transition-all duration-300"></i>
+          </div>
+          <div class="flex flex-col gap-2">
+            <h4 class="text-[28px] lg:text-[34px] font-bold text-white tracking-[-0.5px] leading-tight font-display">Request Live Demo</h4>
+            <p class="text-white/80 text-sm lg:text-[18px] leading-relaxed max-w-[80%] font-medium">Experience the Aegrion Security Platform.</p>
+          </div>
+        </div>
+
+        <!-- Bottom Action -->
+        <div class="relative z-10 flex items-center justify-between border-t border-white/10 pt-4 group-hover:border-brandOrange/20 transition-colors duration-300">
+          <span class="text-xs font-semibold text-white/50 group-hover:text-white transition-colors duration-300">Request Live Demo</span>
+          <span class="inline-flex items-center gap-1.5 text-xs font-bold text-brandOrange select-none">
+            <span>Schedule Demo</span>
+            <i data-lucide="arrow-right" class="w-3.5 h-3.5 transform group-hover:translate-x-1.5 transition-transform duration-300"></i>
+          </span>
+        </div>
+        
+        <a href="#contact" class="absolute inset-0 z-20" aria-label="Request Live Demo"></a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer-section bg-footerNavy py-14 lg:py-16 w-full text-white">
+    <div class="max-w-[1320px] mx-auto px-6 flex flex-col gap-10">
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-[2fr_1fr_1fr_1fr_1fr_1fr_1.8fr] gap-8 lg:gap-6 items-start">
+        
+        <!-- Brand -->
+        <div class="flex flex-col gap-4 sm:col-span-2 md:col-span-3 lg:col-span-1">
+          <a href="index.html" class="logo flex items-center" aria-label="Aegrion Security Home">
+            <img src="/logo.png" alt="Aegrion Security Logo" class="brand-logo h-[48px] w-auto object-contain">
+          </a>
+          <p class="brand-desc text-white/70 text-[13px] leading-relaxed">
+            Building resilient security pipelines for cloud infrastructures. Built in India, serving global enterprise pipelines.
+          </p>
+          <div class="social-links flex items-center gap-2.5 pt-1">
+            <a href="#" aria-label="LinkedIn" class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-brandOrange hover:border-brandOrange text-white/70 hover:text-white transition-all duration-200"><i data-lucide="linkedin" class="w-3.5 h-3.5"></i></a>
+            <a href="#" aria-label="Instagram" class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-brandOrange hover:border-brandOrange text-white/70 hover:text-white transition-all duration-200"><i data-lucide="instagram" class="w-3.5 h-3.5"></i></a>
+            <a href="#" aria-label="YouTube" class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-brandOrange hover:border-brandOrange text-white/70 hover:text-white transition-all duration-200"><i data-lucide="youtube" class="w-3.5 h-3.5"></i></a>
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-brandOrange hover:border-brandOrange text-white/70 hover:text-white transition-all duration-200"><i data-lucide="github" class="w-3.5 h-3.5"></i></a>
+            <a href="#" aria-label="X (formerly Twitter)" class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-brandOrange hover:border-brandOrange text-white/70 hover:text-white transition-all duration-200"><i data-lucide="twitter" class="w-3.5 h-3.5"></i></a>
+          </div>
+        </div>
+
+        <!-- Products -->
+        <div class="flex flex-col gap-3.5">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-white/50">Products</h4>
+          <ul class="flex flex-col gap-2.5 text-sm text-white/70">
+            <li><a href="index.html#updates" class="hover:text-brandOrange transition-colors">Platform</a></li>
+            <li><a href="index.html#updates" class="hover:text-brandOrange transition-colors">Security Center</a></li>
+            <li><a href="index.html#updates" class="hover:text-brandOrange transition-colors">Threat Monitoring</a></li>
+            <li><a href="index.html#updates" class="hover:text-brandOrange transition-colors">AI Security Copilot</a></li>
+            <li><a href="index.html#updates" class="hover:text-brandOrange transition-colors">Compliance</a></li>
+            <li><a href="index.html#updates" class="hover:text-brandOrange transition-colors">Reports</a></li>
+          </ul>
+        </div>
+
+        <!-- Solutions -->
+        <div class="flex flex-col gap-3.5">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-white/50">Solutions</h4>
+          <ul class="flex flex-col gap-2.5 text-sm text-white/70">
+            <li><a href="index.html#solutions" class="hover:text-brandOrange transition-colors">Startups</a></li>
+            <li><a href="index.html#solutions" class="hover:text-brandOrange transition-colors">SMB</a></li>
+            <li><a href="index.html#solutions" class="hover:text-brandOrange transition-colors">Enterprise</a></li>
+            <li><a href="index.html#solutions" class="hover:text-brandOrange transition-colors">Healthcare</a></li>
+          </ul>
+        </div>
+
+        <!-- Services -->
+        <div class="flex flex-col gap-3.5">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-white/50">Services</h4>
+          <ul class="flex flex-col gap-2.5 text-sm text-white/70">
+            <li><a href="index.html#services" class="hover:text-brandOrange transition-colors">Managed SOC</a></li>
+            <li><a href="index.html#services" class="hover:text-brandOrange transition-colors">Cloud Security</a></li>
+            <li><a href="index.html#services" class="hover:text-brandOrange transition-colors">Incident Response</a></li>
+            <li><a href="index.html#services" class="hover:text-brandOrange transition-colors">Penetration Testing</a></li>
+            <li><a href="index.html#services" class="hover:text-brandOrange transition-colors">Vulnerability Assessment</a></li>
+          </ul>
+        </div>
+
+        <!-- Resources -->
+        <div class="flex flex-col gap-3.5">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-white/50">Resources</h4>
+          <ul class="flex flex-col gap-2.5 text-sm text-white/70">
+            <li><a href="index.html#services" class="hover:text-brandOrange transition-colors">Documentation</a></li>
+            <li><a href="index.html#services" class="hover:text-brandOrange transition-colors">API Docs</a></li>
+            <li><a href="index.html#services" class="hover:text-brandOrange transition-colors">Blog</a></li>
+            <li><a href="index.html#services" class="hover:text-brandOrange transition-colors">Case Studies</a></li>
+          </ul>
+        </div>
+
+        <!-- Company -->
+        <div class="flex flex-col gap-3.5">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-white/50">Company</h4>
+          <ul class="flex flex-col gap-2.5 text-sm text-white/70">
+            <li><a href="index.html#about" class="hover:text-brandOrange transition-colors">About</a></li>
+            <li><a href="index.html#careers" class="hover:text-brandOrange transition-colors">Careers</a></li>
+            <li><a href="index.html#contact" class="hover:text-brandOrange transition-colors">Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Newsletter -->
+        <div class="flex flex-col gap-3.5 sm:col-span-2 md:col-span-1 lg:col-span-1">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-white/50">Newsletter</h4>
+          <p class="text-white/70 text-[13px] leading-relaxed">Subscribe to our Threat Intelligence briefings.</p>
+          <div class="flex flex-col gap-2.5">
+            <a href="https://www.linkedin.com/build-relation/newsletter-follow?entityUrn=7489910017622503424" target="_blank" rel="noopener noreferrer" class="w-full h-11 px-4 rounded-full bg-brandOrange text-white hover:bg-darkOrange shadow-sm font-semibold text-xs transition-all duration-200 flex items-center justify-center gap-2 select-none cursor-pointer">
+              <i data-lucide="linkedin" class="w-4 h-4"></i>
+              <span>Subscribe on LinkedIn</span>
+            </a>
+            <p class="text-white/40 text-[11px] leading-relaxed">
+              Follow The Secure Byte on LinkedIn for cybersecurity insights, product updates, and threat intelligence.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-white/50 border-t border-white/5">
+        <p>&copy; 2026 Aegrion Technologies. All Rights Reserved.</p>
+        <div class="bottom-links flex flex-wrap gap-x-6 gap-y-2 justify-center">
+          <a href="privacy.html" class="hover:text-white transition-colors">Privacy Policy</a>
+          <a href="terms.html" class="hover:text-white transition-colors">Terms of Service</a>
+          <a href="security.html" class="hover:text-white transition-colors">Security</a>
+          <a href="security.html" class="hover:text-white transition-colors">Trust Center</a>
+          <a href="login.html" class="login-link hover:text-white transition-colors">Client Login</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Cookie Consent Banner -->
+  <div id="cookie-banner" class="cookie-banner">
+    <div class="cookie-banner-content flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 w-full text-textPrimary">
+      <p class="text-[14px] text-textSecondary leading-relaxed">
+        We use cookies to run this site and understand how it's used. See our <a href="privacy.html" class="text-brandOrange underline">Privacy Policy</a> for details.
+      </p>
+      <div class="cookie-banner-buttons flex gap-3 flex-shrink-0 w-full sm:w-auto justify-end">
+        <button id="cookie-manage-btn" class="px-5 py-2.5 rounded-full text-sm border border-borderColor hover:bg-warmWhite text-textSecondary font-semibold transition-all duration-200">Manage Preferences</button>
+        <button id="cookie-accept-btn" class="px-5 py-2.5 rounded-full text-sm bg-brandOrange hover:bg-darkOrange text-white font-semibold shadow-sm transition-all duration-200">Allow All</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cookie Preferences Modal -->
+  <div id="cookie-prefs-modal" class="modal-overlay">
+    <div class="glass-card modal-content text-textPrimary flex flex-col gap-6">
+      <div class="modal-header flex items-center justify-between border-b border-borderColor pb-4">
+        <h3 class="text-2xl font-bold">Your Cookie Preferences</h3>
+        <button class="close-modal text-2xl font-semibold" id="close-cookie-modal-btn" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="cookie-prefs-list flex flex-col gap-5">
+        <div class="cookie-pref-item flex justify-between items-center gap-6 p-4 rounded-xl bg-warmWhite border border-borderColor">
+          <div class="cookie-pref-info flex flex-col gap-1">
+            <span class="cookie-pref-title font-bold text-textPrimary text-base">Strictly Necessary</span>
+            <p class="cookie-pref-desc text-xs text-textSecondary leading-relaxed">These cookies are essential for the website to function and cannot be switched off.</p>
+          </div>
+          <span class="cookie-pref-status text-xs font-bold text-success uppercase tracking-wider">Always Active</span>
+        </div>
+        <div class="cookie-pref-item flex justify-between items-center gap-6 p-4 rounded-xl bg-warmWhite border border-borderColor">
+          <div class="cookie-pref-info flex flex-col gap-1">
+            <span class="cookie-pref-title font-bold text-textPrimary text-base">Functional</span>
+            <p class="cookie-pref-desc text-xs text-textSecondary leading-relaxed">These cookies enable personalization and enhanced functionality, such as remembering your settings.</p>
+          </div>
+          <label class="toggle-switch" for="cookie-pref-functional">
+            <input type="checkbox" id="cookie-pref-functional" title="Functional Cookies" aria-label="Functional Cookies" checked>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <div class="cookie-pref-item flex justify-between items-center gap-6 p-4 rounded-xl bg-warmWhite border border-borderColor">
+          <div class="cookie-pref-info flex flex-col gap-1">
+            <span class="cookie-pref-title font-bold text-textPrimary text-base">Analytics</span>
+            <p class="cookie-pref-desc text-xs text-textSecondary leading-relaxed">These cookies allow us to count visits and traffic sources so we can measure and improve performance.</p>
+          </div>
+          <label class="toggle-switch" for="cookie-pref-analytics">
+            <input type="checkbox" id="cookie-pref-analytics" title="Analytics Cookies" aria-label="Analytics Cookies" checked>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+      <button id="cookie-save-prefs-btn" class="px-6 py-3.5 rounded-full text-white bg-brandOrange hover:bg-darkOrange font-medium shadow-sm transition-all duration-200 w-full text-center">Confirm My Choices</button>
+    </div>
+  </div>
+
+  <!-- Application Modal -->
+  <div id="apply-modal" class="modal-overlay">
+    <div class="glass-card modal-content text-textPrimary flex flex-col gap-6">
+      <div class="modal-header flex items-center justify-between border-b border-borderColor pb-4">
+        <h3 class="text-2xl font-bold">Apply: <span id="modal-role-name" class="text-brandOrange">Role Name</span></h3>
+        <button class="close-modal text-2xl font-semibold" id="close-modal-btn" aria-label="Close modal">&times;</button>
+      </div>
+      <form id="career-application-form" class="flex flex-col gap-4">
+        <input type="hidden" id="app-role" name="role">
+        <div class="form-row grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="form-group flex flex-col gap-1.5">
+            <label for="app-name" class="text-xs font-bold text-textSecondary uppercase tracking-wider">Full Name</label>
+            <input type="text" id="app-name" required class="px-4 py-3 rounded-xl border border-borderColor focus:outline-none focus:border-brandOrange text-textPrimary text-sm transition-all duration-200" placeholder="Full Name">
+          </div>
+          <div class="form-group flex flex-col gap-1.5">
+            <label for="app-email" class="text-xs font-bold text-textSecondary uppercase tracking-wider">Email Address</label>
+            <input type="email" id="app-email" required class="px-4 py-3 rounded-xl border border-borderColor focus:outline-none focus:border-brandOrange text-textPrimary text-sm transition-all duration-200" placeholder="name@company.com">
+          </div>
+        </div>
+        <div class="form-row grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="form-group flex flex-col gap-1.5">
+            <label for="app-portfolio" class="text-xs font-bold text-textSecondary uppercase tracking-wider">Portfolio / LinkedIn URL</label>
+            <input type="url" id="app-portfolio" class="px-4 py-3 rounded-xl border border-borderColor focus:outline-none focus:border-brandOrange text-textPrimary text-sm transition-all duration-200" placeholder="https://linkedin.com/in/username">
+          </div>
+          <div class="form-group flex flex-col gap-1.5">
+            <label for="app-resume" class="text-xs font-bold text-textSecondary uppercase tracking-wider">Resume URL</label>
+            <input type="url" id="app-resume" required class="px-4 py-3 rounded-xl border border-borderColor focus:outline-none focus:border-brandOrange text-textPrimary text-sm transition-all duration-200" placeholder="Link to PDF / Drive">
+          </div>
+        </div>
+        <div class="form-group flex flex-col gap-1.5">
+          <label for="app-message" class="text-xs font-bold text-textSecondary uppercase tracking-wider">Cover Note</label>
+          <textarea id="app-message" rows="4" class="px-4 py-3 rounded-xl border border-borderColor focus:outline-none focus:border-brandOrange text-textPrimary text-sm transition-all duration-200" placeholder="Tell us why you are interested in Aegrion Security..."></textarea>
+        </div>
+        <button type="submit" class="px-6 py-3.5 rounded-full text-white bg-brandOrange hover:bg-darkOrange font-medium shadow-sm transition-all duration-200 w-full text-center">Submit Application</button>
+      </form>
+      <div class="form-success-message hidden flex-col items-center justify-center text-center py-8 gap-4" id="app-success-box">
+        <i data-lucide="check-circle" class="text-success w-14 h-14"></i>
+        <h4 class="text-2xl font-bold text-textPrimary">Application Submitted!</h4>
+        <p class="text-textSecondary max-w-xs">Thank you for applying. Our talent team will review your application and get in touch.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Core Javascript File -->
+  <script type="module" src="main.js"></script>
+
+  <!-- Premium Animations Injection -->
+  <script>
+    // 1. Dynamic Headline Word Swapper (Fade & vertical slide-up transition)
+    function initHeroTextSwapper() {
+      const wordEl = document.getElementById('dynamic-keyword');
+      if (!wordEl) return;
+      
+      const words = ["Cloud Era.", "Modern Enterprise.", "Digital Future.", "Next Generation."];
+      let index = 0;
+      
+      setInterval(() => {
+        const nextIndex = (index + 1) % words.length;
+        const nextWord = words[nextIndex];
+        
+        // Create clone for outgoing animation (slides upward by 20px and fades out)
+        const outgoing = document.createElement('span');
+        outgoing.textContent = wordEl.textContent;
+        outgoing.className = "absolute left-0 top-0 w-full text-transparent bg-clip-text bg-gradient-to-r from-white to-[#FFF4EA] font-black leading-[1.2] whitespace-normal block opacity-100 transform translate-y-0";
+        outgoing.style.transition = "opacity 700ms cubic-bezier(0.16, 1, 0.3, 1), transform 700ms cubic-bezier(0.16, 1, 0.3, 1)";
+        wordEl.parentNode.appendChild(outgoing);
+        
+        // Start outgoing slide
+        requestAnimationFrame(() => {
+          outgoing.style.opacity = '0';
+          outgoing.style.transform = 'translateY(-20px)';
+        });
+        setTimeout(() => outgoing.remove(), 800);
+        
+        // Reset incoming element state instantly (no transition, placed 20px below)
+        wordEl.style.transition = 'none';
+        wordEl.style.opacity = '0';
+        wordEl.style.transform = 'translateY(20px)';
+        wordEl.textContent = nextWord;
+        
+        // Force reflow
+        wordEl.offsetHeight;
+        
+        // Re-enable transition and animate incoming element (slides upward from 20px below to 0)
+        wordEl.style.transition = "opacity 700ms cubic-bezier(0.16, 1, 0.3, 1), transform 700ms cubic-bezier(0.16, 1, 0.3, 1)";
+        requestAnimationFrame(() => {
+          wordEl.style.opacity = '1';
+          wordEl.style.transform = 'translateY(0)';
+        });
+        
+        index = nextIndex;
+      }, 3200); // 2.5 seconds pause + 0.7 seconds transition
+    }
+
+    // 2. Metrics Counter Animation
+    function initMetricsCounters() {
+      const counters = document.querySelectorAll('.metric-counter');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const target = entry.target;
+            const targetVal = parseFloat(target.getAttribute('data-value'));
+            const isInt = target.getAttribute('data-is-int') === 'true';
+            const suffix = target.getAttribute('data-suffix') || '';
+            let start = 0;
+            const duration = 2000; // 2 seconds
+            const startTime = performance.now();
+            
+            function update(currentTime) {
+              const elapsed = currentTime - startTime;
+              const progress = Math.min(elapsed / duration, 1);
+              const easeProgress = progress * (2 - progress); // Ease out
+              const currentVal = start + easeProgress * (targetVal - start);
+              
+              if (isInt) {
+                target.textContent = Math.floor(currentVal) + suffix;
+              } else {
+                target.textContent = currentVal.toFixed(2) + suffix;
+              }
+              
+              if (progress < 1) {
+                requestAnimationFrame(update);
+              }
+            }
+            
+            requestAnimationFrame(update);
+            observer.unobserve(target);
+          }
+        });
+      }, { threshold: 0.1 });
+      
+      counters.forEach(c => observer.observe(c));
+    }
+
+    // 3. Hero Parallax
+    function initHeroParallax() {
+      const hero = document.getElementById('home');
+      const ill = document.querySelector('.hero-visual-container');
+      if (!hero || !ill) return;
+      
+      hero.addEventListener('mousemove', (e) => {
+        const rect = hero.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        ill.style.transform = `translate(${x * 6}px, ${y * 6}px)`;
+      });
+      
+      hero.addEventListener('mouseleave', () => {
+        ill.style.transform = 'translate(0, 0)';
+      });
+    }
+
+    // 4. Contact Form Service Selector Enhancement
+    function initServiceSelectorEnhancement() {
+      const selectEl = document.getElementById('contact-service');
+      const groupEl = document.getElementById('custom-requirement-group');
+      const textareaEl = document.getElementById('custom-requirement');
+      const messageEl = document.getElementById('contact-message');
+      const formEl = document.getElementById('contact-form');
+      
+      if (!selectEl || !groupEl || !textareaEl || !messageEl || !formEl) return;
+      
+      let originalMessage = "";
+      
+      messageEl.addEventListener('input', () => {
+        if (selectEl.value !== "Other / Custom Requirement") {
+          originalMessage = messageEl.value;
+        }
+      });
+      
+      selectEl.addEventListener('change', () => {
+        if (selectEl.value === "Other / Custom Requirement") {
+          groupEl.style.display = 'flex';
+          groupEl.classList.remove('hidden');
+          textareaEl.required = true;
+        } else {
+          groupEl.style.display = 'none';
+          groupEl.classList.add('hidden');
+          textareaEl.required = false;
+          textareaEl.value = "";
+          messageEl.value = originalMessage;
+        }
+      });
+      
+      formEl.addEventListener('submit', () => {
+        if (selectEl.value === "Other / Custom Requirement") {
+          const customReqText = textareaEl.value.trim();
+          if (customReqText) {
+            messageEl.value = `[Custom Requirement Detail]:\n${customReqText}\n\n[General Message]:\n${originalMessage || messageEl.value}`;
+          }
+        }
+      }, { capture: true });
+    }
+
+    // Run when DOM content is loaded
+    document.addEventListener('DOMContentLoaded', () => {
+      initHeroTextSwapper();
+      initMetricsCounters();
+      initHeroParallax();
+      initServiceSelectorEnhancement();
+    });
+  </script>
+</body>
+</html>

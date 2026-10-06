@@ -1,0 +1,22 @@
+# Node.js dependencies
+node_modules/
+dist/
+
+# Local env files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Temp and archive folders
+aegrion_updated/
+*.zip
+.agents/
+.claude/
+.cursor/
+.devin/
+.netlify/
+desktop.ini
+supabase/.temp/
+.DS_Store

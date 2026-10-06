@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms of Service | Aegrion Security</title>
+  <meta name="description" content="Terms of Service for Aegrion Security - cloud-native security operations and consulting.">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/logo.png">
+  <link rel="shortcut icon" href="/logo.png" type="image/x-icon">
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Tailwind CSS Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brandOrange: '#F48120',
+            darkOrange: '#E66A00',
+            lightOrange: '#FFA640',
+            softOrange: '#FFF4EA',
+            warmWhite: '#FFF8F2',
+            bgPrimary: '#FFFFFF',
+            textPrimary: '#111111',
+            textSecondary: '#5F6368',
+            borderColor: '#E9E9E9',
+            success: '#28A745',
+            error: '#D92D20',
+            footerNavy: '#17122A',
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          maxWidth: {
+            '1320': '1320px',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Mobile nav compatibility overrides */
+    @media (max-width: 1023px) {
+      #nav-menu {
+        display: none;
+        position: fixed;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        background: #FFFFFF;
+        border-bottom: 1px solid #E9E9E9;
+        padding: 2rem;
+        z-index: 49;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+      }
+      #nav-menu.active {
+        display: block;
+      }
+      #nav-menu ul {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body class="bg-white text-textPrimary antialiased">
+
+  <!-- Premium Preloader -->
+  <div id="preloader">
+    <div class="preloader-content">
+      <img src="/logo.png" alt="Aegrion Security Logo" class="preloader-logo">
+      <div class="preloader-bar-container">
+        <div class="preloader-bar"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dynamic Aurora Background Canvas (Hidden via style.css) -->
+  <canvas id="aurora-canvas"></canvas>
+
+  <!-- Sticky Header Navigation -->
+  <header id="main-header" class="sticky top-0 z-50 h-[80px] bg-white border-b border-[#E9E9E9] transition-all duration-300 w-full shadow-none">
+    <div class="max-w-[1320px] mx-auto px-8 h-full flex items-center justify-between">
+      <!-- Left Section -->
+      <div class="flex items-center lg:w-[266px] xl:w-[338px] flex-shrink-0">
+        <a href="index.html" class="flex items-center" aria-label="Aegrion Security Home">
+          <img src="/logo.png" alt="Aegrion Security Logo" class="brand-logo w-[170px] h-auto object-contain">
+        </a>
+      </div>
+      
+      <!-- Center Section -->
+      <nav id="nav-menu" class="hidden lg:flex items-center justify-center flex-1">
+        <ul class="flex items-center gap-[32px] xl:gap-[48px] text-[16px] font-medium text-[#4B5563]">
+          <li><a href="index.html#home" class="hover:text-brandOrange transition-colors duration-200">Platform</a></li>
+          <li><a href="index.html#solutions" class="hover:text-brandOrange transition-colors duration-200">Solutions</a></li>
+          <li><a href="index.html#updates" class="hover:text-brandOrange transition-colors duration-200">Products</a></li>
+          <li><a href="index.html#services" class="hover:text-brandOrange transition-colors duration-200">Resources</a></li>
+          <li><a href="index.html#about" class="hover:text-brandOrange transition-colors duration-200">Company</a></li>
+          <li><a href="index.html#careers" class="hover:text-brandOrange transition-colors duration-200">Careers</a></li>
+        </ul>
+      </nav>
+      
+      <!-- Right Section (Desktop) -->
+      <div class="hidden lg:flex items-center justify-end gap-4 lg:w-[266px] xl:w-[338px] ml-auto flex-shrink-0 header-actions">
+        <a href="login.html" class="login-link flex items-center justify-center h-[42px] px-6 text-[15px] font-semibold text-[#17122A] bg-transparent border border-[#DADDE3] rounded-full hover:bg-[#F7F8FA] hover:border-brandOrange hover:text-brandOrange focus:ring-2 focus:ring-brandOrange/40 focus:outline-none active:bg-[#ECEEF2] transition-all duration-200 cursor-pointer">Login</a>
+        <a href="index.html#contact" class="flex items-center justify-center h-12 px-8 text-[15px] font-medium text-white bg-brandOrange rounded-full hover:bg-darkOrange transition-all duration-200">Book Demo</a>
+      </div>
+
+      <!-- Right Section (Tablet/Mobile controls) -->
+      <div class="flex items-center lg:hidden">
+        <a href="login.html" class="login-link flex items-center justify-center h-[36px] px-4 text-sm font-semibold text-[#17122A] bg-transparent border border-[#DADDE3] rounded-full hover:bg-[#F7F8FA] hover:border-brandOrange hover:text-brandOrange focus:ring-2 focus:ring-brandOrange/40 focus:outline-none active:bg-[#ECEEF2] transition-all duration-200 cursor-pointer mr-3">Login</a>
+        <a href="index.html#contact" class="hidden md:inline-flex items-center justify-center h-10 px-5 text-sm font-semibold text-white bg-brandOrange rounded-full hover:bg-darkOrange transition-all duration-200 mr-4">Book Demo</a>
+        <button class="menu-toggle flex flex-col gap-1.5 justify-center items-end w-8 h-8 focus:outline-none" aria-label="Toggle Menu">
+          <span class="w-6 h-0.5 bg-textPrimary transition-transform duration-200"></span>
+          <span class="w-5 h-0.5 bg-textPrimary transition-transform duration-200"></span>
+          <span class="w-6 h-0.5 bg-textPrimary transition-transform duration-200"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <section class="legal-section bg-warmWhite py-[120px] w-full">
+    <div class="max-w-[800px] mx-auto px-6">
+      <div class="legal-content bg-white border border-borderColor rounded-[20px] p-8 md:p-12 shadow-[0_8px_24px_rgba(0,0,0,0.05)]">
+        <a href="index.html" class="legal-back-link inline-flex items-center gap-2 text-brandOrange hover:text-darkOrange font-semibold text-sm mb-6 transition-colors">
+          <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Home
+        </a>
+        <h1 class="text-3xl sm:text-4xl font-bold text-textPrimary mb-2 leading-tight">Terms of Service</h1>
+        <p class="legal-updated text-xs text-textSecondary uppercase tracking-wider mb-8 block">Last Updated: August 4, 2026</p>
+        
+        <div class="legal-body text-[15px] text-textSecondary leading-relaxed flex flex-col gap-6">
+          <p>Welcome to Aegrion Security. By accessing or using our website, services, or submitting consultation or career requests, you agree to comply with and be bound by these Terms of Service.</p>
+          
+          <h2 class="text-xl font-bold text-textPrimary mt-4 border-b border-borderColor pb-2">1. Site Usage Rules</h2>
+          <p>You agree to use this website only for lawful purposes related to learning about, contacting, or applying to Aegrion Security. You must not use the website to transmit malicious code, attempt unauthorized access to our server systems, or execute automated crawlers/scanners that negatively impact site performance.</p>
+
+          <h2 class="text-xl font-bold text-textPrimary mt-4 border-b border-borderColor pb-2">2. Intellectual Property</h2>
+          <p>All content, branding, logos, graphics, designs, and code (HTML, CSS, JavaScript) on this website are the intellectual property of Aegrion Security. You may not copy, distribute, modify, or repurpose any site content for commercial purposes without prior written authorization.</p>
+
+          <h2 class="text-xl font-bold text-textPrimary mt-4 border-b border-borderColor pb-2">3. Service Availability & State of Build</h2>
+          <p>Our flagship product, <strong>Janus</strong>, is currently in an early development phase. As a solo-founder-stage project, we make no guarantees about the continuous availability, uptime, features, or reliability of Janus or other roadmapped services. We reserve the right to modify, suspend, or discontinue any offerings without notice.</p>
+
+          <h2 class="text-xl font-bold text-textPrimary mt-4 border-b border-borderColor pb-2">4. Career Application Terms</h2>
+          <p>Hiring positions listed on this site, including the Cloud Security Engineer and Security Researcher roles, are evaluation-stage positions. Selected candidates may be offered stipend-based roles or internships. Submitting an application does not guarantee a response, interview, or final offer of employment.</p>
+
+          <h2 class="text-xl font-bold text-textPrimary mt-4 border-b border-borderColor pb-2">5. Limitation of Liability</h2>
+          <p>Aegrion Security and its founder shall not be liable for any direct, indirect, incidental, or consequential damages resulting from your use of or inability to use this website or our early-stage products, even if advised of the possibility of such damages.</p>
+
+          <h2 class="text-xl font-bold text-textPrimary mt-4 border-b border-borderColor pb-2">6. Governing Law</h2>
+          <p>These Terms of Service are governed by and construed in accordance with the laws of India. Any disputes arising from these terms or your use of the site shall be subject to the exclusive jurisdiction of the courts in <strong>Madurai, Tamil Nadu, India</strong>.</p>
+
+          <h2 class="text-xl font-bold text-textPrimary mt-4 border-b border-borderColor pb-2">7. Contact Information</h2>
+          <p>For inquiries regarding these Terms of Service, please contact us at:</p>
+          <ul class="list-disc pl-6 flex flex-col gap-2">
+            <li><strong>Email:</strong> aegrioncsoffical@gmail.com</li>
+            <li><strong>Phone:</strong> +91 93630 80588</li>
+            <li><strong>Address:</strong> Madurai, Tamil Nadu, India</li>
+          </ul>
+
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer-section bg-footerNavy py-14 lg:py-16 w-full text-white">
+    <div class="max-w-[1320px] mx-auto px-6 flex flex-col gap-10">
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-[2fr_1fr_1fr_1fr_1fr_1fr_1.8fr] gap-8 lg:gap-6 items-start">
+        
+        <!-- Brand -->
+        <div class="flex flex-col gap-4 sm:col-span-2 md:col-span-3 lg:col-span-1">
+          <a href="index.html" class="logo flex items-center" aria-label="Aegrion Security Home">
+            <img src="/logo.png" alt="Aegrion Security Logo" class="brand-logo h-[48px] w-auto object-contain">
+          </a>
+          <p class="brand-desc text-white/70 text-[13px] leading-relaxed">
+            Building resilient security pipelines for cloud infrastructures. Built in India, serving global enterprise pipelines.
+          </p>
+          <div class="social-links flex items-center gap-2.5 pt-1">
+            <a href="#" aria-label="LinkedIn" class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-brandOrange hover:border-brandOrange text-white/70 hover:text-white transition-all duration-200"><i data-lucide="linkedin" class="w-3.5 h-3.5"></i></a>
+            <a href="#" aria-label="Instagram" class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-brandOrange hover:border-brandOrange text-white/70 hover:text-white transition-all duration-200"><i data-lucide="instagram" class="w-3.5 h-3.5"></i></a>
+            <a href="#" aria-label="YouTube" class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-brandOrange hover:border-brandOrange text-white/70 hover:text-white transition-all duration-200"><i data-lucide="youtube" class="w-3.5 h-3.5"></i></a>
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-brandOrange hover:border-brandOrange text-white/70 hover:text-white transition-all duration-200"><i data-lucide="github" class="w-3.5 h-3.5"></i></a>
+            <a href="#" aria-label="X (formerly Twitter)" class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-brandOrange hover:border-brandOrange text-white/70 hover:text-white transition-all duration-200"><i data-lucide="twitter" class="w-3.5 h-3.5"></i></a>
+          </div>
+        </div>
+
+        <!-- Products -->
+        <div class="flex flex-col gap-3.5">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-white/50">Products</h4>
+          <ul class="flex flex-col gap-2.5 text-sm text-white/70">
+            <li><a href="index.html#updates" class="hover:text-brandOrange transition-colors">Platform</a></li>
+            <li><a href="index.html#updates" class="hover:text-brandOrange transition-colors">Security Center</a></li>
+            <li><a href="index.html#updates" class="hover:text-brandOrange transition-colors">Threat Monitoring</a></li>
+            <li><a href="index.html#updates" class="hover:text-brandOrange transition-colors">AI Security Copilot</a></li>
+            <li><a href="index.html#updates" class="hover:text-brandOrange transition-colors">Compliance</a></li>
+            <li><a href="index.html#updates" class="hover:text-brandOrange transition-colors">Reports</a></li>
+          </ul>
+        </div>
+
+        <!-- Solutions -->
+        <div class="flex flex-col gap-3.5">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-white/50">Solutions</h4>
+          <ul class="flex flex-col gap-2.5 text-sm text-white/70">
+            <li><a href="index.html#solutions" class="hover:text-brandOrange transition-colors">Startups</a></li>
+            <li><a href="index.html#solutions" class="hover:text-brandOrange transition-colors">SMB</a></li>
+            <li><a href="index.html#solutions" class="hover:text-brandOrange transition-colors">Enterprise</a></li>
+            <li><a href="index.html#solutions" class="hover:text-brandOrange transition-colors">Healthcare</a></li>
+          </ul>
+        </div>
+
+        <!-- Services -->
+        <div class="flex flex-col gap-3.5">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-white/50">Services</h4>
+          <ul class="flex flex-col gap-2.5 text-sm text-white/70">
+            <li><a href="index.html#services" class="hover:text-brandOrange transition-colors">Managed SOC</a></li>
+            <li><a href="index.html#services" class="hover:text-brandOrange transition-colors">Cloud Security</a></li>
+            <li><a href="index.html#services" class="hover:text-brandOrange transition-colors">Incident Response</a></li>
+            <li><a href="index.html#services" class="hover:text-brandOrange transition-colors">Penetration Testing</a></li>
+            <li><a href="index.html#services" class="hover:text-brandOrange transition-colors">Vulnerability Assessment</a></li>
+          </ul>
+        </div>
+
+        <!-- Resources -->
+        <div class="flex flex-col gap-3.5">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-white/50">Resources</h4>
+          <ul class="flex flex-col gap-2.5 text-sm text-white/70">
+            <li><a href="index.html#services" class="hover:text-brandOrange transition-colors">Documentation</a></li>
+            <li><a href="index.html#services" class="hover:text-brandOrange transition-colors">API Docs</a></li>
+            <li><a href="index.html#services" class="hover:text-brandOrange transition-colors">Blog</a></li>
+            <li><a href="index.html#services" class="hover:text-brandOrange transition-colors">Case Studies</a></li>
+          </ul>
+        </div>
+
+        <!-- Company -->
+        <div class="flex flex-col gap-3.5">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-white/50">Company</h4>
+          <ul class="flex flex-col gap-2.5 text-sm text-white/70">
+            <li><a href="index.html#about" class="hover:text-brandOrange transition-colors">About</a></li>
+            <li><a href="index.html#careers" class="hover:text-brandOrange transition-colors">Careers</a></li>
+            <li><a href="index.html#contact" class="hover:text-brandOrange transition-colors">Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Newsletter -->
+        <div class="flex flex-col gap-3.5 sm:col-span-2 md:col-span-1 lg:col-span-1">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-white/50">Newsletter</h4>
+          <p class="text-white/70 text-[13px] leading-relaxed">Subscribe to our Threat Intelligence briefings.</p>
+          <div class="flex flex-col gap-2.5">
+            <a href="https://www.linkedin.com/build-relation/newsletter-follow?entityUrn=7489910017622503424" target="_blank" rel="noopener noreferrer" class="w-full h-11 px-4 rounded-full bg-brandOrange text-white hover:bg-darkOrange shadow-sm font-semibold text-xs transition-all duration-200 flex items-center justify-center gap-2 select-none cursor-pointer">
+              <i data-lucide="linkedin" class="w-4 h-4"></i>
+              <span>Subscribe on LinkedIn</span>
+            </a>
+            <p class="text-white/40 text-[11px] leading-relaxed">
+              Follow The Secure Byte on LinkedIn for cybersecurity insights, product updates, and threat intelligence.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-white/50 border-t border-white/5">
+        <p>&copy; 2026 Aegrion Technologies. All Rights Reserved.</p>
+        <div class="bottom-links flex flex-wrap gap-x-6 gap-y-2 justify-center">
+          <a href="privacy.html" class="hover:text-white transition-colors">Privacy Policy</a>
+          <a href="terms.html" class="hover:text-white transition-colors">Terms of Service</a>
+          <a href="security.html" class="hover:text-white transition-colors">Security</a>
+          <a href="security.html" class="hover:text-white transition-colors">Trust Center</a>
+          <a href="login.html" class="login-link hover:text-white transition-colors">Client Login</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Cookie Consent Banner -->
+  <div id="cookie-banner" class="cookie-banner">
+    <div class="cookie-banner-content flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 w-full text-textPrimary">
+      <p class="text-[14px] text-textSecondary leading-relaxed">
+        We use cookies to run this site and understand how it's used. See our <a href="privacy.html" class="text-brandOrange underline">Privacy Policy</a> for details.
+      </p>
+      <div class="cookie-banner-buttons flex gap-3 flex-shrink-0 w-full sm:w-auto justify-end">
+        <button id="cookie-manage-btn" class="px-5 py-2.5 rounded-full text-sm border border-borderColor hover:bg-warmWhite text-textSecondary font-semibold transition-all duration-200">Manage Preferences</button>
+        <button id="cookie-accept-btn" class="px-5 py-2.5 rounded-full text-sm bg-brandOrange hover:bg-darkOrange text-white font-semibold shadow-sm transition-all duration-200">Allow All</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cookie Preferences Modal -->
+  <div id="cookie-prefs-modal" class="modal-overlay">
+    <div class="glass-card modal-content text-textPrimary flex flex-col gap-6">
+      <div class="modal-header flex items-center justify-between border-b border-borderColor pb-4">
+        <h3 class="text-2xl font-bold">Your Cookie Preferences</h3>
+        <button class="close-modal text-2xl font-semibold" id="close-cookie-modal-btn" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="cookie-prefs-list flex flex-col gap-5">
+        <div class="cookie-pref-item flex justify-between items-center gap-6 p-4 rounded-xl bg-warmWhite border border-borderColor">
+          <div class="cookie-pref-info flex flex-col gap-1">
+            <span class="cookie-pref-title font-bold text-textPrimary text-base">Strictly Necessary</span>
+            <p class="cookie-pref-desc text-xs text-textSecondary leading-relaxed">These cookies are essential for the website to function and cannot be switched off.</p>
+          </div>
+          <span class="cookie-pref-status text-xs font-bold text-success uppercase tracking-wider">Always Active</span>
+        </div>
+        <div class="cookie-pref-item flex justify-between items-center gap-6 p-4 rounded-xl bg-warmWhite border border-borderColor">
+          <div class="cookie-pref-info flex flex-col gap-1">
+            <span class="cookie-pref-title font-bold text-textPrimary text-base">Functional</span>
+            <p class="cookie-pref-desc text-xs text-textSecondary leading-relaxed">These cookies enable personalization and enhanced functionality, such as remembering your settings.</p>
+          </div>
+          <label class="toggle-switch" for="cookie-pref-functional">
+            <input type="checkbox" id="cookie-pref-functional" title="Functional Cookies" aria-label="Functional Cookies" checked>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <div class="cookie-pref-item flex justify-between items-center gap-6 p-4 rounded-xl bg-warmWhite border border-borderColor">
+          <div class="cookie-pref-info flex flex-col gap-1">
+            <span class="cookie-pref-title font-bold text-textPrimary text-base">Analytics</span>
+            <p class="cookie-pref-desc text-xs text-textSecondary leading-relaxed">These cookies allow us to count visits and traffic sources so we can measure and improve performance.</p>
+          </div>
+          <label class="toggle-switch" for="cookie-pref-analytics">
+            <input type="checkbox" id="cookie-pref-analytics" title="Analytics Cookies" aria-label="Analytics Cookies" checked>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+      <button id="cookie-save-prefs-btn" class="px-6 py-3.5 rounded-full text-white bg-brandOrange hover:bg-darkOrange font-medium shadow-sm transition-all duration-200 w-full text-center">Confirm My Choices</button>
+    </div>
+  </div>
+
+  <!-- Core Javascript File -->
+  <script type="module" src="main.js"></script>
+</body>
+</html>

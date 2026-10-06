@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Aegrion Security</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brandOrange: '#F48120',
+            secondaryOrange: '#FFA640',
+            lightOrange: '#FFBE5C',
+            softOrange: '#FFF4EA',
+            warmWhite: '#FFF8F2',
+            textPrimary: '#111111',
+            textSecondary: '#4B5563',
+            borderColor: '#E9E9E9',
+            footerNavy: '#17122A',
+            success: '#16A34A',
+            danger: '#EF4444',
+            warning: '#F59E0B'
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Load Supabase JS SDK & Cloudflare Turnstile -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .animate-spin {
+      animation: spin 1s linear infinite;
+    }
+  </style>
+</head>
+<body class="bg-warmWhite min-h-screen flex flex-col md:flex-row overflow-x-hidden">
+
+  <!-- LEFT PANEL: Marketing & Visuals -->
+  <div class="hidden md:flex md:w-1/2 bg-gradient-to-br from-brandOrange via-secondaryOrange to-[#FFBE5C] text-white p-12 lg:p-16 flex-col justify-between relative overflow-hidden">
+    <!-- Aurora background decoration -->
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.15),transparent_60%)] pointer-events-none"></div>
+    
+    <!-- Logo -->
+    <div class="z-10">
+      <a href="index.html" class="inline-block">
+        <img src="/logo.png" alt="Aegrion Security Logo" class="h-12 w-auto object-contain brightness-0 invert">
+      </a>
+    </div>
+
+    <!-- Cybersecurity Illustration -->
+    <div class="z-10 my-auto py-8">
+      <div class="max-w-[480px]">
+        <h1 class="text-4xl lg:text-5xl font-black tracking-[-0.03em] leading-[1.1] mb-6">
+          Enterprise Security Built for the Cloud Era.
+        </h1>
+        <p class="text-white/90 text-lg mb-10 leading-relaxed font-medium">
+          Protect your digital assets, detect vulnerabilities in real-time, and automate incident response with Aegrion's unified SecOps platform.
+        </p>
+
+        <!-- Dynamic Illustration Grid -->
+        <div class="bg-white/10 backdrop-blur-md rounded-[20px] p-6 border border-white/20 shadow-xl mb-10">
+          <div class="flex items-center justify-between mb-4 border-b border-white/10 pb-3">
+            <div class="flex items-center gap-2">
+              <span class="w-3 h-3 rounded-full bg-[#FF5F56]"></span>
+              <span class="w-3 h-3 rounded-full bg-[#FFBD2E]"></span>
+              <span class="w-3 h-3 rounded-full bg-[#27C93F]"></span>
+              <span class="text-xs font-semibold tracking-wider uppercase ml-2 text-white/70">Aegrion Sentinel</span>
+            </div>
+            <span class="bg-white/20 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Active</span>
+          </div>
+          <div class="space-y-3">
+            <div class="flex items-center justify-between text-sm">
+              <span class="text-white/80">Threat Monitoring Status</span>
+              <span class="text-green-300 font-semibold flex items-center gap-1">
+                <i data-lucide="check-circle" class="w-4 h-4"></i> Secure
+              </span>
+            </div>
+            <div class="h-2 w-full bg-white/20 rounded-full overflow-hidden">
+              <div class="h-full w-4/5 bg-white rounded-full"></div>
+            </div>
+            <div class="flex justify-between text-xs text-white/60">
+              <span>99.9% Scanning Done</span>
+              <span>0 Threats Detected</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Benefits Bullet Points -->
+        <ul class="space-y-4">
+          <li class="flex items-center gap-3">
+            <div class="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
+              <i data-lucide="check" class="w-4 h-4 text-white"></i>
+            </div>
+            <span class="font-semibold text-[16px]">14 Day Free Trial</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <div class="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
+              <i data-lucide="check" class="w-4 h-4 text-white"></i>
+            </div>
+            <span class="font-semibold text-[16px]">No Credit Card Required</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <div class="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
+              <i data-lucide="check" class="w-4 h-4 text-white"></i>
+            </div>
+            <span class="font-semibold text-[16px]">Secure Cloud Platform</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <div class="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
+              <i data-lucide="check" class="w-4 h-4 text-white"></i>
+            </div>
+            <span class="font-semibold text-[16px]">Enterprise Ready</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Footer Copyright -->
+    <div class="z-10 text-white/60 text-xs">
+      &copy; 2026 Aegrion Security Inc. All rights reserved.
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL: Authentication Form -->
+  <div class="w-full md:w-1/2 flex items-center justify-center p-6 sm:p-12 lg:p-16 bg-white min-h-screen">
+    <div class="w-full max-w-[440px]">
+      
+      <!-- Mobile Logo -->
+      <div class="md:hidden mb-8">
+        <a href="index.html">
+          <img src="/logo.png" alt="Aegrion Security Logo" class="h-10 w-auto object-contain">
+        </a>
+      </div>
+
+      <div class="mb-8">
+        <h2 class="text-3xl font-black text-textPrimary tracking-tight mb-2">Welcome Back</h2>
+        <p class="text-textSecondary font-medium text-sm">Enter your credentials to access your security dashboard.</p>
+      </div>
+
+      <!-- Login Form -->
+      <form id="login-form" class="space-y-5">
+        <div class="flex flex-col gap-1.5">
+          <label for="login-email" class="text-xs font-bold text-textSecondary uppercase tracking-wider">Work Email</label>
+          <input type="email" id="login-email" required class="w-full px-4 py-3 rounded-xl border border-borderColor focus:outline-none focus:border-brandOrange text-textPrimary font-medium text-sm transition-all duration-200" placeholder="name@company.com">
+        </div>
+        
+        <div class="flex flex-col gap-1.5">
+          <div class="flex justify-between items-center">
+            <label for="login-password" class="text-xs font-bold text-textSecondary uppercase tracking-wider">Password</label>
+            <a href="forgot-password.html" class="text-xs font-semibold text-brandOrange hover:text-brandOrange/85 transition-colors">Forgot Password?</a>
+          </div>
+          <input type="password" id="login-password" required class="w-full px-4 py-3 rounded-xl border border-borderColor focus:outline-none focus:border-brandOrange text-textPrimary font-medium text-sm transition-all duration-200" placeholder="••••••••">
+        </div>
+
+        <div class="flex items-center justify-between">
+          <label class="flex items-center gap-2 cursor-pointer select-none">
+            <input type="checkbox" id="login-remember" class="w-4 h-4 rounded border-borderColor text-brandOrange focus:ring-brandOrange accent-brandOrange">
+            <span class="text-xs font-semibold text-textSecondary">Remember Me</span>
+          </label>
+        </div>
+
+        <!-- Resend verification email container -->
+        <div id="resend-verification-container" class="hidden flex-col gap-3 bg-red-50 border border-red-100 rounded-2xl p-4 text-xs font-semibold text-textSecondary">
+          <div class="text-danger flex items-center gap-1.5 font-bold">
+            <i data-lucide="alert-circle" class="w-4 h-4"></i>
+            <span>Email Verification Required</span>
+          </div>
+          <p class="leading-relaxed">
+            Your email has not been verified. Please verify your email using the link sent to your inbox.
+          </p>
+          <div class="flex items-center gap-2.5 pt-1">
+            <button type="button" id="btn-resend-verify" class="px-4 py-2 text-white bg-brandOrange hover:bg-brandOrange/95 rounded-full font-bold transition-all text-[11px] shadow-sm">
+              Resend Verification Email
+            </button>
+            <button type="button" onclick="document.getElementById('resend-verification-container').classList.add('hidden')" class="px-4 py-2 border border-borderColor bg-white text-textPrimary hover:bg-warmWhite rounded-full font-bold transition-all text-[11px]">
+              Back to Login
+            </button>
+          </div>
+        </div>
+
+        <!-- Cloudflare Turnstile Verification -->
+        <div class="my-3 flex justify-center w-full">
+          <div id="turnstile-login-container" class="min-h-[65px] flex items-center justify-center"></div>
+        </div>
+
+        <button type="submit" class="w-full py-3.5 rounded-full text-white bg-brandOrange hover:bg-brandOrange/95 font-semibold text-sm transition-all duration-200 shadow-sm text-center">
+          Login to Dashboard
+        </button>
+      </form>
+
+      <!-- Divider -->
+      <div class="relative my-6 flex items-center justify-center">
+        <div class="absolute inset-0 flex items-center">
+          <div class="w-full border-t border-borderColor"></div>
+        </div>
+        <span class="relative px-3 bg-white text-xs font-bold text-textSecondary uppercase tracking-widest">Or Continue With</span>
+      </div>
+
+      <!-- Third-party Auth Buttons -->
+      <div class="grid grid-cols-2 gap-3">
+        <button id="btn-oauth-google" type="button" class="flex items-center justify-center gap-2 py-3 px-4 rounded-xl border border-borderColor bg-white hover:bg-warmWhite transition-all duration-200 shadow-sm font-semibold text-sm text-textPrimary" aria-label="Sign in with Google">
+          <svg class="w-5 h-5" viewBox="0 0 24 24">
+            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+          </svg>
+          <span>Google</span>
+        </button>
+        <button id="btn-oauth-github" type="button" class="flex items-center justify-center gap-2 py-3 px-4 rounded-xl border border-borderColor bg-white hover:bg-warmWhite transition-all duration-200 shadow-sm font-semibold text-sm text-textPrimary" aria-label="Sign in with GitHub">
+          <svg class="w-5 h-5 text-gray-900" fill="currentColor" viewBox="0 0 24 24">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.577.688.479C19.138 20.161 22 16.416 22 12c0-5.523-4.477-10-10-10z"/>
+          </svg>
+          <span>GitHub</span>
+        </button>
+      </div>
+
+      <!-- Register Link -->
+      <div class="mt-8 text-center text-sm font-medium text-textSecondary">
+        Don't have an account? 
+        <a href="register.html" class="font-bold text-brandOrange hover:underline ml-1">Create Account</a>
+      </div>
+
+    </div>
+  </div>
+
+  <script type="module">
+    import { supabase, showNotification, ensureUserProfileAndWorkspace, renderTurnstileWidget, LOGIN_URL, DASHBOARD_URL } from './supabase-client.js';
+
+    // Initialize icons
+    lucide.createIcons();
+
+    let turnstileToken = null;
+    let turnstileWidgetId = null;
+
+    // Initialize Cloudflare Turnstile widget
+    async function initTurnstile() {
+      const container = document.getElementById('turnstile-login-container');
+      if (!container) return;
+      turnstileWidgetId = await renderTurnstileWidget(container, {
+        action: 'login',
+        onSuccess: (token) => {
+          turnstileToken = token;
+        },
+        onError: () => {
+          turnstileToken = null;
+          showNotification("Security verification failed. Please try again.", "error");
+        },
+        onExpire: () => {
+          turnstileToken = null;
+          showNotification("Security verification expired. Please try again.", "warning");
+        }
+      });
+    }
+
+    // Helper to reset Turnstile widget safely
+    function resetTurnstile() {
+      if (window.turnstile && turnstileWidgetId !== null) {
+        try {
+          window.turnstile.reset(turnstileWidgetId);
+        } catch (_) {}
+      }
+      turnstileToken = null;
+    }
+
+    // Listen for Auth changes (OAuth and link-based automated redirects)
+    supabase.auth.onAuthStateChange(async (event, session) => {
+      if (event === 'SIGNED_IN' && session) {
+        if (session.user.email_confirmed_at || session.user.app_metadata?.provider !== 'email') {
+          await ensureUserProfileAndWorkspace(session.user);
+          window.location.href = DASHBOARD_URL;
+        }
+      }
+    });
+
+    // Catch verification errors/notices from URL search params & initialize Turnstile
+    window.addEventListener('load', () => {
+      initTurnstile();
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('error') === 'unverified') {
+        showNotification("Please verify your email using the link sent to your inbox.", "warning");
+        document.getElementById('resend-verification-container').classList.remove('hidden');
+      } else if (params.get('verified') === 'true') {
+        showNotification("Email verified successfully! You can now log in.", "success");
+      }
+    });
+
+    // Login logic
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const email = document.getElementById('login-email').value.trim().toLowerCase();
+      const password = document.getElementById('login-password').value;
+
+      // Cloudflare Turnstile Security Verification Check
+      if (!turnstileToken) {
+        showNotification("Please complete the security verification.", "warning");
+        return;
+      }
+
+      const loginBtn = e.target.querySelector('button[type="submit"]');
+      const originalText = loginBtn.innerHTML;
+
+      // Enable loading state
+      loginBtn.disabled = true;
+      loginBtn.innerHTML = '<span class="flex items-center justify-center gap-2"><i data-lucide="loader" class="w-4 h-4 animate-spin text-white"></i> Logging in...</span>';
+      lucide.createIcons();
+
+      try {
+        // Clear any previous stale auth cache before establishing new session
+        if (supabase) {
+          try { await supabase.auth.signOut({ scope: 'local' }); } catch (_) {}
+        }
+        localStorage.removeItem('aegrion_auth_user');
+        sessionStorage.clear();
+
+        // Perform Supabase Login with native Turnstile captchaToken
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+          options: {
+            captchaToken: turnstileToken
+          }
+        });
+
+        if (error) {
+          showNotification(error.message, "error");
+          resetTurnstile();
+          loginBtn.disabled = false;
+          loginBtn.innerHTML = originalText;
+          lucide.createIcons();
+          return;
+        }
+
+        const user = data.user;
+
+        // Verify Email Status
+        if (!user.email_confirmed_at && user.app_metadata?.provider === 'email') {
+          await supabase.auth.signOut();
+          showNotification("Your email has not been verified. Please verify your email using the link sent to your inbox.", "warning");
+          document.getElementById('resend-verification-container').classList.remove('hidden');
+          
+          resetTurnstile();
+          loginBtn.disabled = false;
+          loginBtn.innerHTML = originalText;
+          lucide.createIcons();
+          return;
+        }
+
+        // Authoritatively ensure profile & workspace are provisioned for this specific user ID
+        await ensureUserProfileAndWorkspace(user);
+
+        showNotification("Login successful! Redirecting...", "success");
+        setTimeout(() => {
+          window.location.href = DASHBOARD_URL;
+        }, 800);
+
+      } catch (err) {
+        showNotification("System error occurred. Please try again.", "error");
+        console.error(err);
+        resetTurnstile();
+        loginBtn.disabled = false;
+        loginBtn.innerHTML = originalText;
+        lucide.createIcons();
+      }
+    });
+
+    // Resend verification email link trigger
+    document.getElementById('btn-resend-verify').addEventListener('click', async () => {
+      const email = document.getElementById('login-email').value;
+      const resendBtn = document.getElementById('btn-resend-verify');
+      if (!email) {
+        showNotification("Please fill in your work email address first.", "warning");
+        return;
+      }
+
+      resendBtn.disabled = true;
+      const originalText = "Resend Verification Email";
+      resendBtn.textContent = "Resending...";
+
+      let secondsLeft = 60;
+      const timer = setInterval(() => {
+        secondsLeft--;
+        if (secondsLeft <= 0) {
+          clearInterval(timer);
+          resendBtn.disabled = false;
+          resendBtn.textContent = originalText;
+        } else {
+          resendBtn.textContent = `Resend available in ${secondsLeft}s`;
+        }
+      }, 1000);
+
+      try {
+        const { error } = await supabase.auth.resend({
+          type: 'signup',
+          email: email,
+          options: {
+            emailRedirectTo: `${window.location.origin}/verify-email.html`
+          }
+        });
+
+        if (error) {
+          showNotification(error.message, "error");
+          clearInterval(timer);
+          resendBtn.disabled = false;
+          resendBtn.textContent = originalText;
+        } else {
+          showNotification("Verification email resent successfully.", "success");
+        }
+      } catch (err) {
+        showNotification("Failed to resend verification. Please try again.", "error");
+        clearInterval(timer);
+        resendBtn.disabled = false;
+        resendBtn.textContent = originalText;
+      }
+    });
+
+    // OAuth Providers Login handler with loading states
+    async function handleOAuth(provider, buttonId) {
+      const button = document.getElementById(buttonId);
+      if (!button) return;
+      const originalContent = button.innerHTML;
+      
+      button.disabled = true;
+      button.innerHTML = '<span class="flex items-center justify-center gap-2"><i data-lucide="loader" class="w-4 h-4 animate-spin text-textSecondary"></i> Connecting...</span>';
+      lucide.createIcons();
+
+      try {
+        if (!supabase) {
+          throw new Error("Authentication service connection failed. Please refresh the page.");
+        }
+
+        // Clear any stale local auth state before initiating OAuth flow
+        try { await supabase.auth.signOut({ scope: 'local' }); } catch (_) {}
+        localStorage.removeItem('aegrion_auth_user');
+
+        const redirectUrl = `${window.location.origin}/app.html`;
+        
+        const oauthOptions = {
+          redirectTo: redirectUrl
+        };
+
+        // Google-specific OAuth options
+        if (provider === 'google') {
+          oauthOptions.queryParams = {
+            access_type: 'offline',
+            prompt: 'select_account'
+          };
+        }
+
+        const { error } = await supabase.auth.signInWithOAuth({
+          provider: provider,
+          options: oauthOptions
+        });
+
+        if (error) throw error;
+      } catch (err) {
+        console.error(`[OAuth ERROR - ${provider}]`, err);
+        showNotification(err.message || "Failed to initiate OAuth login. Please try again.", "error");
+        button.disabled = false;
+        button.innerHTML = originalContent;
+        lucide.createIcons();
+      }
+    }
+
+    document.getElementById('btn-oauth-google')?.addEventListener('click', () => handleOAuth('google', 'btn-oauth-google'));
+    document.getElementById('btn-oauth-github')?.addEventListener('click', () => handleOAuth('github', 'btn-oauth-github'));
+  </script>
+</body>
+</html>

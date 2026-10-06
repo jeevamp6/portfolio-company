@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Provisioning Trial - Aegrion Security</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brandOrange: '#F48120',
+            secondaryOrange: '#FFA640',
+            lightOrange: '#FFBE5C',
+            softOrange: '#FFF4EA',
+            warmWhite: '#FFF8F2',
+            textPrimary: '#111111',
+            textSecondary: '#4B5563',
+            borderColor: '#E9E9E9',
+            footerNavy: '#17122A',
+            success: '#10B981',
+            danger: '#EF4444',
+            warning: '#F59E0B'
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Load Supabase JS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .spinner {
+      animation: spin 1s linear infinite;
+    }
+  </style>
+</head>
+<body class="bg-warmWhite min-h-screen flex items-center justify-center p-6 sm:p-12">
+  <div class="w-full max-w-[480px] bg-white rounded-[20px] border border-borderColor p-8 md:p-10 shadow-[0_8px_32px_rgba(0,0,0,0.03)] text-center">
+    
+    <!-- Header logo -->
+    <img src="/logo.png" alt="Aegrion Security Logo" class="h-10 w-auto object-contain mx-auto mb-8">
+
+    <!-- Loading Spinner & Status Title -->
+    <div class="flex flex-col items-center justify-center gap-4 mb-8">
+      <div class="relative w-16 h-16">
+        <!-- Outer Track -->
+        <div class="absolute inset-0 rounded-full border-4 border-borderColor"></div>
+        <!-- Inner Spinner -->
+        <div class="absolute inset-0 rounded-full border-4 border-transparent border-t-brandOrange spinner"></div>
+      </div>
+      <h2 class="text-2xl font-black text-textPrimary tracking-tight">Provisioning Workspace</h2>
+      <p class="text-textSecondary font-medium text-sm">Please wait while we initialize your sandbox organization.</p>
+    </div>
+
+    <!-- Stepper Steps -->
+    <div class="space-y-4 text-left max-w-sm mx-auto border-t border-borderColor pt-6">
+      <!-- Step 1 -->
+      <div id="step-1" class="flex items-center gap-3 text-textSecondary transition-all duration-300">
+        <div class="step-icon w-6 h-6 rounded-full border-2 border-borderColor flex items-center justify-center flex-shrink-0 text-xs font-semibold">
+          1
+        </div>
+        <span class="font-medium text-sm">Creating Trial Workspace...</span>
+      </div>
+      <!-- Step 2 -->
+      <div id="step-2" class="flex items-center gap-3 text-textSecondary/60 transition-all duration-300">
+        <div class="step-icon w-6 h-6 rounded-full border-2 border-borderColor flex items-center justify-center flex-shrink-0 text-xs font-semibold">
+          2
+        </div>
+        <span class="font-medium text-sm">Setting up Trial Organization...</span>
+      </div>
+      <!-- Step 3 -->
+      <div id="step-3" class="flex items-center gap-3 text-textSecondary/60 transition-all duration-300">
+        <div class="step-icon w-6 h-6 rounded-full border-2 border-borderColor flex items-center justify-center flex-shrink-0 text-xs font-semibold">
+          3
+        </div>
+        <span class="font-medium text-sm">Creating Default User Profile...</span>
+      </div>
+      <!-- Step 4 -->
+      <div id="step-4" class="flex items-center gap-3 text-textSecondary/60 transition-all duration-300">
+        <div class="step-icon w-6 h-6 rounded-full border-2 border-borderColor flex items-center justify-center flex-shrink-0 text-xs font-semibold">
+          4
+        </div>
+        <span class="font-medium text-sm">Activating 14-day Free Trial...</span>
+      </div>
+    </div>
+
+  </div>
+
+  <script type="module">
+    import { supabase, ensureUserProfileAndWorkspace, LOGIN_URL, DASHBOARD_URL } from './supabase-client.js';
+
+    // Initialize icons
+    lucide.createIcons();
+
+    // Setup simulated timeline for provisioning
+    const steps = [
+      { id: 'step-1', duration: 800 },
+      { id: 'step-2', duration: 800 },
+      { id: 'step-3', duration: 800 },
+      { id: 'step-4', duration: 800 }
+    ];
+
+    async function runStepper(user) {
+      let currentDelay = 0;
+
+      // Verify or Provision workspace assets in background
+      await ensureUserProfileAndWorkspace(user);
+
+      steps.forEach((step, idx) => {
+        currentDelay += step.duration;
+        
+        setTimeout(() => {
+          const stepEl = document.getElementById(step.id);
+          if (!stepEl) return;
+
+          // Mark active/complete
+          stepEl.classList.remove('text-textSecondary/60');
+          stepEl.classList.add('text-textPrimary');
+          
+          const iconEl = stepEl.querySelector('.step-icon');
+          iconEl.className = "step-icon w-6 h-6 rounded-full bg-brandOrange text-white flex items-center justify-center flex-shrink-0 text-xs font-semibold";
+          iconEl.innerHTML = '<i data-lucide="check" class="w-3.5 h-3.5"></i>';
+          lucide.createIcons();
+          
+          // Make next step active-looking (fade-in)
+          if (idx < steps.length - 1) {
+            const nextStepEl = document.getElementById(steps[idx+1].id);
+            nextStepEl.classList.remove('text-textSecondary/60');
+            nextStepEl.classList.add('text-textSecondary');
+          }
+        }, currentDelay);
+      });
+
+      // Redirect to app dashboard after all tasks complete
+      setTimeout(() => {
+        window.location.href = DASHBOARD_URL;
+      }, currentDelay + 800);
+    }
+
+    // Check session on page load
+    window.addEventListener('load', async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        window.location.href = LOGIN_URL;
+        return;
+      }
+      
+      // Run stepper
+      runStepper(session.user);
+    });
+  </script>
+</body>
+</html>

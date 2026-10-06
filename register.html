@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Account - Aegrion Security</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brandOrange: '#F48120',
+            secondaryOrange: '#FFA640',
+            lightOrange: '#FFBE5C',
+            softOrange: '#FFF4EA',
+            warmWhite: '#FFF8F2',
+            textPrimary: '#111111',
+            textSecondary: '#4B5563',
+            borderColor: '#E9E9E9',
+            footerNavy: '#17122A',
+            success: '#16A34A',
+            danger: '#EF4444',
+            warning: '#F59E0B'
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Load Supabase JS SDK & Cloudflare Turnstile -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .animate-spin {
+      animation: spin 1s linear infinite;
+    }
+  </style>
+</head>
+<body class="bg-warmWhite min-h-screen flex flex-col md:flex-row overflow-x-hidden">
+
+  <!-- LEFT PANEL: Marketing & Visuals -->
+  <div class="hidden md:flex md:w-1/2 bg-gradient-to-br from-brandOrange via-secondaryOrange to-[#FFBE5C] text-white p-12 lg:p-16 flex-col justify-between relative overflow-hidden">
+    <!-- Aurora background decoration -->
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.15),transparent_60%)] pointer-events-none"></div>
+    
+    <!-- Logo -->
+    <div class="z-10">
+      <a href="index.html" class="inline-block">
+        <img src="/logo.png" alt="Aegrion Security Logo" class="h-12 w-auto object-contain brightness-0 invert">
+      </a>
+    </div>
+
+    <!-- Cybersecurity Illustration -->
+    <div class="z-10 my-auto py-8">
+      <div class="max-w-[480px]">
+        <h1 class="text-4xl lg:text-5xl font-black tracking-[-0.03em] leading-[1.1] mb-6">
+          Start Securing Your Cloud Infrastructure.
+        </h1>
+        <p class="text-white/90 text-lg mb-10 leading-relaxed font-medium">
+          Get unlimited access to threat monitoring and asset reporting during your 14-day trial. No credit card required.
+        </p>
+
+        <!-- Bullet List -->
+        <ul class="space-y-4">
+          <li class="flex items-center gap-3">
+            <div class="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
+              <i data-lucide="check" class="w-4 h-4 text-white"></i>
+            </div>
+            <span class="font-semibold text-[16px]">Instant Workspace Provisioning</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <div class="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
+              <i data-lucide="check" class="w-4 h-4 text-white"></i>
+            </div>
+            <span class="font-semibold text-[16px]">Vulnerability Assessments Included</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <div class="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
+              <i data-lucide="check" class="w-4 h-4 text-white"></i>
+            </div>
+            <span class="font-semibold text-[16px]">14 Days Premium Access (Free)</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <div class="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
+              <i data-lucide="check" class="w-4 h-4 text-white"></i>
+            </div>
+            <span class="font-semibold text-[16px]">Secure DevSecOps Pipeline</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Footer Copyright -->
+    <div class="z-10 text-white/60 text-xs">
+      &copy; 2026 Aegrion Security Inc. All rights reserved.
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL: Registration Form / Success Page -->
+  <div class="w-full md:w-1/2 flex items-center justify-center p-6 sm:p-12 lg:p-16 bg-white min-h-screen">
+    <div class="w-full max-w-[480px]">
+      
+      <!-- Mobile Logo -->
+      <div class="md:hidden mb-8">
+        <a href="index.html">
+          <img src="/logo.png" alt="Aegrion Security Logo" class="h-10 w-auto object-contain">
+        </a>
+      </div>
+
+      <!-- STEP 1: Registration Form -->
+      <div id="register-form-view">
+        <div class="mb-8">
+          <h2 class="text-3xl font-black text-textPrimary tracking-tight mb-2">Create Account</h2>
+          <p class="text-textSecondary font-medium text-sm">Register below to begin your 14-day free trial workspace.</p>
+        </div>
+
+        <form id="register-form" class="space-y-4">
+          <!-- First/Last Name -->
+          <div class="grid grid-cols-2 gap-4">
+            <div class="flex flex-col gap-1">
+              <label for="reg-first-name" class="text-xs font-bold text-textSecondary uppercase tracking-wider">First Name</label>
+              <input type="text" id="reg-first-name" required class="w-full px-4 py-2.5 rounded-xl border border-borderColor focus:outline-none focus:border-brandOrange text-textPrimary font-medium text-sm transition-all duration-200" placeholder="John">
+            </div>
+            <div class="flex flex-col gap-1">
+              <label for="reg-last-name" class="text-xs font-bold text-textSecondary uppercase tracking-wider">Last Name</label>
+              <input type="text" id="reg-last-name" required class="w-full px-4 py-2.5 rounded-xl border border-borderColor focus:outline-none focus:border-brandOrange text-textPrimary font-medium text-sm transition-all duration-200" placeholder="Doe">
+            </div>
+          </div>
+
+          <!-- Company Name -->
+          <div class="flex flex-col gap-1">
+            <label for="reg-company" class="text-xs font-bold text-textSecondary uppercase tracking-wider">Company</label>
+            <input type="text" id="reg-company" required class="w-full px-4 py-2.5 rounded-xl border border-borderColor focus:outline-none focus:border-brandOrange text-textPrimary font-medium text-sm transition-all duration-200" placeholder="Acme Corp">
+          </div>
+
+          <!-- Work Email -->
+          <div class="flex flex-col gap-1">
+            <label for="reg-email" class="text-xs font-bold text-textSecondary uppercase tracking-wider">Work Email</label>
+            <input type="email" id="reg-email" required class="w-full px-4 py-2.5 rounded-xl border border-borderColor focus:outline-none focus:border-brandOrange text-textPrimary font-medium text-sm transition-all duration-200" placeholder="john.doe@company.com">
+          </div>
+
+          <!-- Passwords -->
+          <div class="grid grid-cols-2 gap-4">
+            <div class="flex flex-col gap-1">
+              <label for="reg-password" class="text-xs font-bold text-textSecondary uppercase tracking-wider">Password</label>
+              <input type="password" id="reg-password" required class="w-full px-4 py-2.5 rounded-xl border border-borderColor focus:outline-none focus:border-brandOrange text-textPrimary font-medium text-sm transition-all duration-200" placeholder="••••••••">
+            </div>
+            <div class="flex flex-col gap-1">
+              <label for="reg-confirm-password" class="text-xs font-bold text-textSecondary uppercase tracking-wider">Confirm Password</label>
+              <input type="password" id="reg-confirm-password" required class="w-full px-4 py-2.5 rounded-xl border border-borderColor focus:outline-none focus:border-brandOrange text-textPrimary font-medium text-sm transition-all duration-200" placeholder="••••••••">
+            </div>
+          </div>
+
+          <!-- Passwords Matching Message -->
+          <div id="confirm-pwd-message" class="text-[10px] font-bold hidden flex items-center gap-1 mt-1 transition-all duration-200"></div>
+
+          <!-- Password requirements indicators -->
+          <div class="mt-2 text-[10px] font-bold text-textSecondary space-y-1.5" id="pwd-requirements">
+            <div class="requirement-char flex items-center gap-1.5 text-textSecondary transition-colors duration-200">
+              <span class="icon-holder"><i data-lucide="circle" class="w-3 h-3"></i></span>
+              <span>Minimum 8 characters</span>
+            </div>
+            <div class="requirement-upper flex items-center gap-1.5 text-textSecondary transition-colors duration-200">
+              <span class="icon-holder"><i data-lucide="circle" class="w-3 h-3"></i></span>
+              <span>At least one uppercase letter</span>
+            </div>
+            <div class="requirement-lower flex items-center gap-1.5 text-textSecondary transition-colors duration-200">
+              <span class="icon-holder"><i data-lucide="circle" class="w-3 h-3"></i></span>
+              <span>At least one lowercase letter</span>
+            </div>
+            <div class="requirement-number flex items-center gap-1.5 text-textSecondary transition-colors duration-200">
+              <span class="icon-holder"><i data-lucide="circle" class="w-3 h-3"></i></span>
+              <span>At least one number</span>
+            </div>
+            <div class="requirement-special flex items-center gap-1.5 text-textSecondary transition-colors duration-200">
+              <span class="icon-holder"><i data-lucide="circle" class="w-3 h-3"></i></span>
+              <span>At least one special character</span>
+            </div>
+          </div>
+
+          <!-- Strong Password Indicator -->
+          <div id="strong-pwd-message" class="text-[10px] font-bold text-success hidden flex items-center gap-1 mt-1.5 transition-all duration-200">
+            <i data-lucide="check" class="w-3.5 h-3.5"></i> Strong Password
+          </div>
+
+          <!-- Country -->
+          <div class="flex flex-col gap-1">
+            <label for="reg-country" class="text-xs font-bold text-textSecondary uppercase tracking-wider">Country</label>
+            <select id="reg-country" required class="w-full px-4 py-2.5 rounded-xl border border-borderColor focus:outline-none focus:border-brandOrange text-textPrimary font-medium text-sm transition-all duration-200 bg-white">
+              <option value="" disabled selected>Select Your Country</option>
+              <option value="United States">United States</option>
+              <option value="United Kingdom">United Kingdom</option>
+              <option value="India">India</option>
+              <option value="Germany">Germany</option>
+              <option value="Canada">Canada</option>
+              <option value="Australia">Australia</option>
+              <option value="Singapore">Singapore</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <!-- Terms Agreement Checkbox -->
+          <div class="flex items-start gap-2 pt-2">
+            <input type="checkbox" id="reg-terms" required class="w-4 h-4 rounded mt-0.5 border-borderColor text-brandOrange focus:ring-brandOrange accent-brandOrange">
+            <label for="reg-terms" class="text-xs text-textSecondary font-semibold leading-relaxed cursor-pointer select-none">
+              I agree to the <a href="terms.html" target="_blank" class="text-brandOrange hover:underline">Terms of Service</a> and <a href="privacy.html" target="_blank" class="text-brandOrange hover:underline">Privacy Policy</a>.
+            </label>
+          </div>
+
+          <!-- Cloudflare Turnstile Verification -->
+          <div class="my-2 flex justify-center w-full">
+            <div id="turnstile-register-container" class="min-h-[65px] flex items-center justify-center"></div>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" id="btn-register" disabled class="w-full py-3.5 rounded-full text-white bg-brandOrange hover:bg-brandOrange/95 disabled:opacity-50 disabled:cursor-not-allowed font-semibold text-sm transition-all duration-200 shadow-sm text-center mt-3">
+            Create Account
+          </button>
+        </form>
+
+        <!-- Login Link -->
+        <div class="mt-6 text-center text-sm font-medium text-textSecondary">
+          Already have an account? 
+          <a href="login.html" class="font-bold text-brandOrange hover:underline ml-1">Login</a>
+        </div>
+      </div>
+
+      <!-- STEP 2: Registration Success view (Replacing OTP) -->
+      <div id="success-email-view" class="hidden flex-col items-center justify-center text-center space-y-6">
+        <div class="w-16 h-16 rounded-full bg-brandOrange/15 text-brandOrange flex items-center justify-center">
+          <i data-lucide="mail-open" class="w-8 h-8"></i>
+        </div>
+        
+        <div>
+          <h2 class="text-2xl font-black text-textPrimary tracking-tight mb-2">Check Your Email</h2>
+          <p class="text-xs text-textSecondary font-semibold max-w-sm leading-relaxed">
+            Your account has been created successfully. We've sent a verification email to:
+          </p>
+          <p id="success-target-email" class="text-sm text-textPrimary font-bold mt-1.5"></p>
+          <p class="text-xs text-textSecondary font-semibold max-w-sm leading-relaxed mt-2">
+            Please click the verification link in your inbox to activate your account.
+          </p>
+        </div>
+
+        <div class="w-full space-y-3">
+          <!-- Open Gmail Link -->
+          <a id="btn-open-gmail" href="https://mail.google.com" target="_blank" rel="noopener noreferrer" class="hidden w-full py-3.5 rounded-full text-white bg-brandOrange hover:bg-brandOrange/95 font-semibold text-sm transition-all duration-200 shadow-sm text-center items-center justify-center gap-2">
+            <i data-lucide="external-link" class="w-4 h-4"></i> Open Gmail
+          </a>
+
+          <!-- Return to Login -->
+          <a href="login.html" class="block w-full py-3.5 rounded-full border border-borderColor text-textPrimary hover:bg-warmWhite font-semibold text-sm transition-all duration-200 text-center">
+            Return to Login
+          </a>
+
+          <!-- Resend Verification Email -->
+          <button type="button" id="btn-resend-verification" class="w-full py-3.5 rounded-full text-brandOrange bg-softOrange hover:bg-brandOrange/10 font-semibold text-sm transition-all duration-200 text-center">
+            Resend Verification Email
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script type="module">
+    import { supabase, showNotification, ensureUserProfileAndWorkspace, renderTurnstileWidget, LOGIN_URL, DASHBOARD_URL } from './supabase-client.js';
+
+    let turnstileToken = null;
+    let turnstileWidgetId = null;
+
+    async function initTurnstile() {
+      const container = document.getElementById('turnstile-register-container');
+      if (!container) return;
+      turnstileWidgetId = await renderTurnstileWidget(container, {
+        action: 'signup',
+        onSuccess: (token) => { turnstileToken = token; },
+        onError: () => {
+          turnstileToken = null;
+          showNotification('Security verification failed. Please try again.', 'error');
+        },
+        onExpire: () => {
+          turnstileToken = null;
+          showNotification('Security verification expired. Please try again.', 'warning');
+        }
+      });
+    }
+    function resetTurnstile() {
+      if (window.turnstile && turnstileWidgetId !== null) {
+        try { window.turnstile.reset(turnstileWidgetId); } catch (_) {}
+      }
+      turnstileToken = null;
+    }
+    window.addEventListener('load', () => { initTurnstile(); });
+
+    // Initialize icons
+    lucide.createIcons();
+
+    let targetEmail = "";
+    let regFirstName = "";
+    let regLastName = "";
+    let regCompany = "";
+    let regCountry = "";
+
+    // DOM Elements
+    const registerForm = document.getElementById('register-form');
+    const firstInput = document.getElementById('reg-first-name');
+    const lastInput = document.getElementById('reg-last-name');
+    const companyInput = document.getElementById('reg-company');
+    const emailInput = document.getElementById('reg-email');
+    const countryInput = document.getElementById('reg-country');
+    const pwdInput = document.getElementById('reg-password');
+    const confirmInput = document.getElementById('reg-confirm-password');
+    const termsCheck = document.getElementById('reg-terms');
+    const registerBtn = document.getElementById('btn-register');
+
+    // Listen for Auth changes (OAuth and link-based automated redirects)
+    supabase.auth.onAuthStateChange(async (event, session) => {
+      if (event === 'SIGNED_IN' && session) {
+        if (session.user.email_confirmed_at || session.user.app_metadata?.provider !== 'email') {
+          await ensureUserProfileAndWorkspace(session.user);
+          window.location.href = DASHBOARD_URL;
+        }
+      }
+    });
+
+    function checkPasswordStrength(pwd) {
+      return {
+        char: pwd.length >= 8,
+        upper: /[A-Z]/.test(pwd),
+        lower: /[a-z]/.test(pwd),
+        number: /[0-9]/.test(pwd),
+        special: /[^A-Za-z0-9]/.test(pwd)
+      };
+    }
+
+    // Real-time Form Validation
+    function validateForm() {
+      const pwd = pwdInput.value;
+      const confirmPwd = confirmInput.value;
+
+      // 1. Password Strength Validation Checks
+      const reqs = checkPasswordStrength(pwd);
+      const allReqsMet = Object.values(reqs).every(Boolean);
+
+      updateRequirementEl('requirement-char', reqs.char);
+      updateRequirementEl('requirement-upper', reqs.upper);
+      updateRequirementEl('requirement-lower', reqs.lower);
+      updateRequirementEl('requirement-number', reqs.number);
+      updateRequirementEl('requirement-special', reqs.special);
+
+      // Transitions border & reveals success banner
+      const strongMsg = document.getElementById('strong-pwd-message');
+      if (allReqsMet) {
+        pwdInput.classList.remove('border-borderColor', 'focus:border-brandOrange');
+        pwdInput.classList.add('border-success');
+        strongMsg.classList.remove('hidden');
+      } else {
+        pwdInput.classList.remove('border-success');
+        pwdInput.classList.add('border-borderColor', 'focus:border-brandOrange');
+        strongMsg.classList.add('hidden');
+      }
+
+      // 2. Passwords Matching Checks
+      const confirmMsg = document.getElementById('confirm-pwd-message');
+      let passwordsMatch = false;
+
+      if (confirmPwd.length > 0) {
+        confirmMsg.classList.remove('hidden');
+        if (pwd === confirmPwd) {
+          confirmInput.classList.remove('border-borderColor', 'focus:border-brandOrange', 'border-danger');
+          confirmInput.classList.add('border-success');
+          confirmMsg.className = "text-[10px] font-bold text-success flex items-center gap-1 mt-1 transition-all duration-200";
+          confirmMsg.innerHTML = '<span class="icon-holder-match"><i data-lucide="check" class="w-3.5 h-3.5"></i></span> Passwords match';
+          passwordsMatch = true;
+        } else {
+          confirmInput.classList.remove('border-borderColor', 'focus:border-brandOrange', 'border-success');
+          confirmInput.classList.add('border-danger');
+          confirmMsg.className = "text-[10px] font-bold text-danger flex items-center gap-1 mt-1 transition-all duration-200";
+          confirmMsg.innerHTML = '<span class="icon-holder-match"><i data-lucide="alert-circle" class="w-3.5 h-3.5"></i></span> Passwords do not match';
+        }
+      } else {
+        confirmInput.classList.remove('border-danger', 'border-success');
+        confirmInput.classList.add('border-borderColor', 'focus:border-brandOrange');
+        confirmMsg.classList.add('hidden');
+      }
+
+      // Re-trigger icon parsing
+      lucide.createIcons();
+
+      // 3. Overall validation values
+      const isFirstValid = firstInput.value.trim().length > 0;
+      const isLastValid = lastInput.value.trim().length > 0;
+      const isCompanyValid = companyInput.value.trim().length > 0;
+      const isEmailValid = emailInput.validity.valid && emailInput.value.trim().length > 0;
+      const isCountryValid = countryInput.value !== "";
+      const isTermsChecked = termsCheck.checked;
+
+      const isFormValid = isFirstValid &&
+                          isLastValid &&
+                          isCompanyValid &&
+                          isEmailValid &&
+                          isCountryValid &&
+                          allReqsMet &&
+                          passwordsMatch &&
+                          isTermsChecked;
+
+      registerBtn.disabled = !isFormValid;
+    }
+
+    function updateRequirementEl(cls, isValid) {
+      const el = document.querySelector(`#pwd-requirements .${cls}`);
+      if (!el) return;
+      const iconHolder = el.querySelector('.icon-holder');
+
+      if (isValid) {
+        el.classList.remove('text-textSecondary');
+        el.classList.add('text-success');
+        iconHolder.innerHTML = '<i data-lucide="check" class="w-3 h-3"></i>';
+      } else {
+        el.classList.remove('text-success');
+        el.classList.add('text-textSecondary');
+        iconHolder.innerHTML = '<i data-lucide="circle" class="w-3 h-3"></i>';
+      }
+    }
+
+    // Attach listeners
+    [firstInput, lastInput, companyInput, emailInput, countryInput, pwdInput, confirmInput, termsCheck].forEach(input => {
+      input.addEventListener('input', validateForm);
+      input.addEventListener('change', validateForm);
+    });
+
+    // Register Submit Handler
+    registerForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      regFirstName = firstInput.value;
+      regLastName = lastInput.value;
+      regCompany = companyInput.value;
+      targetEmail = emailInput.value;
+      regCountry = countryInput.value;
+      const password = pwdInput.value;
+      const confirmPassword = confirmInput.value;
+
+      const registerBtnElement = document.getElementById('btn-register');
+      const originalBtnText = registerBtnElement.innerHTML;
+
+      if (password !== confirmPassword) {
+        showNotification("Passwords do not match!", "error");
+        return;
+      }
+
+      const reqs = checkPasswordStrength(password);
+      if (!Object.values(reqs).every(Boolean)) {
+        showNotification("Password does not meet all security requirements.", "warning");
+        return;
+      }
+
+      // Cloudflare Turnstile Security Verification Check
+      if (!turnstileToken) {
+        showNotification('Please complete the security verification.', 'warning');
+        return;
+      }
+
+      // Enable loading state
+      registerBtnElement.disabled = true;
+      registerBtnElement.innerHTML = '<span class="flex items-center justify-center gap-2"><i data-lucide="loader" class="w-4 h-4 animate-spin text-white"></i> Creating Account...</span>';
+      lucide.createIcons();
+      try {
+        // Clear any old auth cache before creating new account
+        if (supabase) {
+          try { await supabase.auth.signOut({ scope: 'local' }); } catch (_) {}
+        }
+        localStorage.removeItem('aegrion_auth_user');
+        sessionStorage.clear();
+
+        // Register via Supabase Auth with native Turnstile captchaToken
+        const { data, error } = await supabase.auth.signUp({
+          email: targetEmail.trim().toLowerCase(),
+          password: password,
+          options: {
+            captchaToken: turnstileToken,
+            data: {
+              first_name: regFirstName,
+              last_name: regLastName,
+              full_name: `${regFirstName} ${regLastName}`.trim(),
+              company: regCompany,
+              country: regCountry
+            },
+            emailRedirectTo: `${window.location.origin}/verify-email.html`
+          }
+        });
+
+        if (error) {
+          showNotification(error.message, "error");
+          resetTurnstile();
+          registerBtnElement.disabled = false;
+          registerBtnElement.innerHTML = originalBtnText;
+          lucide.createIcons();
+          return;
+        }
+
+        const user = data.user;
+
+        if (user) {
+          showNotification("Account created successfully ✓", "success");
+          
+          await ensureUserProfileAndWorkspace(user, {
+            first_name: regFirstName,
+            last_name: regLastName,
+            company: regCompany,
+            country: regCountry
+          });
+
+          // Check if session exists (auto-confirmed or OAuth) or confirmation email was sent
+          if (data.session) {
+            setTimeout(() => {
+              window.location.href = DASHBOARD_URL;
+            }, 800);
+          } else {
+            // Display check email screen
+            document.getElementById('register-form-view').classList.add('hidden');
+            const successView = document.getElementById('success-email-view');
+            successView.classList.remove('hidden');
+            successView.classList.add('flex');
+            document.getElementById('success-target-email').textContent = targetEmail;
+            lucide.createIcons();
+          }
+        } else {
+          throw new Error("User data not returned from registration.");
+        }
+
+      } catch (err) {
+        showNotification("Registration failed. Please try again.", "error");
+        console.error("Catch Signup Error:", err);
+        resetTurnstile();
+        registerBtnElement.disabled = false;
+        registerBtnElement.innerHTML = originalBtnText;
+        lucide.createIcons();
+      }
+    });
+  </script>
+</body>
+</html>
